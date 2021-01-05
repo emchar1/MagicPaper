@@ -1,0 +1,20 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "resources" : [
+    {
+      "filename" : "christmas.arreferenceimage"
+    },
+    {
+      "filename" : "gidget.arreferenceimage"
+    },
+    {
+      "filename" : "pushups.arreferenceimage"
+    },
+    {
+      "filename" : "wfh.arreferenceimage"
+    }
+  ]
+}

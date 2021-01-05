@@ -1,0 +1,674 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EA49A37C2598218F003FF00B /* gidget.mov in Resources */ = {isa = PBXBuildFile; fileRef = EA49A37B2598218F003FF00B /* gidget.mov */; };
+		EA49A384259859E1003FF00B /* pushups.mov in Resources */ = {isa = PBXBuildFile; fileRef = EA49A383259859E1003FF00B /* pushups.mov */; };
+		EA49D77C25908A0D00C52847 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA49D77B25908A0D00C52847 /* CloudKit.framework */; };
+		EA49D77E2590982600C52847 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA49D77D2590982600C52847 /* Model.swift */; };
+		EAD14243259AF27500FA8474 /* christmas.mov in Resources */ = {isa = PBXBuildFile; fileRef = EAD14242259AF27500FA8474 /* christmas.mov */; };
+		EAD1424E259AF35E00FA8474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAD1424D259AF35E00FA8474 /* Assets.xcassets */; };
+		EAD1426725A136EF00FA8474 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD1426625A136EF00FA8474 /* QRCode.swift */; };
+		EAD1426F25A149D400FA8474 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD1426E25A149D400FA8474 /* ScannerViewController.swift */; };
+		EAD1427725A1716B00FA8474 /* RateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD1427625A1716B00FA8474 /* RateViewController.swift */; };
+		EAD619902522A1DC003E425F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD6198F2522A1DC003E425F /* AppDelegate.swift */; };
+		EAD619942522A1DC003E425F /* MagicPaperController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD619932522A1DC003E425F /* MagicPaperController.swift */; };
+		EAD619972522A1DC003E425F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAD619952522A1DC003E425F /* Main.storyboard */; };
+		EAD6199C2522A1DE003E425F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAD6199A2522A1DE003E425F /* LaunchScreen.storyboard */; };
+		EAD619A72522A1DE003E425F /* MagicPaperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD619A62522A1DE003E425F /* MagicPaperTests.swift */; };
+		EAD619B22522A1DE003E425F /* MagicPaperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD619B12522A1DE003E425F /* MagicPaperUITests.swift */; };
+		EAD619CE25230CAD003E425F /* wfh.mov in Resources */ = {isa = PBXBuildFile; fileRef = EAD619CD25230CAD003E425F /* wfh.mov */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EAD619A32522A1DE003E425F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EAD619842522A1DC003E425F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EAD6198B2522A1DC003E425F;
+			remoteInfo = MagicPaper;
+		};
+		EAD619AE2522A1DE003E425F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EAD619842522A1DC003E425F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EAD6198B2522A1DC003E425F;
+			remoteInfo = MagicPaper;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EA49A37B2598218F003FF00B /* gidget.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = gidget.mov; sourceTree = "<group>"; };
+		EA49A383259859E1003FF00B /* pushups.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = pushups.mov; sourceTree = "<group>"; };
+		EA49D77625908A0700C52847 /* MagicPaper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MagicPaper.entitlements; sourceTree = "<group>"; };
+		EA49D77B25908A0D00C52847 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		EA49D77D2590982600C52847 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		EAD14242259AF27500FA8474 /* christmas.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = christmas.mov; sourceTree = "<group>"; };
+		EAD1424D259AF35E00FA8474 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EAD1426625A136EF00FA8474 /* QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
+		EAD1426E25A149D400FA8474 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
+		EAD1427625A1716B00FA8474 /* RateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateViewController.swift; sourceTree = "<group>"; };
+		EAD6198C2522A1DC003E425F /* MagicPaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MagicPaper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAD6198F2522A1DC003E425F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EAD619932522A1DC003E425F /* MagicPaperController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicPaperController.swift; sourceTree = "<group>"; };
+		EAD619962522A1DC003E425F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EAD6199B2522A1DE003E425F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EAD6199D2522A1DE003E425F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EAD619A22522A1DE003E425F /* MagicPaperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagicPaperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAD619A62522A1DE003E425F /* MagicPaperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicPaperTests.swift; sourceTree = "<group>"; };
+		EAD619A82522A1DE003E425F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EAD619AD2522A1DE003E425F /* MagicPaperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagicPaperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAD619B12522A1DE003E425F /* MagicPaperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicPaperUITests.swift; sourceTree = "<group>"; };
+		EAD619B32522A1DE003E425F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EAD619CD25230CAD003E425F /* wfh.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = wfh.mov; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EAD619892522A1DC003E425F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA49D77C25908A0D00C52847 /* CloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAD6199F2522A1DE003E425F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAD619AA2522A1DE003E425F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EA49D77A25908A0D00C52847 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EA49D77B25908A0D00C52847 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EAD1425A25A134D500FA8474 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EAD1426E25A149D400FA8474 /* ScannerViewController.swift */,
+				EAD619932522A1DC003E425F /* MagicPaperController.swift */,
+				EAD1427625A1716B00FA8474 /* RateViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		EAD1425E25A134DE00FA8474 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EA49D77D2590982600C52847 /* Model.swift */,
+				EAD1426625A136EF00FA8474 /* QRCode.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EAD1426225A134E800FA8474 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EAD619952522A1DC003E425F /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EAD619832522A1DC003E425F = {
+			isa = PBXGroup;
+			children = (
+				EAD6198E2522A1DC003E425F /* MagicPaper */,
+				EAD619A52522A1DE003E425F /* MagicPaperTests */,
+				EAD619B02522A1DE003E425F /* MagicPaperUITests */,
+				EAD6198D2522A1DC003E425F /* Products */,
+				EA49D77A25908A0D00C52847 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		EAD6198D2522A1DC003E425F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EAD6198C2522A1DC003E425F /* MagicPaper.app */,
+				EAD619A22522A1DE003E425F /* MagicPaperTests.xctest */,
+				EAD619AD2522A1DE003E425F /* MagicPaperUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EAD6198E2522A1DC003E425F /* MagicPaper */ = {
+			isa = PBXGroup;
+			children = (
+				EA49D77625908A0700C52847 /* MagicPaper.entitlements */,
+				EAD6198F2522A1DC003E425F /* AppDelegate.swift */,
+				EAD1425A25A134D500FA8474 /* Controllers */,
+				EAD1425E25A134DE00FA8474 /* Models */,
+				EAD1426225A134E800FA8474 /* Views */,
+				EAD1424D259AF35E00FA8474 /* Assets.xcassets */,
+				EAD619C72522D597003E425F /* Videos */,
+				EAD6199A2522A1DE003E425F /* LaunchScreen.storyboard */,
+				EAD6199D2522A1DE003E425F /* Info.plist */,
+			);
+			path = MagicPaper;
+			sourceTree = "<group>";
+		};
+		EAD619A52522A1DE003E425F /* MagicPaperTests */ = {
+			isa = PBXGroup;
+			children = (
+				EAD619A62522A1DE003E425F /* MagicPaperTests.swift */,
+				EAD619A82522A1DE003E425F /* Info.plist */,
+			);
+			path = MagicPaperTests;
+			sourceTree = "<group>";
+		};
+		EAD619B02522A1DE003E425F /* MagicPaperUITests */ = {
+			isa = PBXGroup;
+			children = (
+				EAD619B12522A1DE003E425F /* MagicPaperUITests.swift */,
+				EAD619B32522A1DE003E425F /* Info.plist */,
+			);
+			path = MagicPaperUITests;
+			sourceTree = "<group>";
+		};
+		EAD619C72522D597003E425F /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+				EA49A383259859E1003FF00B /* pushups.mov */,
+				EAD14242259AF27500FA8474 /* christmas.mov */,
+				EA49A37B2598218F003FF00B /* gidget.mov */,
+				EAD619CD25230CAD003E425F /* wfh.mov */,
+			);
+			path = Videos;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EAD6198B2522A1DC003E425F /* MagicPaper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EAD619B62522A1DE003E425F /* Build configuration list for PBXNativeTarget "MagicPaper" */;
+			buildPhases = (
+				EAD619882522A1DC003E425F /* Sources */,
+				EAD619892522A1DC003E425F /* Frameworks */,
+				EAD6198A2522A1DC003E425F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MagicPaper;
+			productName = MagicPaper;
+			productReference = EAD6198C2522A1DC003E425F /* MagicPaper.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EAD619A12522A1DE003E425F /* MagicPaperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EAD619B92522A1DE003E425F /* Build configuration list for PBXNativeTarget "MagicPaperTests" */;
+			buildPhases = (
+				EAD6199E2522A1DE003E425F /* Sources */,
+				EAD6199F2522A1DE003E425F /* Frameworks */,
+				EAD619A02522A1DE003E425F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EAD619A42522A1DE003E425F /* PBXTargetDependency */,
+			);
+			name = MagicPaperTests;
+			productName = MagicPaperTests;
+			productReference = EAD619A22522A1DE003E425F /* MagicPaperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EAD619AC2522A1DE003E425F /* MagicPaperUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EAD619BC2522A1DE003E425F /* Build configuration list for PBXNativeTarget "MagicPaperUITests" */;
+			buildPhases = (
+				EAD619A92522A1DE003E425F /* Sources */,
+				EAD619AA2522A1DE003E425F /* Frameworks */,
+				EAD619AB2522A1DE003E425F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EAD619AF2522A1DE003E425F /* PBXTargetDependency */,
+			);
+			name = MagicPaperUITests;
+			productName = MagicPaperUITests;
+			productReference = EAD619AD2522A1DE003E425F /* MagicPaperUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EAD619842522A1DC003E425F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1200;
+				TargetAttributes = {
+					EAD6198B2522A1DC003E425F = {
+						CreatedOnToolsVersion = 12.0.1;
+					};
+					EAD619A12522A1DE003E425F = {
+						CreatedOnToolsVersion = 12.0.1;
+						TestTargetID = EAD6198B2522A1DC003E425F;
+					};
+					EAD619AC2522A1DE003E425F = {
+						CreatedOnToolsVersion = 12.0.1;
+						TestTargetID = EAD6198B2522A1DC003E425F;
+					};
+				};
+			};
+			buildConfigurationList = EAD619872522A1DC003E425F /* Build configuration list for PBXProject "MagicPaper" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EAD619832522A1DC003E425F;
+			productRefGroup = EAD6198D2522A1DC003E425F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EAD6198B2522A1DC003E425F /* MagicPaper */,
+				EAD619A12522A1DE003E425F /* MagicPaperTests */,
+				EAD619AC2522A1DE003E425F /* MagicPaperUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EAD6198A2522A1DC003E425F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA49A384259859E1003FF00B /* pushups.mov in Resources */,
+				EAD6199C2522A1DE003E425F /* LaunchScreen.storyboard in Resources */,
+				EAD14243259AF27500FA8474 /* christmas.mov in Resources */,
+				EA49A37C2598218F003FF00B /* gidget.mov in Resources */,
+				EAD619972522A1DC003E425F /* Main.storyboard in Resources */,
+				EAD1424E259AF35E00FA8474 /* Assets.xcassets in Resources */,
+				EAD619CE25230CAD003E425F /* wfh.mov in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAD619A02522A1DE003E425F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAD619AB2522A1DE003E425F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EAD619882522A1DC003E425F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAD1427725A1716B00FA8474 /* RateViewController.swift in Sources */,
+				EA49D77E2590982600C52847 /* Model.swift in Sources */,
+				EAD1426725A136EF00FA8474 /* QRCode.swift in Sources */,
+				EAD619942522A1DC003E425F /* MagicPaperController.swift in Sources */,
+				EAD1426F25A149D400FA8474 /* ScannerViewController.swift in Sources */,
+				EAD619902522A1DC003E425F /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAD6199E2522A1DE003E425F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAD619A72522A1DE003E425F /* MagicPaperTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAD619A92522A1DE003E425F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAD619B22522A1DE003E425F /* MagicPaperUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EAD619A42522A1DE003E425F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EAD6198B2522A1DC003E425F /* MagicPaper */;
+			targetProxy = EAD619A32522A1DE003E425F /* PBXContainerItemProxy */;
+		};
+		EAD619AF2522A1DE003E425F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EAD6198B2522A1DC003E425F /* MagicPaper */;
+			targetProxy = EAD619AE2522A1DE003E425F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EAD619952522A1DC003E425F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EAD619962522A1DC003E425F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EAD6199A2522A1DE003E425F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EAD6199B2522A1DE003E425F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EAD619B42522A1DE003E425F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EAD619B52522A1DE003E425F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EAD619B72522A1DE003E425F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MagicPaper/MagicPaper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LZ8V996BTJ;
+				INFOPLIST_FILE = MagicPaper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fiveplay-apps.MagicPaper";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EAD619B82522A1DE003E425F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MagicPaper/MagicPaper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LZ8V996BTJ;
+				INFOPLIST_FILE = MagicPaper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fiveplay-apps.MagicPaper";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EAD619BA2522A1DE003E425F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LZ8V996BTJ;
+				INFOPLIST_FILE = MagicPaperTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fiveplay-apps.MagicPaperTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MagicPaper.app/MagicPaper";
+			};
+			name = Debug;
+		};
+		EAD619BB2522A1DE003E425F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LZ8V996BTJ;
+				INFOPLIST_FILE = MagicPaperTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fiveplay-apps.MagicPaperTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MagicPaper.app/MagicPaper";
+			};
+			name = Release;
+		};
+		EAD619BD2522A1DE003E425F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LZ8V996BTJ;
+				INFOPLIST_FILE = MagicPaperUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fiveplay-apps.MagicPaperUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MagicPaper;
+			};
+			name = Debug;
+		};
+		EAD619BE2522A1DE003E425F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LZ8V996BTJ;
+				INFOPLIST_FILE = MagicPaperUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fiveplay-apps.MagicPaperUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MagicPaper;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EAD619872522A1DC003E425F /* Build configuration list for PBXProject "MagicPaper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAD619B42522A1DE003E425F /* Debug */,
+				EAD619B52522A1DE003E425F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EAD619B62522A1DE003E425F /* Build configuration list for PBXNativeTarget "MagicPaper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAD619B72522A1DE003E425F /* Debug */,
+				EAD619B82522A1DE003E425F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EAD619B92522A1DE003E425F /* Build configuration list for PBXNativeTarget "MagicPaperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAD619BA2522A1DE003E425F /* Debug */,
+				EAD619BB2522A1DE003E425F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EAD619BC2522A1DE003E425F /* Build configuration list for PBXNativeTarget "MagicPaperUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAD619BD2522A1DE003E425F /* Debug */,
+				EAD619BE2522A1DE003E425F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EAD619842522A1DC003E425F /* Project object */;
+}
