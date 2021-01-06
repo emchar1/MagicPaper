@@ -26,79 +26,13 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     var avPlayer: AVPlayer?
     
     
-    
-//    let videoNameTextField: UITextField = {
-//        let textField = UITextField()
-//        textField.placeholder = "Enter video name"
-//        textField.autocapitalizationType = .none
-//        textField.autocorrectionType = .no
-//        textField.borderStyle = .roundedRect
-//        textField.backgroundColor = .white
-//        textField.textColor = .black
-//        textField.font = UIFont(name: "Avenir Next", size: 14.0)
-//        textField.becomeFirstResponder()
-//        textField.translatesAutoresizingMaskIntoConstraints = false
-//        return textField
-//    }()
-//
-//    let submitButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.layer.cornerRadius = 30
-//        button.backgroundColor = UIColor(red: 148/255, green: 55/255, blue: 255/255, alpha: 1.0)
-//        button.setTitle("Submit", for: .normal)
-//        button.titleLabel?.font = UIFont(name: "Avenir Next Bold", size: 18)
-//        button.addTarget(self, action: #selector(submitTapped(_:)), for: .touchUpInside)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//    }()
-//
-//    var qrString: String = ""
-//
-//    lazy var qrCodeImageView: UIImageView = {
-//        let qr = QRCode(string: qrString)
-//
-//        let imageView = UIImageView()
-//        imageView.image = qr.generate()
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        return imageView
-//    }()
-
-    
-//    let videos = ["gigget2"]
-//    let model = Model()
-    
-    
     // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        videoNameTextField.delegate = self
         sceneView.delegate = self
-        sceneView.showsStatistics = true
-        
-//        view.addSubview(videoNameTextField)
-//        NSLayoutConstraint.activate([videoNameTextField.widthAnchor.constraint(equalToConstant: 200),
-//                                     videoNameTextField.heightAnchor.constraint(equalToConstant: 40),
-//                                     videoNameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
-//                                     videoNameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor)])
-//
-//        view.addSubview(submitButton)
-//        NSLayoutConstraint.activate([submitButton.widthAnchor.constraint(equalToConstant: 150),
-//                                     submitButton.heightAnchor.constraint(equalToConstant: 60),
-//                                     submitButton.topAnchor.constraint(equalTo: videoNameTextField.bottomAnchor, constant: 20),
-//                                     submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)])
-//
-//        view.addSubview(qrCodeImageView)
-//        NSLayoutConstraint.activate([qrCodeImageView.widthAnchor.constraint(equalToConstant: 60),
-//                                     qrCodeImageView.heightAnchor.constraint(equalToConstant: 60),
-//                                     qrCodeImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//                                     qrCodeImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
-        
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
-//        view.addGestureRecognizer(tapGestureRecognizer)
-                
-//        model.fetchVideos(videoNames: videos)
+//        sceneView.showsStatistics = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -141,33 +75,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     
     
     // MARK: - Helper Functions
-    
-//    @objc func submitTapped(_ sender: UIButton) {
-//        qrCodeImageView.removeFromSuperview()
-        
-//        videoName = videoNameTextField.text!
-//        videoNameTextField.text = ""
-
-//        view.addSubview(qrCodeImageView)
-//        NSLayoutConstraint.activate([qrCodeImageView.widthAnchor.constraint(equalToConstant: 60),
-//                                     qrCodeImageView.heightAnchor.constraint(equalToConstant: 60),
-//                                     qrCodeImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//                                     qrCodeImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
-
-//        avPlayer?.pause()
-//        node?.removeFromParentNode()
-//
-//        sceneView.session.run(configuration, options: [.removeExistingAnchors, .resetTracking])
-//    }
-    
-//    @objc func dismissKeyboard(_ sender: UITapGestureRecognizer) {
-//        let location = sender.location(in: view)
-//
-//        if location.x < videoNameTextField.frame.origin.x || location.x > videoNameTextField.bounds.width || location.y < videoNameTextField.frame.origin.y || location.y > videoNameTextField.bounds.height {
-//
-//            videoNameTextField.endEditing(true)
-//        }
-//    }
     
     /**
      Creates the video based on the key image file.
