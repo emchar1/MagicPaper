@@ -25,6 +25,8 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     var node: SCNNode?
     var avPlayer: AVPlayer?
     
+    
+    
 //    let videoNameTextField: UITextField = {
 //        let textField = UITextField()
 //        textField.placeholder = "Enter video name"
