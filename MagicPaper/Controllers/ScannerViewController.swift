@@ -12,17 +12,21 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     
     // MARK: - Properties
     
+    @IBOutlet weak var qrLabel: UILabel!
     @IBOutlet weak var scannerView: UIView!
     
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
-    var qrCode: String = ""
+    var qrCode = ""
+    var validQRCode = "magicpaper"
     
     
     // MARK: - Initialization
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        qrLabel.text = "Scan the QR Code on your\nMagic Greeting Card\nand watch it come to life!"
         
         scannerView.layer.cornerRadius = 10
         scannerView.layer.borderWidth = 4
@@ -130,7 +134,26 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
      - parameter code: The string info used to create the QR Code
      */
     func found(code: String) {
-        print(code)
+        guard code.contains(validQRCode) else {
+            let errorLabel = UILabel(frame: CGRect(x: 20, y: view.frame.height / 2 + 180, width: view.frame.width - 40, height: 100))
+            errorLabel.font = UIFont(name: "Avenir Next Regular", size: 18.0)
+            errorLabel.text = "Invalid QR Code! Please scan the QR Code on the Magic Greeting Card."
+            errorLabel.textAlignment = .center
+            errorLabel.numberOfLines = 0
+            errorLabel.textColor = .systemRed
+            view.addSubview(errorLabel)
+            
+            UIView.animate(withDuration: 0.5, delay: 3.0, options: .curveEaseIn, animations: {
+                errorLabel.alpha = 0
+            }, completion: { _ in
+                errorLabel.removeFromSuperview()
+            })
+            
+            captureSession.startRunning()
+
+            return
+        }
+        
         
         qrCode = code
 

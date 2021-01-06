@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="T2I-Hm-52y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5Oj-9h-r63">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -16,8 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan the QR Code to view your Magic Greeting Card!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S5b-4H-ULj">
-                                <rect key="frame" x="20" y="124" width="374" height="66"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S5b-4H-ULj">
+                                <rect key="frame" x="20" y="124" width="374" height="33"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -32,7 +32,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="J3L-6e-b2e"/>
-                        <color key="backgroundColor" systemColor="systemPinkColor"/>
+                        <color key="backgroundColor" red="0.21881785184777036" green="0.13763390365911993" blue="0.25639225783086678" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="m14-qG-UEs" firstAttribute="centerY" secondItem="Dft-aH-7x3" secondAttribute="centerY" id="4fS-Db-rjl"/>
                             <constraint firstItem="S5b-4H-ULj" firstAttribute="centerX" secondItem="Dft-aH-7x3" secondAttribute="centerX" id="Ac8-ay-WaB"/>
@@ -42,15 +42,32 @@
                             <constraint firstAttribute="trailing" secondItem="S5b-4H-ULj" secondAttribute="trailing" constant="20" id="wus-y0-ksb"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Scanner" id="NG7-gD-k5i"/>
+                    <tabBarItem key="tabBarItem" title="Scanner" image="qrcode.viewfinder" catalog="system" id="NG7-gD-k5i"/>
                     <connections>
+                        <outlet property="qrLabel" destination="S5b-4H-ULj" id="ana-UP-iWq"/>
                         <outlet property="scannerView" destination="m14-qG-UEs" id="kob-cD-YMz"/>
                         <segue destination="BV1-FR-VrT" kind="presentation" identifier="seguePaper" modalPresentationStyle="fullScreen" modalTransitionStyle="partialCurl" id="xjL-hF-18e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aLY-KP-ry4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-65" y="183"/>
+            <point key="canvasLocation" x="844.92753623188412" y="182.8125"/>
+        </scene>
+        <!--QRCode-->
+        <scene sceneID="Ezq-FD-uju">
+            <objects>
+                <viewController id="Byb-g8-vZt" customClass="QRCodeView" customModule="MagicPaper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Dhs-xb-4IP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Ec4-jh-qLn"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="QRCode" image="qrcode" catalog="system" id="K0W-yX-Cg8"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iqt-Qq-cSp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="845" y="1057"/>
         </scene>
         <!--Magic Paper-->
         <scene sceneID="tXr-a1-R10">
@@ -80,15 +97,32 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="932" y="183"/>
+            <point key="canvasLocation" x="1842.0289855072465" y="182.8125"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="ab7-Ek-97q">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="5Oj-9h-r63" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7Q4-0F-8Dg">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="T2I-Hm-52y" kind="relationship" relationship="viewControllers" id="yHr-3H-z2C"/>
+                        <segue destination="Byb-g8-vZt" kind="relationship" relationship="viewControllers" id="eO8-wo-fsz"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u41-21-TBY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-267" y="627"/>
         </scene>
     </scenes>
     <resources>
+        <image name="qrcode" catalog="system" width="128" height="114"/>
+        <image name="qrcode.viewfinder" catalog="system" width="128" height="115"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
