@@ -35,10 +35,9 @@
                         <color key="backgroundColor" red="0.21881785184777036" green="0.13763390365911993" blue="0.25639225783086678" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="m14-qG-UEs" firstAttribute="centerY" secondItem="Dft-aH-7x3" secondAttribute="centerY" id="4fS-Db-rjl"/>
-                            <constraint firstItem="S5b-4H-ULj" firstAttribute="centerX" secondItem="Dft-aH-7x3" secondAttribute="centerX" id="Ac8-ay-WaB"/>
                             <constraint firstItem="m14-qG-UEs" firstAttribute="centerX" secondItem="Dft-aH-7x3" secondAttribute="centerX" id="VLt-7i-PUo"/>
                             <constraint firstItem="S5b-4H-ULj" firstAttribute="top" secondItem="J3L-6e-b2e" secondAttribute="top" constant="80" id="WWm-qZ-gZu"/>
-                            <constraint firstItem="S5b-4H-ULj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Dft-aH-7x3" secondAttribute="leading" constant="20" id="ktj-kl-uTc"/>
+                            <constraint firstItem="S5b-4H-ULj" firstAttribute="leading" secondItem="Dft-aH-7x3" secondAttribute="leading" constant="20" id="ktj-kl-uTc"/>
                             <constraint firstAttribute="trailing" secondItem="S5b-4H-ULj" secondAttribute="trailing" constant="20" id="wus-y0-ksb"/>
                         </constraints>
                     </view>
@@ -46,7 +45,7 @@
                     <connections>
                         <outlet property="qrLabel" destination="S5b-4H-ULj" id="ana-UP-iWq"/>
                         <outlet property="scannerView" destination="m14-qG-UEs" id="kob-cD-YMz"/>
-                        <segue destination="BV1-FR-VrT" kind="presentation" identifier="seguePaper" modalPresentationStyle="fullScreen" modalTransitionStyle="partialCurl" id="xjL-hF-18e"/>
+                        <segue destination="BV1-FR-VrT" kind="presentation" identifier="segueMagic" modalPresentationStyle="fullScreen" modalTransitionStyle="partialCurl" id="xjL-hF-18e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aLY-KP-ry4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -93,11 +92,30 @@
                     <tabBarItem key="tabBarItem" title="Magic Paper" id="v2v-pO-lya"/>
                     <connections>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
+                        <segue destination="5y4-pQ-m1t" kind="presentation" identifier="segueReplay" modalPresentationStyle="fullScreen" modalTransitionStyle="partialCurl" id="lBK-ix-CxF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1842.0289855072465" y="182.8125"/>
+        </scene>
+        <!--Replay View Controller-->
+        <scene sceneID="ONk-VI-BcC">
+            <objects>
+                <viewController id="5y4-pQ-m1t" customClass="ReplayViewController" customModule="MagicPaper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iD1-fU-DbR">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="IRa-Qj-sfo"/>
+                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                    </view>
+                    <connections>
+                        <segue destination="BV1-FR-VrT" kind="presentation" identifier="segueMagic" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="KTg-NW-Biz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="49C-Pi-hLv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2864" y="183"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ab7-Ek-97q">
@@ -105,6 +123,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="5Oj-9h-r63" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7Q4-0F-8Dg">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -118,11 +137,17 @@
             <point key="canvasLocation" x="-267" y="627"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="xjL-hF-18e"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="qrcode" catalog="system" width="128" height="114"/>
         <image name="qrcode.viewfinder" catalog="system" width="128" height="115"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

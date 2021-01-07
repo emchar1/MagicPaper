@@ -15,10 +15,11 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     @IBOutlet weak var qrLabel: UILabel!
     @IBOutlet weak var scannerView: UIView!
     
+    let validQRCode = "magicpaper"
+    let segueMagic = "segueMagic"
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
-    var qrCode = ""
-    var validQRCode = "magicpaper"
+//    var qrCode = ""
     
     
     // MARK: - Initialization
@@ -155,15 +156,18 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         }
         
         
-        qrCode = code
+        K.qrCode = code
 
-        performSegue(withIdentifier: "seguePaper", sender: nil)
+        performSegue(withIdentifier: segueMagic, sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "seguePaper" {
+        if segue.identifier == segueMagic {
             let controller = segue.destination as! MagicPaperController
-            controller.videoName = qrCode
+            
+            if let qrCode = K.qrCode {
+                controller.videoName = qrCode
+            }
         }
     }
     

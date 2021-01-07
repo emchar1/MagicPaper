@@ -19,7 +19,29 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     }
     
     @IBOutlet var sceneView: ARSCNView!
+    
+    let instructionsView: UIView = {
+        let label = UILabel()
+        label.text = "Point the camera at your\nMagic Greeting Card and\nwatch the magic unfold!"
+        label.font = UIFont(name: "Avenir Next Regular", size: 16.0)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        let view = UIView()
+        view.addSubview(label)
+        view.alpha = 0.8
+        view.backgroundColor = .black
+        view.layer.cornerRadius = 8
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                                     label.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
+        return view
+    }()
 
+    let segueReplay = "segueReplay"
     var configuration: ARImageTrackingConfiguration!
     var videoName: String?
     var node: SCNNode?
@@ -33,18 +55,37 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         
         sceneView.delegate = self
 //        sceneView.showsStatistics = true
+
+        //Only show instructions once.
+        if K.showInstructions {
+            view.addSubview(instructionsView)
+            NSLayoutConstraint.activate([instructionsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                                         instructionsView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                                         instructionsView.widthAnchor.constraint(equalToConstant: 250),
+                                         instructionsView.heightAnchor.constraint(equalToConstant: 100)])
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        //Only show instructions once.
+        if K.showInstructions {
+            UIView.animate(withDuration: 0.5, delay: 4.5, options: .curveEaseIn, animations: {
+                self.instructionsView.alpha = 0
+            }, completion: { _ in
+                self.instructionsView.removeFromSuperview()
+            })
+            
+            K.showInstructions = false
+        }
+
         configuration = ARImageTrackingConfiguration()
 
         //Ensure you can read the images in the NewsPaperImages AR Resource Group in Assets.xcassets
         if let trackedImages = ARReferenceImage.referenceImages(inGroupNamed: "NewsPaperImages", bundle: .main) {
             configuration.trackingImages = trackedImages
             configuration.maximumNumberOfTrackedImages = 1
-            print("Images found.")
         }
 
         sceneView.session.run(configuration)
@@ -54,7 +95,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         super.viewWillDisappear(animated)
         sceneView.session.pause()
     }
-
+    
     
     // MARK: - ARSCNViewDelegate
     
@@ -62,14 +103,14 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
         guard let imageAnchor = anchor as? ARImageAnchor,
               let videoName = videoName else {
-            
+            print("couldn't find videoName")
             return nil
         }
         
         if let myVideo = makeVideo(for: imageAnchor, referenceImage: videoName, videoExtension: "mov") {
             return myVideo
         }
-
+        
         return nil
     }
     
@@ -105,9 +146,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         
         let imageDimensions: (width: CGFloat, height: CGFloat) = (image.size.width, image.size.height)
         let imageOrientation: ImageOrientation = imageDimensions.width > imageDimensions.height ? .landscape : .portrait
-        
-        print("img: \(referenceImage), dimensions: \(imageDimensions), orientation: \(imageOrientation)")
-            
         let url = URL(fileURLWithPath: path)
         let item = AVPlayerItem(url: url)
         avPlayer = AVPlayer(playerItem: item)
@@ -148,13 +186,14 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
                                                object: avPlayer?.currentItem,
                                                queue: nil) { notification in
             self.node?.removeFromParentNode()
-//            self.sceneView.session.remove(anchor: imageAnchor)
-//            self.avPlayer?.seek(to: CMTime.zero)
-//            avPlayer.play()
+            self.sceneView.session.remove(anchor: imageAnchor)
+            self.avPlayer?.seek(to: CMTime.zero)
+//            self.avPlayer?.play()
+            
+            self.performSegue(withIdentifier: self.segueReplay, sender: nil)
         }
-
         
         return node!
     }
-    
+        
 }
