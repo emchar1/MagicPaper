@@ -91,6 +91,7 @@ class CheckmarkView: UIView {
         UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 8, options: .curveEaseIn, animations: {
             checkmarkImage.layoutIfNeeded()
             checkmarkImage.alpha = 1.0
+            checkmarkView.alpha = 1.0
             checkmarkView.backgroundColor = .systemGreen
         }, completion: { _ in
             self.delegate?.checkmarkViewDidCompleteAnimation(self)

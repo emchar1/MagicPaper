@@ -20,7 +20,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     let segueMagic = "segueMagic"
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
-//    var qrCode = ""
     
     
     // MARK: - Initialization
@@ -132,8 +131,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             
             found(code: stringValue)
         }
-        
-//        dismiss(animated: true)
     }
     
     /**
@@ -143,6 +140,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     func found(code: String) {
         guard code.contains(validQRCode) else {
             K.addHapticFeedback(withStyle: .heavy)
+            
 
             let errorLabel = UILabel(frame: CGRect(x: 20, y: view.frame.height / 2 + 180, width: view.frame.width - 40, height: 100))
             errorLabel.font = UIFont(name: "Avenir Next Regular", size: 18.0)

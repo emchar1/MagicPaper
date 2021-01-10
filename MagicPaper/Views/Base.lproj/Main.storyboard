@@ -120,6 +120,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="xjL-hF-18e"/>
         <segue reference="Eji-Vm-kAx"/>
     </inferredMetricsTieBreakers>
     <resources>

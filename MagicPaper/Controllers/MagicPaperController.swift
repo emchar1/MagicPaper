@@ -53,7 +53,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
 
     let replayButton: UIButton = {
         let button = UIButton(type: .system)
-//        button.setImage(UIImage(systemName: "goforward"), for: .normal)
         button.setTitle("Play Again", for: .normal)
         button.titleLabel?.font = UIFont(name: "Avenir Next Bold", size: 24)
         button.backgroundColor = UIColor(red: 16/255, green: 172/255, blue: 132/255, alpha: 1)
