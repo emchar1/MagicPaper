@@ -272,44 +272,49 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     @objc func scanPressed(_ sender: UIButton) {
         K.addHapticFeedback(withStyle: .medium)
         
-        shrinkButtons()
+        shrinkButtons(replayPressed: false)
 
-        performSegue(withIdentifier: "segueScan", sender: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.performSegue(withIdentifier: "segueScan", sender: nil)
+        }
     }
     
     @objc func replayPressed(_ sender: UIButton) {
         K.addHapticFeedback(withStyle: .medium)
         
-        shrinkButtons()
+        shrinkButtons(replayPressed: true)
 
-        sceneView.session.run(configuration, options: [.removeExistingAnchors, .resetTracking])
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.sceneView.session.run(self.configuration, options: [.removeExistingAnchors, .resetTracking])
+        }
     }
     
-    private func shrinkButtons() {
-        self.scanButtonWidthAnchor.constant = 0
-        self.scanButtonHeightAnchor.constant = 0
-        self.replayButtonWidthAnchor.constant = 0
-        self.replayButtonHeightAnchor.constant = 0
+    private func shrinkButtons(replayPressed: Bool) {
         
         UIView.animate(withDuration: 0, animations: {
             //Don't do anyting here
         }, completion: { _ in
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+                if replayPressed {
+                    self.scanButton.alpha = 0
+                }
+                else {
+                    self.replayButton.alpha = 0
+                }
+            }, completion: { _ in
+                self.scanButtonWidthAnchor.constant = 0
+                self.scanButtonHeightAnchor.constant = 0
+                self.replayButtonWidthAnchor.constant = 0
+                self.replayButtonHeightAnchor.constant = 0
+                self.scanButton.alpha = 1
+                self.replayButton.alpha = 1
+                
                 self.scanButton.layoutIfNeeded()
-            }, completion: { _ in
-                self.scanButton.removeFromSuperview()
-            })
-        })
-
-        UIView.animate(withDuration: 0, animations: {
-            //Don't do anyting here
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: {
                 self.replayButton.layoutIfNeeded()
-            }, completion: { _ in
+                
+                self.scanButton.removeFromSuperview()
                 self.replayButton.removeFromSuperview()
             })
         })
-
     }
 }

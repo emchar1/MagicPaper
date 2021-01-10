@@ -65,6 +65,7 @@ struct AudioManager {
     mutating private func setupSounds() {
         audioItems["Load"] = AudioItem(fileName: "main_LaunchButton", category: .soundFX, maxVolume: 0.0)
         audioItems["LaunchButton"] = AudioItem(fileName: "main_LaunchButton", category: .soundFX)
+        audioItems["PageTurn"] = AudioItem(fileName: "main_PageTurn", category: .soundFX)
         
         for (key, item) in audioItems {
             if let player = configureAudioPlayer(for: item) {

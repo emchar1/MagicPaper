@@ -12,6 +12,7 @@
 		EA01F49725AAD01F00188BC1 /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F49625AAD01F00188BC1 /* CheckmarkView.swift */; };
 		EA01F4A225AADC0200188BC1 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F4A125AADC0200188BC1 /* AudioManager.swift */; };
 		EA01F4AA25AAEEAD00188BC1 /* main_LaunchButton.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA01F4A925AAEEAD00188BC1 /* main_LaunchButton.mp3 */; };
+		EA01F4AF25AB0A7800188BC1 /* main_PageTurn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA01F4AE25AB0A7800188BC1 /* main_PageTurn.mp3 */; };
 		EA2B8BED25A5A44E005910C3 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2B8BEC25A5A44E005910C3 /* QRCodeView.swift */; };
 		EA49A37C2598218F003FF00B /* gidget.mov in Resources */ = {isa = PBXBuildFile; fileRef = EA49A37B2598218F003FF00B /* gidget.mov */; };
 		EA49A384259859E1003FF00B /* pushups.mov in Resources */ = {isa = PBXBuildFile; fileRef = EA49A383259859E1003FF00B /* pushups.mov */; };
@@ -55,6 +56,7 @@
 		EA01F49625AAD01F00188BC1 /* CheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
 		EA01F4A125AADC0200188BC1 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		EA01F4A925AAEEAD00188BC1 /* main_LaunchButton.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = main_LaunchButton.mp3; sourceTree = "<group>"; };
+		EA01F4AE25AB0A7800188BC1 /* main_PageTurn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = main_PageTurn.mp3; sourceTree = "<group>"; };
 		EA2B8BEC25A5A44E005910C3 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		EA49A37B2598218F003FF00B /* gidget.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = gidget.mov; sourceTree = "<group>"; };
 		EA49A383259859E1003FF00B /* pushups.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = pushups.mov; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 		EA01F49B25AADBAC00188BC1 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				EA01F4AE25AB0A7800188BC1 /* main_PageTurn.mp3 */,
 				EA01F4A925AAEEAD00188BC1 /* main_LaunchButton.mp3 */,
 			);
 			path = Sounds;
@@ -341,6 +344,7 @@
 				EA49A37C2598218F003FF00B /* gidget.mov in Resources */,
 				EAD619972522A1DC003E425F /* Main.storyboard in Resources */,
 				EAD1424E259AF35E00FA8474 /* Assets.xcassets in Resources */,
+				EA01F4AF25AB0A7800188BC1 /* main_PageTurn.mp3 in Resources */,
 				EA01F4AA25AAEEAD00188BC1 /* main_LaunchButton.mp3 in Resources */,
 				EAD619CE25230CAD003E425F /* wfh.mov in Resources */,
 			);
