@@ -15,6 +15,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     @IBOutlet weak var qrLabel: UILabel!
     @IBOutlet weak var scannerView: UIView!
     
+    var checkmarkView: CheckmarkView!
     let validQRCode = "magicpaper"
     let segueMagic = "segueMagic"
     var captureSession: AVCaptureSession!
@@ -27,6 +28,8 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        audioManager.playSound(for: "Load")
+                
         qrLabel.text = "Scan the QR Code on your\nMagic Greeting Card\nand watch it come to life!"
         
         scannerView.layer.cornerRadius = 10
@@ -38,6 +41,9 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         scannerBorder.layer.borderWidth = 1
         scannerBorder.layer.borderColor = UIColor.white.cgColor
         view.addSubview(scannerBorder)
+        
+        checkmarkView = CheckmarkView(frame: .zero, in: view)
+        checkmarkView.delegate = self
         
         captureSession = AVCaptureSession()
         
@@ -123,7 +129,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         if let metadataObject = metadataObjects.first {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
-            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+            
             found(code: stringValue)
         }
         
@@ -136,6 +142,8 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
      */
     func found(code: String) {
         guard code.contains(validQRCode) else {
+            K.addHapticFeedback(withStyle: .heavy)
+
             let errorLabel = UILabel(frame: CGRect(x: 20, y: view.frame.height / 2 + 180, width: view.frame.width - 40, height: 100))
             errorLabel.font = UIFont(name: "Avenir Next Regular", size: 18.0)
             errorLabel.text = "Invalid QR Code! Please scan the QR Code on the Magic Greeting Card."
@@ -157,8 +165,8 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         
         
         K.qrCode = code
-
-        performSegue(withIdentifier: segueMagic, sender: nil)
+        
+        drawCheckmark()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -172,4 +180,17 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     
+}
+
+
+// MARK: - Checkmark
+
+extension ScannerViewController: CheckmarkViewDelegate {
+    func drawCheckmark() {
+        checkmarkView.animate()
+    }
+    
+    func checkmarkViewDidCompleteAnimation(_ controller: CheckmarkView) {
+        performSegue(withIdentifier: segueMagic, sender: nil)
+    }
 }

@@ -11,7 +11,7 @@
         <!--Scanner-->
         <scene sceneID="ugC-H2-XIk">
             <objects>
-                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="T2I-Hm-52y" customClass="ScannerViewController" customModule="MagicPaper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="partialCurl" modalPresentationStyle="fullScreen" id="T2I-Hm-52y" customClass="ScannerViewController" customModule="MagicPaper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dft-aH-7x3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -77,14 +77,14 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </arscnView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
-                            <constraint firstItem="BrB-h1-WRS" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="VpT-BR-CcM"/>
+                            <constraint firstItem="BrB-h1-WRS" firstAttribute="bottom" secondItem="U0K-SW-4ec" secondAttribute="bottom" id="VpT-BR-CcM"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="rJc-2c-zQA"/>
                         </constraints>
@@ -92,30 +92,12 @@
                     <tabBarItem key="tabBarItem" title="Magic Paper" id="v2v-pO-lya"/>
                     <connections>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
-                        <segue destination="5y4-pQ-m1t" kind="presentation" identifier="segueReplay" modalPresentationStyle="fullScreen" modalTransitionStyle="partialCurl" id="lBK-ix-CxF"/>
+                        <segue destination="T2I-Hm-52y" kind="presentation" identifier="segueScan" modalPresentationStyle="fullScreen" modalTransitionStyle="partialCurl" id="Eji-Vm-kAx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1842.0289855072465" y="182.8125"/>
-        </scene>
-        <!--Replay View Controller-->
-        <scene sceneID="ONk-VI-BcC">
-            <objects>
-                <viewController id="5y4-pQ-m1t" customClass="ReplayViewController" customModule="MagicPaper" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="iD1-fU-DbR">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="IRa-Qj-sfo"/>
-                        <color key="backgroundColor" systemColor="systemGreenColor"/>
-                    </view>
-                    <connections>
-                        <segue destination="BV1-FR-VrT" kind="presentation" identifier="segueMagic" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="KTg-NW-Biz"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="49C-Pi-hLv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2864" y="183"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ab7-Ek-97q">
@@ -138,16 +120,13 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="xjL-hF-18e"/>
+        <segue reference="yHr-3H-z2C"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="qrcode" catalog="system" width="128" height="114"/>
         <image name="qrcode.viewfinder" catalog="system" width="128" height="115"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

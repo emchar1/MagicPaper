@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA01F48925AA818700188BC1 /* AppStoreReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F48825AA818700188BC1 /* AppStoreReviewManager.swift */; };
+		EA01F48F25AA81D100188BC1 /* UserDefaults+Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F48E25AA81D100188BC1 /* UserDefaults+Key.swift */; };
+		EA01F49725AAD01F00188BC1 /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F49625AAD01F00188BC1 /* CheckmarkView.swift */; };
+		EA01F4A225AADC0200188BC1 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F4A125AADC0200188BC1 /* AudioManager.swift */; };
+		EA01F4AA25AAEEAD00188BC1 /* main_LaunchButton.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA01F4A925AAEEAD00188BC1 /* main_LaunchButton.mp3 */; };
 		EA2B8BED25A5A44E005910C3 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2B8BEC25A5A44E005910C3 /* QRCodeView.swift */; };
 		EA49A37C2598218F003FF00B /* gidget.mov in Resources */ = {isa = PBXBuildFile; fileRef = EA49A37B2598218F003FF00B /* gidget.mov */; };
 		EA49A384259859E1003FF00B /* pushups.mov in Resources */ = {isa = PBXBuildFile; fileRef = EA49A383259859E1003FF00B /* pushups.mov */; };
@@ -45,6 +50,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EA01F48825AA818700188BC1 /* AppStoreReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReviewManager.swift; sourceTree = "<group>"; };
+		EA01F48E25AA81D100188BC1 /* UserDefaults+Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Key.swift"; sourceTree = "<group>"; };
+		EA01F49625AAD01F00188BC1 /* CheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
+		EA01F4A125AADC0200188BC1 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		EA01F4A925AAEEAD00188BC1 /* main_LaunchButton.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = main_LaunchButton.mp3; sourceTree = "<group>"; };
 		EA2B8BEC25A5A44E005910C3 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		EA49A37B2598218F003FF00B /* gidget.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = gidget.mov; sourceTree = "<group>"; };
 		EA49A383259859E1003FF00B /* pushups.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = pushups.mov; sourceTree = "<group>"; };
@@ -98,6 +108,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EA01F48D25AA81AD00188BC1 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				EA01F48E25AA81D100188BC1 /* UserDefaults+Key.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		EA01F49B25AADBAC00188BC1 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				EA01F4A925AAEEAD00188BC1 /* main_LaunchButton.mp3 */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		EA49D77A25908A0D00C52847 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +149,8 @@
 				EA9CC8F225A6EE980040122E /* Constants.swift */,
 				EA49D77D2590982600C52847 /* Model.swift */,
 				EAD1426625A136EF00FA8474 /* QRCode.swift */,
+				EA01F48825AA818700188BC1 /* AppStoreReviewManager.swift */,
+				EA01F4A125AADC0200188BC1 /* AudioManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -131,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				EAD619952522A1DC003E425F /* Main.storyboard */,
+				EA01F49625AAD01F00188BC1 /* CheckmarkView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -161,10 +190,12 @@
 			children = (
 				EA49D77625908A0700C52847 /* MagicPaper.entitlements */,
 				EAD6198F2522A1DC003E425F /* AppDelegate.swift */,
-				EAD1425A25A134D500FA8474 /* Controllers */,
+				EA01F48D25AA81AD00188BC1 /* Utilities */,
 				EAD1425E25A134DE00FA8474 /* Models */,
+				EAD1425A25A134D500FA8474 /* Controllers */,
 				EAD1426225A134E800FA8474 /* Views */,
 				EAD1424D259AF35E00FA8474 /* Assets.xcassets */,
+				EA01F49B25AADBAC00188BC1 /* Sounds */,
 				EAD619C72522D597003E425F /* Videos */,
 				EAD6199A2522A1DE003E425F /* LaunchScreen.storyboard */,
 				EAD6199D2522A1DE003E425F /* Info.plist */,
@@ -310,6 +341,7 @@
 				EA49A37C2598218F003FF00B /* gidget.mov in Resources */,
 				EAD619972522A1DC003E425F /* Main.storyboard in Resources */,
 				EAD1424E259AF35E00FA8474 /* Assets.xcassets in Resources */,
+				EA01F4AA25AAEEAD00188BC1 /* main_LaunchButton.mp3 in Resources */,
 				EAD619CE25230CAD003E425F /* wfh.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,10 +368,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAD1427725A1716B00FA8474 /* ReplayViewController.swift in Sources */,
+				EA01F49725AAD01F00188BC1 /* CheckmarkView.swift in Sources */,
 				EA49D77E2590982600C52847 /* Model.swift in Sources */,
 				EAD1426725A136EF00FA8474 /* QRCode.swift in Sources */,
 				EA2B8BED25A5A44E005910C3 /* QRCodeView.swift in Sources */,
 				EAD619942522A1DC003E425F /* MagicPaperController.swift in Sources */,
+				EA01F4A225AADC0200188BC1 /* AudioManager.swift in Sources */,
+				EA01F48925AA818700188BC1 /* AppStoreReviewManager.swift in Sources */,
+				EA01F48F25AA81D100188BC1 /* UserDefaults+Key.swift in Sources */,
 				EAD1426F25A149D400FA8474 /* ScannerViewController.swift in Sources */,
 				EAD619902522A1DC003E425F /* AppDelegate.swift in Sources */,
 				EA9CC8F325A6EE980040122E /* Constants.swift in Sources */,

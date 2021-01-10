@@ -23,7 +23,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     let instructionsView: UIView = {
         let label = UILabel()
         label.text = "Point the camera at your\nMagic Greeting Card and\nwatch the magic unfold!"
-        label.font = UIFont(name: "Avenir Next Regular", size: 16.0)
+        label.font = UIFont(name: "Avenir Next Regular", size: 18.0)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = .white
@@ -31,7 +31,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         
         let view = UIView()
         view.addSubview(label)
-        view.alpha = 0.8
         view.backgroundColor = .black
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
@@ -40,6 +39,34 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
                                      label.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
         return view
     }()
+    
+    let scanButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Scan Another Card", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Avenir Next Bold", size: 24)
+        button.backgroundColor = UIColor(red: 238/255, green: 82/255, blue: 83/255, alpha: 1)
+        button.layer.cornerRadius = 40
+        button.addTarget(self, action: #selector(scanPressed(_:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    let replayButton: UIButton = {
+        let button = UIButton(type: .system)
+//        button.setImage(UIImage(systemName: "goforward"), for: .normal)
+        button.setTitle("Play Again", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Avenir Next Bold", size: 24)
+        button.backgroundColor = UIColor(red: 16/255, green: 172/255, blue: 132/255, alpha: 1)
+        button.layer.cornerRadius = 40
+        button.addTarget(self, action: #selector(replayPressed(_:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    var replayButtonWidthAnchor: NSLayoutConstraint!
+    var replayButtonHeightAnchor: NSLayoutConstraint!
+    var scanButtonWidthAnchor: NSLayoutConstraint!
+    var scanButtonHeightAnchor: NSLayoutConstraint!
 
     let segueReplay = "segueReplay"
     var configuration: ARImageTrackingConfiguration!
@@ -56,6 +83,8 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = self
 //        sceneView.showsStatistics = true
 
+        instructionsView.alpha = 0
+
         //Only show instructions once.
         if K.showInstructions {
             view.addSubview(instructionsView)
@@ -64,6 +93,12 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
                                          instructionsView.widthAnchor.constraint(equalToConstant: 250),
                                          instructionsView.heightAnchor.constraint(equalToConstant: 100)])
         }
+        
+        scanButtonWidthAnchor = scanButton.widthAnchor.constraint(equalToConstant: 0)
+        scanButtonHeightAnchor = scanButton.heightAnchor.constraint(equalToConstant: 0)
+        replayButtonWidthAnchor = replayButton.widthAnchor.constraint(equalToConstant: 0)
+        replayButtonHeightAnchor = replayButton.heightAnchor.constraint(equalToConstant: 0)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,15 +106,22 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         
         //Only show instructions once.
         if K.showInstructions {
-            UIView.animate(withDuration: 0.5, delay: 4.5, options: .curveEaseIn, animations: {
-                self.instructionsView.alpha = 0
+            UIView.animate(withDuration: 0.5, delay: 2.0, options: .curveEaseIn, animations: {
+                self.instructionsView.alpha = 0.8
             }, completion: { _ in
-                self.instructionsView.removeFromSuperview()
+                UIView.animate(withDuration: 0.5, delay: 3.5, options: .curveEaseIn, animations: {
+                    self.instructionsView.alpha = 0
+                }, completion: { _ in
+                    self.instructionsView.removeFromSuperview()
+                })
+
             })
+        
+            
             
             K.showInstructions = false
         }
-
+        
         configuration = ARImageTrackingConfiguration()
 
         //Ensure you can read the images in the NewsPaperImages AR Resource Group in Assets.xcassets
@@ -190,10 +232,84 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             self.avPlayer?.seek(to: CMTime.zero)
 //            self.avPlayer?.play()
             
-            self.performSegue(withIdentifier: self.segueReplay, sender: nil)
+            self.view.addSubview(self.scanButton)
+            NSLayoutConstraint.activate([self.scanButtonWidthAnchor,
+                                         self.scanButtonHeightAnchor,
+                                         self.scanButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                                         self.view.layoutMarginsGuide.bottomAnchor.constraint(equalTo: self.scanButton.bottomAnchor, constant: 180)])
+            
+            self.scanButtonWidthAnchor.constant = 260
+            self.scanButtonHeightAnchor.constant = 80
+
+            self.view.addSubview(self.replayButton)
+            NSLayoutConstraint.activate([self.replayButtonWidthAnchor,
+                                         self.replayButtonHeightAnchor,
+                                         self.replayButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                                         self.view.layoutMarginsGuide.bottomAnchor.constraint(equalTo: self.replayButton.bottomAnchor, constant: 80)])
+            
+            self.replayButtonWidthAnchor.constant = 260
+            self.replayButtonHeightAnchor.constant = 80
+            
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: {
+
+                self.scanButton.layoutIfNeeded()
+            }, completion: { _ in
+                
+            })
+            
+            UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: {
+                
+                self.replayButton.layoutIfNeeded()
+            }, completion: nil)
+            
+            AppStoreReviewManager.requestReviewIfAppropriate()
         }
         
         return node!
     }
+    
+    
+    @objc func scanPressed(_ sender: UIButton) {
+        K.addHapticFeedback(withStyle: .medium)
         
+        shrinkButtons()
+
+        performSegue(withIdentifier: "segueScan", sender: nil)
+    }
+    
+    @objc func replayPressed(_ sender: UIButton) {
+        K.addHapticFeedback(withStyle: .medium)
+        
+        shrinkButtons()
+
+        sceneView.session.run(configuration, options: [.removeExistingAnchors, .resetTracking])
+    }
+    
+    private func shrinkButtons() {
+        self.scanButtonWidthAnchor.constant = 0
+        self.scanButtonHeightAnchor.constant = 0
+        self.replayButtonWidthAnchor.constant = 0
+        self.replayButtonHeightAnchor.constant = 0
+        
+        UIView.animate(withDuration: 0, animations: {
+            //Don't do anyting here
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: {
+                self.scanButton.layoutIfNeeded()
+            }, completion: { _ in
+                self.scanButton.removeFromSuperview()
+            })
+        })
+
+        UIView.animate(withDuration: 0, animations: {
+            //Don't do anyting here
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: {
+                self.replayButton.layoutIfNeeded()
+            }, completion: { _ in
+                self.replayButton.removeFromSuperview()
+            })
+        })
+
+    }
 }
