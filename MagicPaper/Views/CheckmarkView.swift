@@ -14,7 +14,7 @@ protocol CheckmarkViewDelegate {
 
 class CheckmarkView: UIView {
     var superView: UIView!
-    let checkmarkSize: CGFloat = 125
+    let checkmarkSize: CGFloat = 200
     let checkmarkScale: CGFloat = 1/3
     
     var delegate: CheckmarkViewDelegate?
