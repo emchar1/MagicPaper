@@ -29,7 +29,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         
         audioManager.playSound(for: "Load")
                 
-        qrLabel.text = "Scan the QR Code on your\nMagic Greeting Card\nand watch it come to life!"
+        qrLabel.text = "Scan the QR Code on your\nGreeting Card and\nwatch it come to life!"
         
         scannerView.layer.cornerRadius = 10
         scannerView.layer.borderWidth = 4
@@ -112,7 +112,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     
     func failed() {
         let ac = UIAlertController(title: "Scanning not supported",
-                                   message: "Your device does not support scanning a code from an item. Please use a device with a camera.",
+                                   message: "Your device does not support QR Code scanning. Please use a device with a camera.",
                                    preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
@@ -144,7 +144,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
 
             let errorLabel = UILabel(frame: CGRect(x: 20, y: view.frame.height / 2 + 180, width: view.frame.width - 40, height: 100))
             errorLabel.font = UIFont(name: "Avenir Next Regular", size: 18.0)
-            errorLabel.text = "Invalid QR Code! Please scan the QR Code on the Magic Greeting Card."
+            errorLabel.text = "Invalid QR Code! Please scan the code on the Greeting Card."
             errorLabel.textAlignment = .center
             errorLabel.numberOfLines = 0
             errorLabel.textColor = .systemRed
@@ -164,12 +164,13 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         
         K.qrCode = code
         
-        drawCheckmark()
+        checkmarkView.animate()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueMagic {
-            let controller = segue.destination as! MagicPaperController
+            let navigationController = segue.destination as! UINavigationController
+            let controller = navigationController.topViewController as! MagicPaperController
             
             if let qrCode = K.qrCode {
                 controller.videoName = qrCode
@@ -184,10 +185,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
 // MARK: - Checkmark
 
 extension ScannerViewController: CheckmarkViewDelegate {
-    func drawCheckmark() {
-        checkmarkView.animate()
-    }
-    
     func checkmarkViewDidCompleteAnimation(_ controller: CheckmarkView) {
         performSegue(withIdentifier: segueMagic, sender: nil)
     }

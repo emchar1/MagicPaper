@@ -11,7 +11,7 @@ class QRCodeView: UIViewController {
     var qrCode: QRCode!
     
     override func viewDidLoad() {
-        qrCode = QRCode(string: "magicpaperchristmas")
+        qrCode = QRCode(string: "magicpaperdisco")
         
         let qrImageView = UIImageView(image: qrCode.generate())
         let qrImageSize = view.frame.width - 80

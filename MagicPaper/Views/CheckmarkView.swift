@@ -16,7 +16,6 @@ class CheckmarkView: UIView {
     var superView: UIView!
     let checkmarkSize: CGFloat = 200
     let checkmarkScale: CGFloat = 1/3
-    
     var delegate: CheckmarkViewDelegate?
 
     init(frame: CGRect, in superView: UIView) {
@@ -83,9 +82,7 @@ class CheckmarkView: UIView {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             audioManager.playSound(for: "LaunchButton")
-//            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
             K.addHapticFeedback(withStyle: .heavy)
-
         })
         
         UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 8, options: .curveEaseIn, animations: {

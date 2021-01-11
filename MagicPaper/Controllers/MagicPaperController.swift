@@ -22,7 +22,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     
     let instructionsView: UIView = {
         let label = UILabel()
-        label.text = "Point the camera at your\nMagic Greeting Card and\nwatch the magic unfold!"
+        label.text = "Point the camera at your\nGreeting Card to see the video."
         label.font = UIFont(name: "Avenir Next Regular", size: 18.0)
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -89,7 +89,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             view.addSubview(instructionsView)
             NSLayoutConstraint.activate([instructionsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                                          instructionsView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                                         instructionsView.widthAnchor.constraint(equalToConstant: 250),
+                                         instructionsView.widthAnchor.constraint(equalToConstant: 300),
                                          instructionsView.heightAnchor.constraint(equalToConstant: 100)])
         }
         
@@ -316,4 +316,14 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             })
         })
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueCreate" {
+            print("Preparing to Create Cards")
+        }
+    }
 }
+
+
+
