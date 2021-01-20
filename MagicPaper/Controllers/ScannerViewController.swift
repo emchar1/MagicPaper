@@ -27,9 +27,11 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        requestCamera()
+        
         audioManager.playSound(for: "Load")
                 
-        qrLabel.text = "Scan the QR Code on your\nGreeting Card and\nwatch it come to life!"
+        qrLabel.text = "Scan the QR Code on your\nMagic Greeting Card and\nwatch it come to life!"
         
         scannerView.layer.cornerRadius = 10
         scannerView.layer.borderWidth = 4
@@ -169,8 +171,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueMagic {
-            let navigationController = segue.destination as! UINavigationController
-            let controller = navigationController.topViewController as! MagicPaperController
+            let controller = segue.destination as! MagicPaperController
             
             if let qrCode = K.qrCode {
                 controller.videoName = qrCode
@@ -189,3 +190,28 @@ extension ScannerViewController: CheckmarkViewDelegate {
         performSegue(withIdentifier: segueMagic, sender: nil)
     }
 }
+
+
+// MARK: - Camera Access
+
+extension ScannerViewController {
+    func requestCamera() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized: // The user has previously granted access to the camera.
+            return
+        case .notDetermined: // The user has not yet been asked for camera access.
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted {
+                    return
+                }
+            }
+        case .denied: // The user has previously denied access.
+            return
+        case .restricted: // The user can't grant access due to restrictions.
+            return
+        default:
+            return
+        }
+    }
+}
+

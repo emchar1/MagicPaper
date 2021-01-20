@@ -18,10 +18,11 @@
 		EA49A384259859E1003FF00B /* pushups.mov in Resources */ = {isa = PBXBuildFile; fileRef = EA49A383259859E1003FF00B /* pushups.mov */; };
 		EA49D77C25908A0D00C52847 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA49D77B25908A0D00C52847 /* CloudKit.framework */; };
 		EA49D77E2590982600C52847 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA49D77D2590982600C52847 /* Model.swift */; };
+		EA99286225AEC8F400A64947 /* GreetingCard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA99286025AEC8F400A64947 /* GreetingCard.xcdatamodeld */; };
 		EA9CC8F325A6EE980040122E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9CC8F225A6EE980040122E /* Constants.swift */; };
 		EAAB12D025ABA33A00D55262 /* magicpaperdisco.mov in Resources */ = {isa = PBXBuildFile; fileRef = EAAB12CF25ABA33A00D55262 /* magicpaperdisco.mov */; };
 		EAAB12DE25AC327F00D55262 /* GreetingCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB12DD25AC327F00D55262 /* GreetingCardController.swift */; };
-		EAAB12E625AC361F00D55262 /* GreetingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB12E525AC361F00D55262 /* GreetingCard.swift */; };
+		EAAB12E625AC361F00D55262 /* MagicGreetingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB12E525AC361F00D55262 /* MagicGreetingCard.swift */; };
 		EAAB12EB25AC40E900D55262 /* GreetingCardDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB12EA25AC40E900D55262 /* GreetingCardDetailsController.swift */; };
 		EAD14243259AF27500FA8474 /* magicpaperchristmas.mov in Resources */ = {isa = PBXBuildFile; fileRef = EAD14242259AF27500FA8474 /* magicpaperchristmas.mov */; };
 		EAD1424E259AF35E00FA8474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAD1424D259AF35E00FA8474 /* Assets.xcassets */; };
@@ -66,10 +67,11 @@
 		EA49D77625908A0700C52847 /* MagicPaper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MagicPaper.entitlements; sourceTree = "<group>"; };
 		EA49D77B25908A0D00C52847 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		EA49D77D2590982600C52847 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		EA99286125AEC8F400A64947 /* GreetingCard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GreetingCard.xcdatamodel; sourceTree = "<group>"; };
 		EA9CC8F225A6EE980040122E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EAAB12CF25ABA33A00D55262 /* magicpaperdisco.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = magicpaperdisco.mov; sourceTree = "<group>"; };
 		EAAB12DD25AC327F00D55262 /* GreetingCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCardController.swift; sourceTree = "<group>"; };
-		EAAB12E525AC361F00D55262 /* GreetingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCard.swift; sourceTree = "<group>"; };
+		EAAB12E525AC361F00D55262 /* MagicGreetingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicGreetingCard.swift; sourceTree = "<group>"; };
 		EAAB12EA25AC40E900D55262 /* GreetingCardDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCardDetailsController.swift; sourceTree = "<group>"; };
 		EAD14242259AF27500FA8474 /* magicpaperchristmas.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = magicpaperchristmas.mov; sourceTree = "<group>"; };
 		EAD1424D259AF35E00FA8474 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -161,7 +163,7 @@
 				EAD1426625A136EF00FA8474 /* QRCode.swift */,
 				EA01F48825AA818700188BC1 /* AppStoreReviewManager.swift */,
 				EA01F4A125AADC0200188BC1 /* AudioManager.swift */,
-				EAAB12E525AC361F00D55262 /* GreetingCard.swift */,
+				EAAB12E525AC361F00D55262 /* MagicGreetingCard.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -209,6 +211,7 @@
 				EA01F49B25AADBAC00188BC1 /* Sounds */,
 				EAD619C72522D597003E425F /* Videos */,
 				EAD6199A2522A1DE003E425F /* LaunchScreen.storyboard */,
+				EA99286025AEC8F400A64947 /* GreetingCard.xcdatamodeld */,
 				EAD6199D2522A1DE003E425F /* Info.plist */,
 			);
 			path = MagicPaper;
@@ -381,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA99286225AEC8F400A64947 /* GreetingCard.xcdatamodeld in Sources */,
 				EA01F49725AAD01F00188BC1 /* CheckmarkView.swift in Sources */,
 				EA49D77E2590982600C52847 /* Model.swift in Sources */,
 				EAAB12DE25AC327F00D55262 /* GreetingCardController.swift in Sources */,
@@ -393,7 +397,7 @@
 				EA01F48F25AA81D100188BC1 /* UserDefaults+Key.swift in Sources */,
 				EAD1426F25A149D400FA8474 /* ScannerViewController.swift in Sources */,
 				EAD619902522A1DC003E425F /* AppDelegate.swift in Sources */,
-				EAAB12E625AC361F00D55262 /* GreetingCard.swift in Sources */,
+				EAAB12E625AC361F00D55262 /* MagicGreetingCard.swift in Sources */,
 				EA9CC8F325A6EE980040122E /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -729,6 +733,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		EA99286025AEC8F400A64947 /* GreetingCard.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EA99286125AEC8F400A64947 /* GreetingCard.xcdatamodel */,
+			);
+			currentVersion = EA99286125AEC8F400A64947 /* GreetingCard.xcdatamodel */;
+			path = GreetingCard.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = EAD619842522A1DC003E425F /* Project object */;
 }

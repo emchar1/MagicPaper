@@ -43,7 +43,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     let scanButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Scan Another Card", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir Next Bold", size: 24)
+        button.titleLabel?.font = UIFont(name: "Avenir Next Bold", size: 22)
         button.backgroundColor = UIColor(red: 238/255, green: 82/255, blue: 83/255, alpha: 1)
         button.layer.cornerRadius = 40
         button.addTarget(self, action: #selector(scanPressed(_:)), for: .touchUpInside)
@@ -54,7 +54,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     let replayButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Play Again", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir Next Bold", size: 24)
+        button.titleLabel?.font = UIFont(name: "Avenir Next Bold", size: 22)
         button.backgroundColor = UIColor(red: 16/255, green: 172/255, blue: 132/255, alpha: 1)
         button.layer.cornerRadius = 40
         button.addTarget(self, action: #selector(replayPressed(_:)), for: .touchUpInside)
@@ -83,6 +83,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
 //        sceneView.showsStatistics = true
 
         instructionsView.alpha = 0
+        navigationItem.setHidesBackButton(true, animated: false)
 
         //Only show instructions once.
         if K.showInstructions {
@@ -235,7 +236,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             NSLayoutConstraint.activate([self.scanButtonWidthAnchor,
                                          self.scanButtonHeightAnchor,
                                          self.scanButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-                                         self.view.layoutMarginsGuide.bottomAnchor.constraint(equalTo: self.scanButton.bottomAnchor, constant: 180)])
+                                         self.view.layoutMarginsGuide.bottomAnchor.constraint(equalTo: self.scanButton.bottomAnchor, constant: 140)])
             
             self.scanButtonWidthAnchor.constant = 260
             self.scanButtonHeightAnchor.constant = 80
@@ -244,7 +245,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             NSLayoutConstraint.activate([self.replayButtonWidthAnchor,
                                          self.replayButtonHeightAnchor,
                                          self.replayButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-                                         self.view.layoutMarginsGuide.bottomAnchor.constraint(equalTo: self.replayButton.bottomAnchor, constant: 80)])
+                                         self.view.layoutMarginsGuide.bottomAnchor.constraint(equalTo: self.replayButton.bottomAnchor, constant: 40)])
             
             self.replayButtonWidthAnchor.constant = 260
             self.replayButtonHeightAnchor.constant = 80
@@ -283,7 +284,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         
         shrinkButtons(replayPressed: true)
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.sceneView.session.run(self.configuration, options: [.removeExistingAnchors, .resetTracking])
         }
     }
@@ -291,9 +292,9 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     private func shrinkButtons(replayPressed: Bool) {
         
         UIView.animate(withDuration: 0, animations: {
-            //Don't do anyting here
+            //Don't do anything here, but you need it to be a nested UIView.animate because otherwise it doesn't animate for some reason. Bug???
         }, completion: { _ in
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
                 if replayPressed {
                     self.scanButton.alpha = 0
                 }
@@ -301,19 +302,46 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
                     self.replayButton.alpha = 0
                 }
             }, completion: { _ in
-                self.scanButtonWidthAnchor.constant = 0
-                self.scanButtonHeightAnchor.constant = 0
-                self.replayButtonWidthAnchor.constant = 0
-                self.replayButtonHeightAnchor.constant = 0
-                self.scanButton.alpha = 1
-                self.replayButton.alpha = 1
-                
-                self.scanButton.layoutIfNeeded()
-                self.replayButton.layoutIfNeeded()
-                
-                self.scanButton.removeFromSuperview()
-                self.replayButton.removeFromSuperview()
+                if replayPressed {
+                    self.scanButtonWidthAnchor.constant = 0
+                    self.scanButtonHeightAnchor.constant = 0
+                    self.scanButton.alpha = 1
+                    self.scanButton.layoutIfNeeded()
+                    self.scanButton.removeFromSuperview()
+                }
+                else {
+                    self.replayButtonWidthAnchor.constant = 0
+                    self.replayButtonHeightAnchor.constant = 0
+                    self.replayButton.alpha = 1
+                    self.replayButton.layoutIfNeeded()
+                    self.replayButton.removeFromSuperview()
+                }
             })
+            
+            UIView.animate(withDuration: 0, delay: 1, options: .curveEaseIn, animations: {
+                if !replayPressed {
+                    self.scanButton.alpha = 0
+                }
+                else {
+                    self.replayButton.alpha = 0
+                }
+            }, completion: { _ in
+                if !replayPressed {
+                    self.scanButtonWidthAnchor.constant = 0
+                    self.scanButtonHeightAnchor.constant = 0
+                    self.scanButton.alpha = 1
+                    self.scanButton.layoutIfNeeded()
+                    self.scanButton.removeFromSuperview()
+                }
+                else {
+                    self.replayButtonWidthAnchor.constant = 0
+                    self.replayButtonHeightAnchor.constant = 0
+                    self.replayButton.alpha = 1
+                    self.replayButton.layoutIfNeeded()
+                    self.replayButton.removeFromSuperview()
+                }
+            })
+            
         })
     }
     

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20C69" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="GreetingCard" representedClassName="GreetingCardMO" syncable="YES" codeGenerationType="class">
+        <attribute name="greetingCategory" optional="YES" attributeType="String"/>
+        <attribute name="greetingDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="greetingDescription" optional="YES" attributeType="String"/>
+        <attribute name="greetingHeading" optional="YES" attributeType="String"/>
+        <attribute name="greetingIdentifier" optional="YES" attributeType="String"/>
+        <attribute name="greetingImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="greetingQRCode" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="greetingVideo" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+    </entity>
+    <elements>
+        <element name="GreetingCard" positionX="-63" positionY="-18" width="128" height="149"/>
+    </elements>
+</model>
