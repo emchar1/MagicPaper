@@ -93,6 +93,7 @@ extension VideoPicker: UIImagePickerControllerDelegate {
         }
         
         self.pickerController(picker, didSelect: url)
+        
     }
 }
 
