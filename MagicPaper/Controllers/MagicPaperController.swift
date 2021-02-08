@@ -83,7 +83,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
 //        sceneView.showsStatistics = true
 
         instructionsView.alpha = 0
-        navigationItem.setHidesBackButton(true, animated: false)
+//        navigationItem.setHidesBackButton(true, animated: false)
 
         //Only show instructions once.
         if K.showInstructions {
@@ -106,9 +106,11 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         
         //Only show instructions once.
         if K.showInstructions {
-            UIView.animate(withDuration: 0.5, delay: 2.0, options: .curveEaseIn, animations: {
+            UIView.animate(withDuration: 0.5, delay: 2.0, options: .curveEaseIn, animations: { [weak self] in
+                guard let self = self else { return }
                 self.instructionsView.alpha = 0.8
-            }, completion: { _ in
+            }, completion: { [weak self] _ in
+                guard let self = self else { return }
                 UIView.animate(withDuration: 0.5, delay: 3.5, options: .curveEaseIn, animations: {
                     self.instructionsView.alpha = 0
                 }, completion: { _ in
@@ -116,9 +118,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
                 })
 
             })
-        
-            
-            
+
             K.showInstructions = false
         }
         
@@ -211,7 +211,8 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         let videoScene = SKScene(size: CGSize(width: imageDimensions.width, height: imageDimensions.height))
         videoScene.addChild(videoNode)
         
-        let plane = SCNPlane(width: imageAnchor.referenceImage.physicalSize.width, height: imageAnchor.referenceImage.physicalSize.height)
+        let plane = SCNPlane(width: imageAnchor.referenceImage.physicalSize.width,
+                             height: imageAnchor.referenceImage.physicalSize.height)
         let material = SCNMaterial()
         material.diffuse.contents = videoScene
         plane.materials = [material]
@@ -226,7 +227,9 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         //Determine what to do once playback ends.
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
                                                object: avPlayer?.currentItem,
-                                               queue: nil) { notification in
+                                               queue: nil) { [weak self] notification in
+            guard let self = self else { return print("Notification Center weakness return") }
+            
             self.node?.removeFromParentNode()
             self.sceneView.session.remove(anchor: imageAnchor)
             self.avPlayer?.seek(to: CMTime.zero)
@@ -272,9 +275,8 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     @objc func scanPressed(_ sender: UIButton) {
         K.addHapticFeedback(withStyle: .medium)
         
-        shrinkButtons(replayPressed: false)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        shrinkButtons(replayPressed: false) { [weak self] in
+            guard let self = self else { return }
             self.performSegue(withIdentifier: "segueScan", sender: nil)
         }
     }
@@ -282,18 +284,19 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     @objc func replayPressed(_ sender: UIButton) {
         K.addHapticFeedback(withStyle: .medium)
         
-        shrinkButtons(replayPressed: true)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        shrinkButtons(replayPressed: true) { [weak self] in
+            guard let self = self else { return }
             self.sceneView.session.run(self.configuration, options: [.removeExistingAnchors, .resetTracking])
         }
     }
     
-    private func shrinkButtons(replayPressed: Bool) {
+    private func shrinkButtons(replayPressed: Bool, completion: @escaping () -> Void) {
         
         UIView.animate(withDuration: 0, animations: {
             //Don't do anything here, but you need it to be a nested UIView.animate because otherwise it doesn't animate for some reason. Bug???
-        }, completion: { _ in
+        }, completion: { [weak self] _ in
+            guard let self = self else { return }
+            
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
                 if replayPressed {
                     self.scanButton.alpha = 0
@@ -340,6 +343,8 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
                     self.replayButton.layoutIfNeeded()
                     self.replayButton.removeFromSuperview()
                 }
+
+                completion()
             })
             
         })

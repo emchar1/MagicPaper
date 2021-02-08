@@ -22,6 +22,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>This app uses Augmented Reality. In order to see the magic, tap OK to allow camera access.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to your photos  in order to create a Magic Greeting Card.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

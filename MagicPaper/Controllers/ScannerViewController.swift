@@ -28,30 +28,24 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         super.viewDidLoad()
         
         requestCamera()
-        
         audioManager.playSound(for: "Load")
-                
         qrLabel.text = "Scan the QR Code on your\nMagic Greeting Card and\nwatch it come to life!"
-        
         scannerView.layer.cornerRadius = 10
         scannerView.layer.borderWidth = 4
         scannerView.layer.borderColor = UIColor.white.cgColor
         scannerView.clipsToBounds = true
-        
         let scannerBorder = UIView(frame: CGRect(x: view.center.x - 1, y: view.center.y - 1, width: 2, height: 2))
         scannerBorder.layer.borderWidth = 1
         scannerBorder.layer.borderColor = UIColor.white.cgColor
         view.addSubview(scannerBorder)
-        
         checkmarkView = CheckmarkView(frame: .zero, in: view)
         checkmarkView.delegate = self
         
-        captureSession = AVCaptureSession()
-        
         guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
         
+        captureSession = AVCaptureSession()
+
         let videoInput: AVCaptureDeviceInput
-        
         do {
             videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
         } catch {
@@ -64,7 +58,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             failed()
             return
         }
-        
+
         let metadataOutput = AVCaptureMetadataOutput()
         
         if (captureSession.canAddOutput(metadataOutput)) {
@@ -88,7 +82,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if (captureSession?.isRunning == false) {
+        if let captureSession = captureSession, !captureSession.isRunning {
             captureSession.startRunning()
         }
     }
@@ -96,7 +90,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if (captureSession?.isRunning == true) {
+        if let captureSession = captureSession, captureSession.isRunning {
             captureSession.stopRunning()
         }
     }
@@ -180,6 +174,9 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     
+    @IBAction func unwindToHomeScreen(segue: UIStoryboardSegue) {
+        
+    }
 }
 
 

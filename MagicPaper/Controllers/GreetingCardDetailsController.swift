@@ -13,7 +13,7 @@ import AVFoundation
 class GreetingCardDetailsController: UITableViewController {
     
     // MARK: - Properties
-        
+    
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var headingField: UITextField!
     @IBOutlet weak var descriptionField: UITextView!
@@ -22,12 +22,18 @@ class GreetingCardDetailsController: UITableViewController {
     @IBOutlet weak var qrView: UIImageView!
     
     var greetingCardMO: GreetingCardMO!
-    var currentRecord: CKRecord?
+    var greetingCardRecord: CKRecord?
+    
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d, yyyy"
         return formatter
     }()
+    
+    var imagePicker: ImagePicker!
+    var videoPicker2: VideoPicker!
+    var videoURL: URL?
+    
     let videoPicker: UIImagePickerController = {
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
@@ -69,7 +75,7 @@ class GreetingCardDetailsController: UITableViewController {
                 qrView.image = UIImage(data: qrImage as Data)
             }
 
-            if let video = greetingCard.greetingVideo {
+            if let _ = greetingCard.greetingVideo {
 //                let videoString = String(data: video, encoding: String.Encoding(rawValue: String.Encoding.utf32.rawValue))!//NSString.init(data: video, encoding: String.Encoding.utf8.rawValue)
 //                let videoURL = URL(string: videoString)!//NSURL(string: videoString! as String)
 //                
@@ -86,6 +92,8 @@ class GreetingCardDetailsController: UITableViewController {
             dateLabel.text = dateFormatter.string(from: Date())
         }
         
+        imagePicker = ImagePicker(presentationController: self, delegate: self)
+        videoPicker2 = VideoPicker(presentationController: self, delegate: self)
         videoPicker.delegate = self
         headingField.becomeFirstResponder()
     }
@@ -98,7 +106,7 @@ class GreetingCardDetailsController: UITableViewController {
                                          greetingDate: Date(),
                                          greetingDescription: descriptionField.text!,
                                          greetingHeading: headingField.text!,
-                                         greetingIdentifier: "magicpaper" + K.getRandomString(of: 8),
+                                         greetingIdentifier: "magicpaper" + UUID().uuidString,
                                          greetingImage: imageView.image ?? UIImage(),
                                          greetingQRCode: qrView.image ?? UIImage(),
                                          greetingVideo: videoView.image ?? UIImage())
@@ -141,11 +149,11 @@ class GreetingCardDetailsController: UITableViewController {
         let publicDatabase = container.publicCloudDatabase
         let record: CKRecord
         
-//        let imageFilePath = NSTemporaryDirectory() + greetingCard.greetingIdentifier//greetingCardMO.greetingIdentifier!
-//        let imageFileURL = URL(fileURLWithPath: imageFilePath)
-//        print(imageFilePath)
+        let imageFilePath = NSTemporaryDirectory() + greetingCard.greetingIdentifier//greetingCardMO.greetingIdentifier!
+        let imageFileURL = URL(fileURLWithPath: imageFilePath)
+        print(imageFilePath)
         
-        if let currentRecord = currentRecord {
+        if let currentRecord = greetingCardRecord {
             record = currentRecord
             print("currentRecord exists")
         }
@@ -154,20 +162,52 @@ class GreetingCardDetailsController: UITableViewController {
             print("currentrecord doesn't exist")
         }
         
-//        record.setValue(greetingCard.greetingDate, forKey: "greetingDate")
         record.setValue(greetingCard.greetingIdentifier, forKey: "greetingIdentifier")
         record.setValue(greetingCard.greetingHeading, forKey: "greetingHeading")
         record.setValue(greetingCard.greetingDescription, forKey: "greetingDescription")
         
+        if let image = greetingCardMO.greetingImage {
+            let imageData = image as Data
+            let originalImage = UIImage(data: imageData)!
+            let scalingFactor = (originalImage.size.width > 1024) ? 1024 / originalImage.size.width : 1.0
+            let scaledImage = UIImage(data: imageData, scale: scalingFactor)!
+            
+            //WTF???
+            ((try? scaledImage.jpegData(compressionQuality: 0.8)?.write(to: imageFileURL)) as ()??)
+            
+            let imageAsset = CKAsset(fileURL: imageFileURL)
+            
+            record.setValue(imageAsset, forKey: "greetingImage")
+        }
+        else {
+            record.setObject(nil, forKey: "greetingImage")
+        }
+        
+        
+        
+        
+        
+        
+        
+        
         //How the hell do you save a video to cloudkit???
-//        if let video = greetingCardMO.greetingVideo {
-//            let videoAsset = CKAsset(fileURL: imageFileURL)
-//
+        if let video = greetingCardMO.greetingVideo {
+            let videoAsset = CKAsset(fileURL: imageFileURL)
+
 //            record.setObject(videoAsset, forKey: "greetingVideo")
-//        }
+            print("trying to save a vid dude")
+        }
+        
+        
+        
+        
+        
+        
+        
+        
         
         publicDatabase.save(record, completionHandler: { result, error in
-            if self.currentRecord != nil {
+            if self.greetingCardRecord != nil {
                 print("Updating data to Cloud...")
             }
             else {
@@ -209,17 +249,20 @@ class GreetingCardDetailsController: UITableViewController {
         else if indexPath.section == 2 {
             descriptionField.becomeFirstResponder()
         }
+        else if indexPath.section == 3 {
+            self.imagePicker.present(from: self.view)
+        }
         else if indexPath.section == 4 {
             present(videoPicker, animated: true, completion: nil)
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
 }
 
 
 // MARK: - Image Picker Delegate
+
 extension GreetingCardDetailsController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let movieURL = info[.mediaURL] as? URL else { return }
@@ -241,4 +284,25 @@ extension GreetingCardDetailsController: UIImagePickerControllerDelegate, UINavi
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
+    
+    class func getVideoURL() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory.appendingPathComponent("video.mov")
+    }
 }
+
+
+// MARK: - CUSTOM Image Picker Delegate
+
+extension GreetingCardDetailsController: ImagePickerDelegate, VideoPickerDelegate {
+    func didSelect(image: UIImage?) {
+        self.imageView.image = image
+    }
+    
+    func didSelect(url: URL?) {
+        self.videoURL = url
+    }
+}
+
+
