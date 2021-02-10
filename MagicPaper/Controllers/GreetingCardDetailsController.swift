@@ -112,6 +112,7 @@ class GreetingCardDetailsController: UITableViewController {
         videoPicker2 = VideoPicker(presentationController: self, delegate: self)
         videoPicker.delegate = self
         headingField.becomeFirstResponder()
+        
     }
     
     
