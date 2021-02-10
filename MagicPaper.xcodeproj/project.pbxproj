@@ -3,26 +3,29 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		245D561BC612F3FFB9794603 /* Pods_MagicPaperTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40B1934B6CB4AD96550FEAB9 /* Pods_MagicPaperTests.framework */; };
+		75394A9FDC0DF17C077883FC /* Pods_MagicPaper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA6B35DC7B524386BA6D7CED /* Pods_MagicPaper.framework */; };
 		EA01F48925AA818700188BC1 /* AppStoreReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F48825AA818700188BC1 /* AppStoreReviewManager.swift */; };
 		EA01F48F25AA81D100188BC1 /* UserDefaults+Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F48E25AA81D100188BC1 /* UserDefaults+Key.swift */; };
 		EA01F49725AAD01F00188BC1 /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F49625AAD01F00188BC1 /* CheckmarkView.swift */; };
 		EA01F4A225AADC0200188BC1 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F4A125AADC0200188BC1 /* AudioManager.swift */; };
 		EA01F4AA25AAEEAD00188BC1 /* main_LaunchButton.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA01F4A925AAEEAD00188BC1 /* main_LaunchButton.mp3 */; };
 		EA01F4AF25AB0A7800188BC1 /* main_PageTurn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA01F4AE25AB0A7800188BC1 /* main_PageTurn.mp3 */; };
-		EA2B8BED25A5A44E005910C3 /* QRCodeViewDELETE.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2B8BEC25A5A44E005910C3 /* QRCodeViewDELETE.swift */; };
 		EA49A37C2598218F003FF00B /* gidget.mov in Resources */ = {isa = PBXBuildFile; fileRef = EA49A37B2598218F003FF00B /* gidget.mov */; };
 		EA49A384259859E1003FF00B /* pushups.mov in Resources */ = {isa = PBXBuildFile; fileRef = EA49A383259859E1003FF00B /* pushups.mov */; };
 		EA49D77C25908A0D00C52847 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA49D77B25908A0D00C52847 /* CloudKit.framework */; };
-		EA49D77E2590982600C52847 /* ModelDELETE.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA49D77D2590982600C52847 /* ModelDELETE.swift */; };
 		EA5E4EBE25BCFB300013B539 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5E4EBD25BCFB300013B539 /* ImagePicker.swift */; };
 		EA5E4EC325BD65120013B539 /* VideoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5E4EC225BD65120013B539 /* VideoPicker.swift */; };
 		EA5E4EC825BE1F9C0013B539 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5E4EC725BE1F9C0013B539 /* VideoView.swift */; };
 		EA99286225AEC8F400A64947 /* GreetingCard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA99286025AEC8F400A64947 /* GreetingCard.xcdatamodeld */; };
 		EA9CC8F325A6EE980040122E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9CC8F225A6EE980040122E /* Constants.swift */; };
+		EA9FA1DD25D11E52001AE96E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA9FA1DC25D11E52001AE96E /* GoogleService-Info.plist */; };
+		EA9FA1E225D128ED001AE96E /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9FA1E125D128ED001AE96E /* AuthController.swift */; };
+		EA9FA1F825D3194C001AE96E /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9FA1F725D3194C001AE96E /* ImageLoader.swift */; };
 		EAAB12D025ABA33A00D55262 /* magicpaperdisco.mov in Resources */ = {isa = PBXBuildFile; fileRef = EAAB12CF25ABA33A00D55262 /* magicpaperdisco.mov */; };
 		EAAB12DE25AC327F00D55262 /* GreetingCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB12DD25AC327F00D55262 /* GreetingCardController.swift */; };
 		EAAB12E625AC361F00D55262 /* MagicGreetingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB12E525AC361F00D55262 /* MagicGreetingCard.swift */; };
@@ -38,6 +41,7 @@
 		EAD619A72522A1DE003E425F /* MagicPaperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD619A62522A1DE003E425F /* MagicPaperTests.swift */; };
 		EAD619B22522A1DE003E425F /* MagicPaperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD619B12522A1DE003E425F /* MagicPaperUITests.swift */; };
 		EAD619CE25230CAD003E425F /* wfh.mov in Resources */ = {isa = PBXBuildFile; fileRef = EAD619CD25230CAD003E425F /* wfh.mov */; };
+		FFF84C3D3AD9F9DD2E154F99 /* Pods_MagicPaper_MagicPaperUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BC2BDDA6659E3770924FA3 /* Pods_MagicPaper_MagicPaperUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,23 +62,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0BAE2B16C1522177BC9C50F1 /* Pods-MagicPaper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicPaper.release.xcconfig"; path = "Target Support Files/Pods-MagicPaper/Pods-MagicPaper.release.xcconfig"; sourceTree = "<group>"; };
+		1010ACCF3F76BE9D592253D8 /* Pods-MagicPaper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicPaper.debug.xcconfig"; path = "Target Support Files/Pods-MagicPaper/Pods-MagicPaper.debug.xcconfig"; sourceTree = "<group>"; };
+		30BC2BDDA6659E3770924FA3 /* Pods_MagicPaper_MagicPaperUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicPaper_MagicPaperUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		40B1934B6CB4AD96550FEAB9 /* Pods_MagicPaperTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicPaperTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		589197B8E1114AC199EAC7CB /* Pods-MagicPaperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicPaperTests.release.xcconfig"; path = "Target Support Files/Pods-MagicPaperTests/Pods-MagicPaperTests.release.xcconfig"; sourceTree = "<group>"; };
+		B1A37685AF68B2D7D8E90D07 /* Pods-MagicPaper-MagicPaperUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicPaper-MagicPaperUITests.debug.xcconfig"; path = "Target Support Files/Pods-MagicPaper-MagicPaperUITests/Pods-MagicPaper-MagicPaperUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		CA6B35DC7B524386BA6D7CED /* Pods_MagicPaper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicPaper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E47CE8D45BE70667C6B5D056 /* Pods-MagicPaperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicPaperTests.debug.xcconfig"; path = "Target Support Files/Pods-MagicPaperTests/Pods-MagicPaperTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EA01F48825AA818700188BC1 /* AppStoreReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReviewManager.swift; sourceTree = "<group>"; };
 		EA01F48E25AA81D100188BC1 /* UserDefaults+Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Key.swift"; sourceTree = "<group>"; };
 		EA01F49625AAD01F00188BC1 /* CheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
 		EA01F4A125AADC0200188BC1 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		EA01F4A925AAEEAD00188BC1 /* main_LaunchButton.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = main_LaunchButton.mp3; sourceTree = "<group>"; };
 		EA01F4AE25AB0A7800188BC1 /* main_PageTurn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = main_PageTurn.mp3; sourceTree = "<group>"; };
-		EA2B8BEC25A5A44E005910C3 /* QRCodeViewDELETE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewDELETE.swift; sourceTree = "<group>"; };
+		EA0C1906A94E59050EF536C8 /* Pods-MagicPaper-MagicPaperUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicPaper-MagicPaperUITests.release.xcconfig"; path = "Target Support Files/Pods-MagicPaper-MagicPaperUITests/Pods-MagicPaper-MagicPaperUITests.release.xcconfig"; sourceTree = "<group>"; };
 		EA49A37B2598218F003FF00B /* gidget.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = gidget.mov; sourceTree = "<group>"; };
 		EA49A383259859E1003FF00B /* pushups.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = pushups.mov; sourceTree = "<group>"; };
 		EA49D77625908A0700C52847 /* MagicPaper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MagicPaper.entitlements; sourceTree = "<group>"; };
 		EA49D77B25908A0D00C52847 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		EA49D77D2590982600C52847 /* ModelDELETE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDELETE.swift; sourceTree = "<group>"; };
 		EA5E4EBD25BCFB300013B539 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		EA5E4EC225BD65120013B539 /* VideoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPicker.swift; sourceTree = "<group>"; };
 		EA5E4EC725BE1F9C0013B539 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		EA99286125AEC8F400A64947 /* GreetingCard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GreetingCard.xcdatamodel; sourceTree = "<group>"; };
 		EA9CC8F225A6EE980040122E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		EA9FA1DC25D11E52001AE96E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EA9FA1E125D128ED001AE96E /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
+		EA9FA1F725D3194C001AE96E /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		EAAB12CF25ABA33A00D55262 /* magicpaperdisco.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = magicpaperdisco.mov; sourceTree = "<group>"; };
 		EAAB12DD25AC327F00D55262 /* GreetingCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCardController.swift; sourceTree = "<group>"; };
 		EAAB12E525AC361F00D55262 /* MagicGreetingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicGreetingCard.swift; sourceTree = "<group>"; };
@@ -104,6 +118,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA49D77C25908A0D00C52847 /* CloudKit.framework in Frameworks */,
+				75394A9FDC0DF17C077883FC /* Pods_MagicPaper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				245D561BC612F3FFB9794603 /* Pods_MagicPaperTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,17 +134,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFF84C3D3AD9F9DD2E154F99 /* Pods_MagicPaper_MagicPaperUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC32A00E64B077CE37B43F0C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1010ACCF3F76BE9D592253D8 /* Pods-MagicPaper.debug.xcconfig */,
+				0BAE2B16C1522177BC9C50F1 /* Pods-MagicPaper.release.xcconfig */,
+				B1A37685AF68B2D7D8E90D07 /* Pods-MagicPaper-MagicPaperUITests.debug.xcconfig */,
+				EA0C1906A94E59050EF536C8 /* Pods-MagicPaper-MagicPaperUITests.release.xcconfig */,
+				E47CE8D45BE70667C6B5D056 /* Pods-MagicPaperTests.debug.xcconfig */,
+				589197B8E1114AC199EAC7CB /* Pods-MagicPaperTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		EA01F48D25AA81AD00188BC1 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				EA9CC8F225A6EE980040122E /* Constants.swift */,
 				EA01F48E25AA81D100188BC1 /* UserDefaults+Key.swift */,
+				EA9FA1F725D3194C001AE96E /* ImageLoader.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -146,6 +177,9 @@
 			isa = PBXGroup;
 			children = (
 				EA49D77B25908A0D00C52847 /* CloudKit.framework */,
+				CA6B35DC7B524386BA6D7CED /* Pods_MagicPaper.framework */,
+				30BC2BDDA6659E3770924FA3 /* Pods_MagicPaper_MagicPaperUITests.framework */,
+				40B1934B6CB4AD96550FEAB9 /* Pods_MagicPaperTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -155,9 +189,9 @@
 			children = (
 				EAD1426E25A149D400FA8474 /* ScannerViewController.swift */,
 				EAD619932522A1DC003E425F /* MagicPaperController.swift */,
+				EA9FA1E125D128ED001AE96E /* AuthController.swift */,
 				EAAB12DD25AC327F00D55262 /* GreetingCardController.swift */,
 				EAAB12EA25AC40E900D55262 /* GreetingCardDetailsController.swift */,
-				EA2B8BEC25A5A44E005910C3 /* QRCodeViewDELETE.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -165,7 +199,6 @@
 		EAD1425E25A134DE00FA8474 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EA49D77D2590982600C52847 /* ModelDELETE.swift */,
 				EAD1426625A136EF00FA8474 /* QRCode.swift */,
 				EA01F48825AA818700188BC1 /* AppStoreReviewManager.swift */,
 				EA01F4A125AADC0200188BC1 /* AudioManager.swift */,
@@ -194,6 +227,7 @@
 				EAD619B02522A1DE003E425F /* MagicPaperUITests */,
 				EAD6198D2522A1DC003E425F /* Products */,
 				EA49D77A25908A0D00C52847 /* Frameworks */,
+				DC32A00E64B077CE37B43F0C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -221,6 +255,7 @@
 				EAD619C72522D597003E425F /* Videos */,
 				EAD6199A2522A1DE003E425F /* LaunchScreen.storyboard */,
 				EA99286025AEC8F400A64947 /* GreetingCard.xcdatamodeld */,
+				EA9FA1DC25D11E52001AE96E /* GoogleService-Info.plist */,
 				EAD6199D2522A1DE003E425F /* Info.plist */,
 			);
 			path = MagicPaper;
@@ -263,9 +298,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EAD619B62522A1DE003E425F /* Build configuration list for PBXNativeTarget "MagicPaper" */;
 			buildPhases = (
+				4B960D56A6C047F8F439C721 /* [CP] Check Pods Manifest.lock */,
 				EAD619882522A1DC003E425F /* Sources */,
 				EAD619892522A1DC003E425F /* Frameworks */,
 				EAD6198A2522A1DC003E425F /* Resources */,
+				3BE6A87560D0B34CEA4FBFBD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -280,6 +317,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EAD619B92522A1DE003E425F /* Build configuration list for PBXNativeTarget "MagicPaperTests" */;
 			buildPhases = (
+				BC951E35AD58DB76B5DD97CE /* [CP] Check Pods Manifest.lock */,
 				EAD6199E2522A1DE003E425F /* Sources */,
 				EAD6199F2522A1DE003E425F /* Frameworks */,
 				EAD619A02522A1DE003E425F /* Resources */,
@@ -298,9 +336,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EAD619BC2522A1DE003E425F /* Build configuration list for PBXNativeTarget "MagicPaperUITests" */;
 			buildPhases = (
+				18DDA1BAD2CAD767B95F5962 /* [CP] Check Pods Manifest.lock */,
 				EAD619A92522A1DE003E425F /* Sources */,
 				EAD619AA2522A1DE003E425F /* Frameworks */,
 				EAD619AB2522A1DE003E425F /* Resources */,
+				0D243E31CBE920E587A03191 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -367,6 +407,7 @@
 				EAAB12D025ABA33A00D55262 /* magicpaperdisco.mov in Resources */,
 				EAD1424E259AF35E00FA8474 /* Assets.xcassets in Resources */,
 				EA01F4AF25AB0A7800188BC1 /* main_PageTurn.mp3 in Resources */,
+				EA9FA1DD25D11E52001AE96E /* GoogleService-Info.plist in Resources */,
 				EA01F4AA25AAEEAD00188BC1 /* main_LaunchButton.mp3 in Resources */,
 				EAD619CE25230CAD003E425F /* wfh.mov in Resources */,
 			);
@@ -388,6 +429,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0D243E31CBE920E587A03191 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MagicPaper-MagicPaperUITests/Pods-MagicPaper-MagicPaperUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MagicPaper-MagicPaperUITests/Pods-MagicPaper-MagicPaperUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MagicPaper-MagicPaperUITests/Pods-MagicPaper-MagicPaperUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		18DDA1BAD2CAD767B95F5962 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MagicPaper-MagicPaperUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3BE6A87560D0B34CEA4FBFBD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MagicPaper/Pods-MagicPaper-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MagicPaper/Pods-MagicPaper-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MagicPaper/Pods-MagicPaper-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4B960D56A6C047F8F439C721 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MagicPaper-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BC951E35AD58DB76B5DD97CE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MagicPaperTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		EAD619882522A1DC003E425F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -395,10 +539,9 @@
 			files = (
 				EA99286225AEC8F400A64947 /* GreetingCard.xcdatamodeld in Sources */,
 				EA01F49725AAD01F00188BC1 /* CheckmarkView.swift in Sources */,
-				EA49D77E2590982600C52847 /* ModelDELETE.swift in Sources */,
 				EAAB12DE25AC327F00D55262 /* GreetingCardController.swift in Sources */,
+				EA9FA1E225D128ED001AE96E /* AuthController.swift in Sources */,
 				EAD1426725A136EF00FA8474 /* QRCode.swift in Sources */,
-				EA2B8BED25A5A44E005910C3 /* QRCodeViewDELETE.swift in Sources */,
 				EA5E4EC825BE1F9C0013B539 /* VideoView.swift in Sources */,
 				EAAB12EB25AC40E900D55262 /* GreetingCardDetailsController.swift in Sources */,
 				EA5E4EC325BD65120013B539 /* VideoPicker.swift in Sources */,
@@ -408,6 +551,7 @@
 				EA01F48F25AA81D100188BC1 /* UserDefaults+Key.swift in Sources */,
 				EAD1426F25A149D400FA8474 /* ScannerViewController.swift in Sources */,
 				EAD619902522A1DC003E425F /* AppDelegate.swift in Sources */,
+				EA9FA1F825D3194C001AE96E /* ImageLoader.swift in Sources */,
 				EA5E4EBE25BCFB300013B539 /* ImagePicker.swift in Sources */,
 				EAAB12E625AC361F00D55262 /* MagicGreetingCard.swift in Sources */,
 				EA9CC8F325A6EE980040122E /* Constants.swift in Sources */,
@@ -583,6 +727,7 @@
 		};
 		EAD619B72522A1DE003E425F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1010ACCF3F76BE9D592253D8 /* Pods-MagicPaper.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -603,6 +748,7 @@
 		};
 		EAD619B82522A1DE003E425F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BAE2B16C1522177BC9C50F1 /* Pods-MagicPaper.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -623,6 +769,7 @@
 		};
 		EAD619BA2522A1DE003E425F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E47CE8D45BE70667C6B5D056 /* Pods-MagicPaperTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -645,6 +792,7 @@
 		};
 		EAD619BB2522A1DE003E425F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 589197B8E1114AC199EAC7CB /* Pods-MagicPaperTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -667,6 +815,7 @@
 		};
 		EAD619BD2522A1DE003E425F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1A37685AF68B2D7D8E90D07 /* Pods-MagicPaper-MagicPaperUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -687,6 +836,7 @@
 		};
 		EAD619BE2522A1DE003E425F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA0C1906A94E59050EF536C8 /* Pods-MagicPaper-MagicPaperUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

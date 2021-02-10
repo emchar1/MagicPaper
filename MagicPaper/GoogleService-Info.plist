@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>743971425436-2mbs93n671a7fb98rifaeepachvl0l0o.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.743971425436-2mbs93n671a7fb98rifaeepachvl0l0o</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCx4M4EGGMfPfYFUdZpOe9g4omFEu6hcjE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>743971425436</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.5play-apps.MagicPaper</string>
+	<key>PROJECT_ID</key>
+	<string>magicpaper-88fb8</string>
+	<key>STORAGE_BUCKET</key>
+	<string>magicpaper-88fb8.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:743971425436:ios:d5149bf1aba5256d0b7159</string>
+</dict>
+</plist>

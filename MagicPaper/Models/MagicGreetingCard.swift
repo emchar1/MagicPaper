@@ -6,14 +6,20 @@
 //
 
 import UIKit
+import FirebaseFirestoreSwift
 
 struct MagicGreetingCard {
-    var greetingCategory: String
+//    @DocumentID public var id: String?
     var greetingDate: Date
+    var greetingCategory: String
     var greetingDescription: String
     var greetingHeading: String
     var greetingIdentifier: String
     var greetingImage: UIImage
     var greetingQRCode: UIImage
     var greetingVideo: UIImage
+    
+//    enum CodingKeys: String, CodingKey {
+//        case greetingDate, greetingCategory, greetingDescription, greetingHeading, greetingIdentifier, greetingImage, greetingQRCode, greetingVideo
+//    }
 }

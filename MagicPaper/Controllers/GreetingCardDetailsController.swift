@@ -6,8 +6,10 @@
 //
 
 import UIKit
-import CoreData
-import CloudKit
+//import CoreData
+//import CloudKit
+import FirebaseAuth
+import FirebaseFirestore
 import AVFoundation
 
 class GreetingCardDetailsController: UITableViewController {
@@ -21,8 +23,11 @@ class GreetingCardDetailsController: UITableViewController {
     @IBOutlet weak var videoView: UIImageView!
     @IBOutlet weak var qrView: UIImageView!
     
-    var greetingCardMO: GreetingCardMO!
-    var greetingCardRecord: CKRecord?
+//    var greetingCardMO: GreetingCardMO!
+//    var greetingCardRecord: CKRecord?
+    var uid: String!
+    var docRef: DocumentReference?
+    var greetingCard: MagicGreetingCard?
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -61,7 +66,17 @@ class GreetingCardDetailsController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
+        if let greetingCard = greetingCard {
+            dateLabel.text = dateFormatter.string(from: greetingCard.greetingDate)
+            headingField.text = greetingCard.greetingHeading
+            descriptionField.text = greetingCard.greetingDescription
+        }
+        else {
+            dateLabel.text = dateFormatter.string(from: Date())
+        }
+              
+        /*
         if let greetingCard = greetingCardMO {
             dateLabel.text = dateFormatter.string(from: greetingCard.greetingDate!)
             headingField.text = greetingCard.greetingHeading
@@ -78,7 +93,7 @@ class GreetingCardDetailsController: UITableViewController {
             if let _ = greetingCard.greetingVideo {
 //                let videoString = String(data: video, encoding: String.Encoding(rawValue: String.Encoding.utf32.rawValue))!//NSString.init(data: video, encoding: String.Encoding.utf8.rawValue)
 //                let videoURL = URL(string: videoString)!//NSURL(string: videoString! as String)
-//                
+//
 //                let item = AVPlayerItem(url: videoURL)
 //                let player = AVPlayer(playerItem: item)
 //                player.seek(to: CMTime.zero)
@@ -91,6 +106,7 @@ class GreetingCardDetailsController: UITableViewController {
         else {
             dateLabel.text = dateFormatter.string(from: Date())
         }
+ */
         
         imagePicker = ImagePicker(presentationController: self, delegate: self)
         videoPicker2 = VideoPicker(presentationController: self, delegate: self)
@@ -102,21 +118,30 @@ class GreetingCardDetailsController: UITableViewController {
     // MARK: - Data Persistence
     
     @IBAction func donePressed(_ sender: UIBarButtonItem) {
-        let greetingCard = MagicGreetingCard(greetingCategory: "🎄",
-                                         greetingDate: Date(),
-                                         greetingDescription: descriptionField.text!,
-                                         greetingHeading: headingField.text!,
-                                         greetingIdentifier: "magicpaper" + UUID().uuidString,
-                                         greetingImage: imageView.image ?? UIImage(),
-                                         greetingQRCode: qrView.image ?? UIImage(),
-                                         greetingVideo: videoView.image ?? UIImage())
+        let greetingCard = MagicGreetingCard(greetingDate: dateFormatter.date(from: dateLabel.text!)!,
+                                             greetingCategory: "🎄",
+                                             greetingDescription: descriptionField.text!,
+                                             greetingHeading: headingField.text!,
+                                             greetingIdentifier: uid,
+                                             greetingImage: imageView.image ?? UIImage(),
+                                             greetingQRCode: qrView.image ?? UIImage(),
+                                             greetingVideo: videoView.image ?? UIImage())
         
-        saveCoreData(greetingCard: greetingCard)
-        saveCloudKit(greetingCard: greetingCard)
+//        docRef?.setData(<#T##documentData: [String : Any]##[String : Any]#>)
+        
+        
+        
+//        saveCoreData(greetingCard: greetingCard)
+//        saveCloudKit(greetingCard: greetingCard)
         
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    /*
     private func saveCoreData(greetingCard: MagicGreetingCard) {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             if greetingCardMO == nil {
@@ -237,7 +262,7 @@ class GreetingCardDetailsController: UITableViewController {
 //            }
 //        })
     }
-        
+        */
     
     
     // MARK: - Table view data source

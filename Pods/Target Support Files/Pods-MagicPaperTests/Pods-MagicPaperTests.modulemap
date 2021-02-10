@@ -1,0 +1,6 @@
+framework module Pods_MagicPaperTests {
+  umbrella header "Pods-MagicPaperTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
