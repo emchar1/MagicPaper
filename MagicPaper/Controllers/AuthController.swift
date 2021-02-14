@@ -27,6 +27,9 @@ class AuthController: UIViewController {
         
         peekPasswordButton.addTarget(self, action: #selector(peekPasswordTapped(_:)), for: .touchDown)
         peekPasswordButton.addTarget(self, action: #selector(unpeekPasswordTapped(_:)), for: .touchUpInside)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        view.addGestureRecognizer(tapGestureRecognizer)
     }
     
     @objc func peekPasswordTapped(_ sender: UIButton) {
@@ -37,9 +40,24 @@ class AuthController: UIViewController {
         passwordField.isSecureTextEntry = true
     }
     
-    //Cancel button segue
-    @IBAction func unwindToHomeScreen(segue: UIStoryboardSegue) {
+    @objc func tapped(_ sender: UITapGestureRecognizer) {
+        let location = sender.location(in: view)
         
+        if location.isOutside(of: emailField.bounds) && location.isOutside(of: passwordField.bounds) {
+            emailField.endEditing(true)
+            passwordField.endEditing(true)
+        }
+    }
+    
+    //Logout button segue
+    @IBAction func unwindToAuthController(segue: UIStoryboardSegue) {
+        do {
+            try Auth.auth().signOut()
+            print("Sign out.")
+        }
+        catch let error as NSError {
+            print("Error signing out: \(error)")
+        }
     }
 
     @IBAction func loginPressed(_ sender: UIButton) {
@@ -60,10 +78,7 @@ class AuthController: UIViewController {
             UserDefaults.standard.set(email, forKey: "loginEmail")
             UserDefaults.standard.set(password, forKey: "loginPassword")
 
-//            print("user: \(authResult?.user.uid)")
-
             self.performSegue(withIdentifier: "segueLogin", sender: nil)
-            
         }
     }
 

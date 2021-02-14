@@ -135,7 +135,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
      */
     func found(code: String) {
         guard code.contains(validQRCode) else {
-//            K.addHapticFeedback(withStyle: .heavy)
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
 
             let errorLabel = UILabel(frame: CGRect(x: 20, y: view.frame.height / 2 + 180, width: view.frame.width - 40, height: 100))
@@ -174,7 +173,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     
-    @IBAction func unwindToHomeScreen(segue: UIStoryboardSegue) {
+    @IBAction func unwindToScannerViewController(segue: UIStoryboardSegue) {
         
     }
 }

@@ -6,11 +6,18 @@
 //
 
 import UIKit
-//import CoreData
-//import CloudKit
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseStorage
 import AVFoundation
+
+protocol GreetingCardDetailsControllerDelegate: class {
+    func greetingCardDetailsController(_ controller: GreetingCardDetailsController,
+                                       image: UIImage?,
+                                       video: UIImage?,
+                                       qrCode: UIImage?)
+}
+
 
 class GreetingCardDetailsController: UITableViewController {
     
@@ -23,11 +30,13 @@ class GreetingCardDetailsController: UITableViewController {
     @IBOutlet weak var videoView: UIImageView!
     @IBOutlet weak var qrView: UIImageView!
     
-//    var greetingCardMO: GreetingCardMO!
-//    var greetingCardRecord: CKRecord?
     var uid: String!
-    var docRef: DocumentReference?
+    var docRef: DocumentReference!
     var greetingCard: MagicGreetingCard?
+    var image: UIImage?
+    var video: UIImage?
+    var qrCode: UIImage?
+    var delegate: GreetingCardDetailsControllerDelegate?
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -49,17 +58,6 @@ class GreetingCardDetailsController: UITableViewController {
         picker.allowsEditing = true
         return picker
     }()
-    
-    var videoData: NSData? {
-        didSet {
-            if videoData == nil {
-                imageView.backgroundColor = .clear
-            }
-            else {
-                imageView.backgroundColor = .green
-            }
-        }
-    }
 
 
     // MARK: - Initialization
@@ -67,47 +65,24 @@ class GreetingCardDetailsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Elaborate - involve all fields
         if let greetingCard = greetingCard {
             dateLabel.text = dateFormatter.string(from: greetingCard.greetingDate)
             headingField.text = greetingCard.greetingHeading
             descriptionField.text = greetingCard.greetingDescription
+            imageView.image = image
+            videoView.image = video
+            qrView.image = qrCode
         }
         else {
             dateLabel.text = dateFormatter.string(from: Date())
+            docRef = Firestore.firestore().collection(FIR.collection).document()
         }
-              
-        /*
-        if let greetingCard = greetingCardMO {
-            dateLabel.text = dateFormatter.string(from: greetingCard.greetingDate!)
-            headingField.text = greetingCard.greetingHeading
-            descriptionField.text = greetingCard.greetingDescription
-            
-            if let imageImage = greetingCard.greetingImage {
-                imageView.image = UIImage(data: imageImage as Data)
-            }
-            
-            if let qrImage = greetingCard.greetingQRCode {
-                qrView.image = UIImage(data: qrImage as Data)
-            }
-
-            if let _ = greetingCard.greetingVideo {
-//                let videoString = String(data: video, encoding: String.Encoding(rawValue: String.Encoding.utf32.rawValue))!//NSString.init(data: video, encoding: String.Encoding.utf8.rawValue)
-//                let videoURL = URL(string: videoString)!//NSURL(string: videoString! as String)
-//
-//                let item = AVPlayerItem(url: videoURL)
-//                let player = AVPlayer(playerItem: item)
-//                player.seek(to: CMTime.zero)
-//                player.play()
-                
-//                videoView.image = UIImage(data: video)
-                videoView.backgroundColor = .green
-            }
-        }
-        else {
-            dateLabel.text = dateFormatter.string(from: Date())
-        }
- */
         
+        title = docRef.documentID
+        
+        
+        //Do I need all these?
         imagePicker = ImagePicker(presentationController: self, delegate: self)
         videoPicker2 = VideoPicker(presentationController: self, delegate: self)
         videoPicker.delegate = self
@@ -116,25 +91,52 @@ class GreetingCardDetailsController: UITableViewController {
     }
     
     
-    // MARK: - Data Persistence
+    // MARK: - UIBar Button Items
     
     @IBAction func donePressed(_ sender: UIBarButtonItem) {
-        let greetingCard = MagicGreetingCard(greetingDate: dateFormatter.date(from: dateLabel.text!)!,
+        let greetingCard = MagicGreetingCard(id: docRef.documentID,
+                                             greetingDate: dateFormatter.date(from: dateLabel.text!)!,
                                              greetingCategory: "🎄",
                                              greetingDescription: descriptionField.text!,
                                              greetingHeading: headingField.text!,
-                                             greetingIdentifier: uid,
-                                             greetingImage: imageView.image ?? UIImage(),
-                                             greetingQRCode: qrView.image ?? UIImage(),
-                                             greetingVideo: videoView.image ?? UIImage())
+                                             greetingUID: uid,
+                                             greetingImage: "image",
+                                             greetingQRCode: "qr",
+                                             greetingVideo: "video")
+        do {
+            try docRef.setData(from: greetingCard)
+            print("Document ID: \(docRef.documentID) has been set in Firestore.")
+        }
+        catch {
+            print("Error writing to Firestore: \(error)")
+        }
         
-//        docRef?.setData(<#T##documentData: [String : Any]##[String : Any]#>)
+        //Firebase Cloud Storage
+        if imageView.image != nil {
+            var data = Data()
+            data = imageView.image!.pngData()!
+            let imageRef = Storage.storage().reference().child(FIR.storageImage).child("\(docRef.documentID).png")
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/png"
+            
+            imageRef.putData(data, metadata: metadata) { (metadata, error) in
+                guard error == nil else {
+                    print("Localized error: \(error!.localizedDescription)")
+                    return
+                }
+                
+                imageRef.downloadURL { (url, error) in
+                    guard let downloadURL = url else { return }
+                    
+                    print("Image created: \(downloadURL)")
+                }
+            }
+        }
         
-        
-        
-//        saveCoreData(greetingCard: greetingCard)
-//        saveCloudKit(greetingCard: greetingCard)
-        
+        delegate?.greetingCardDetailsController(self,
+                                                image: imageView.image,
+                                                video: videoView.image,
+                                                qrCode: qrView.image)
         dismiss(animated: true, completion: nil)
     }
     
@@ -142,132 +144,10 @@ class GreetingCardDetailsController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    /*
-    private func saveCoreData(greetingCard: MagicGreetingCard) {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            if greetingCardMO == nil {
-                greetingCardMO = GreetingCardMO(context: appDelegate.persistentContainer.viewContext)
-            }
-            
-            greetingCardMO.greetingCategory = greetingCard.greetingCategory
-            greetingCardMO.greetingDate = greetingCard.greetingDate
-            greetingCardMO.greetingDescription = greetingCard.greetingDescription
-            greetingCardMO.greetingHeading = greetingCard.greetingHeading
-            greetingCardMO.greetingIdentifier = greetingCard.greetingIdentifier
-            if let qrCodeImage = greetingCard.greetingQRCode.pngData() {
-                greetingCardMO.greetingQRCode = Data(qrCodeImage)
-            }
-            if let imageImage = greetingCard.greetingImage.pngData() {
-                greetingCardMO.greetingImage = Data(imageImage)
-            }
-            
-            if let videoData = videoData {
-                greetingCardMO.greetingVideo = videoData as Data
-            }
-
-            print("Saving to Core Data")
-            appDelegate.saveContext()
-        }
-    }
-    
-    private func saveCloudKit(greetingCard: MagicGreetingCard) {
-        let container = CKContainer.default()
-        let publicDatabase = container.publicCloudDatabase
-        let record: CKRecord
-        
-        let imageFilePath = NSTemporaryDirectory() + greetingCard.greetingIdentifier//greetingCardMO.greetingIdentifier!
-        let imageFileURL = URL(fileURLWithPath: imageFilePath)
-        print(imageFilePath)
-        
-        if let currentRecord = greetingCardRecord {
-            record = currentRecord
-            print("currentRecord exists")
-        }
-        else {
-            record = CKRecord(recordType: "MagicVideo")
-            print("currentrecord doesn't exist")
-        }
-        
-        record.setValue(greetingCard.greetingIdentifier, forKey: "greetingIdentifier")
-        record.setValue(greetingCard.greetingHeading, forKey: "greetingHeading")
-        record.setValue(greetingCard.greetingDescription, forKey: "greetingDescription")
-        
-        if let image = greetingCardMO.greetingImage {
-            let imageData = image as Data
-            let originalImage = UIImage(data: imageData)!
-            let scalingFactor = (originalImage.size.width > 1024) ? 1024 / originalImage.size.width : 1.0
-            let scaledImage = UIImage(data: imageData, scale: scalingFactor)!
-            
-            //WTF???
-            ((try? scaledImage.jpegData(compressionQuality: 0.8)?.write(to: imageFileURL)) as ()??)
-            
-            let imageAsset = CKAsset(fileURL: imageFileURL)
-            
-            record.setValue(imageAsset, forKey: "greetingImage")
-        }
-        else {
-            record.setObject(nil, forKey: "greetingImage")
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        //How the hell do you save a video to cloudkit???
-        if let video = greetingCardMO.greetingVideo {
-            let videoAsset = CKAsset(fileURL: imageFileURL)
-
-//            record.setObject(videoAsset, forKey: "greetingVideo")
-            print("trying to save a vid dude")
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        publicDatabase.save(record, completionHandler: { result, error in
-            if self.greetingCardRecord != nil {
-                print("Updating data to Cloud...")
-            }
-            else {
-                print("Saving new data to Cloud...")
-            }
-            
-            //Garbage collection
-//            try? FileManager.default.removeItem(at: imageFileURL)
-        })
-        
-//        let predicate = NSPredicate(format: "identifier=%@", greetingCard!.qrCode)
-//        let query = CKQuery(recordType: "DrinkRecipe", predicate: predicate)
-//        publicDatabase.perform(query, inZoneWith: nil, completionHandler: { results, error in
-//            if let error = error {
-//                print("Error querying Cloud: \(error)")
-//            }
-//            else {
-//                if results!.count > 0 {
-//                    let record = results![0]
-//
-//                    print("Found existing record when querying Cloud!")
-//                    controller.currentRecord = record
-//                }
-//                else {
-//                    print("No match found when querying Cloud")
-//                }
-//            }
-//        })
-    }
-        */
-    
     
     // MARK: - Table view data source
 
+    //So gross. Improve this!
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             headingField.becomeFirstResponder()
@@ -291,9 +171,13 @@ class GreetingCardDetailsController: UITableViewController {
 
 extension GreetingCardDetailsController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let movieURL = info[.mediaURL] as? URL else { return }
+
+        //Figure how to add the video to the detail view, and prepare to upload to Cloud Storage (Firebase)
         
-        videoData = NSData(contentsOf: movieURL)
+        
+//        guard let movieURL = info[.mediaURL] as? URL else { return }
+        
+//        videoData = NSData(contentsOf: movieURL)
         
         
 //        do {
@@ -330,5 +214,3 @@ extension GreetingCardDetailsController: ImagePickerDelegate, VideoPickerDelegat
         self.videoURL = url
     }
 }
-
-

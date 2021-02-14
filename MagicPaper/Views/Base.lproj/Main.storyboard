@@ -77,11 +77,9 @@
                     <connections>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                         <segue destination="5Oj-9h-r63" kind="presentation" identifier="segueScan" modalPresentationStyle="fullScreen" modalTransitionStyle="partialCurl" id="F47-re-VUI"/>
-                        <segue destination="TaW-Zc-R9a" kind="unwind" identifier="unwindToHome" unwindAction="unwindToHomeScreenWithSegue:" id="RZV-7M-ZDj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
-                <exit id="TaW-Zc-R9a" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2747.826086956522" y="182.8125"/>
         </scene>
@@ -157,11 +155,13 @@
                     <tabBarItem key="tabBarItem" title="Create" image="greetingcard" catalog="system" id="SkY-Ru-t1s"/>
                     <navigationItem key="navigationItem" id="FDD-ig-oTG">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="8iv-RA-u4T">
+                            <color key="tintColor" systemColor="linkColor"/>
                             <connections>
-                                <segue destination="Xle-ae-AJW" kind="unwind" unwindAction="unwindToHomeScreenWithSegue:" id="bUo-6C-Up1"/>
+                                <segue destination="dor-BW-rpU" kind="unwind" unwindAction="unwindToAuthControllerWithSegue:" id="Fsd-aW-BuA"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="SUE-VG-ZFE">
+                            <color key="tintColor" systemColor="linkColor"/>
                             <connections>
                                 <segue destination="uWA-fw-aIB" kind="presentation" identifier="AddGreetingCard" id="bAc-pe-2X1"/>
                             </connections>
@@ -169,7 +169,7 @@
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="adQ-hU-NRR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="Xle-ae-AJW" userLabel="Exit" sceneMemberID="exit"/>
+                <exit id="dor-BW-rpU" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1838" y="1148"/>
         </scene>
@@ -218,6 +218,7 @@
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OgZ-Ia-ups">
                                                     <rect key="frame" x="20" y="13" width="374" height="18.5"/>
+                                                    <color key="tintColor" systemColor="linkColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -243,6 +244,7 @@
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XzB-3s-Z96">
                                                     <rect key="frame" x="20" y="11" width="374" height="178"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="tintColor" systemColor="linkColor"/>
                                                     <color key="textColor" systemColor="labelColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -341,11 +343,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="iOi-jZ-F8K">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="dbO-xo-GhC">
+                            <color key="tintColor" systemColor="linkColor"/>
                             <connections>
                                 <action selector="cancelPressed:" destination="T0A-g2-jqF" id="qcQ-HO-p7B"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="5mW-Rc-KtT">
+                            <color key="tintColor" systemColor="linkColor"/>
                             <connections>
                                 <action selector="donePressed:" destination="T0A-g2-jqF" id="dj3-wX-A0H"/>
                             </connections>
@@ -386,7 +390,6 @@
         <!--Create-->
         <scene sceneID="cUF-un-RYr">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Gnx-Vl-bwg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JZh-g2-WVX" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Create" image="greetingcard" catalog="system" id="CKS-Jh-tWo"/>
                     <toolbarItems/>
@@ -400,6 +403,7 @@
                         <segue destination="IdF-NQ-X4n" kind="relationship" relationship="rootViewController" id="yHU-IA-pvK"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gnx-Vl-bwg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="845" y="1148"/>
         </scene>
@@ -440,7 +444,7 @@
             </objects>
             <point key="canvasLocation" x="844.92753623188412" y="182.8125"/>
         </scene>
-        <!--Item-->
+        <!--Create-->
         <scene sceneID="nJG-dG-ata">
             <objects>
                 <viewController id="OaK-d7-XwJ" customClass="AuthController" customModule="MagicPaper" customModuleProvider="target" sceneMemberID="viewController">
@@ -460,6 +464,7 @@
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pPj-sG-Ody">
                                                         <rect key="frame" x="20" y="19" width="200" height="22"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="tintColor" systemColor="linkColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="6hF-dF-0Gj"/>
                                                         </constraints>
@@ -492,6 +497,7 @@
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jNZ-Di-fLh">
                                                         <rect key="frame" x="20" y="19.5" width="200" height="21"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="tintColor" systemColor="linkColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="Rzr-ij-12y"/>
                                                         </constraints>
@@ -551,7 +557,7 @@
                             <constraint firstItem="2dT-iv-yK7" firstAttribute="centerX" secondItem="M1C-iB-9C4" secondAttribute="centerX" id="f3j-dV-AFl"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="mso-zo-wyV"/>
+                    <tabBarItem key="tabBarItem" title="Create" image="greetingcard" catalog="system" id="mso-zo-wyV"/>
                     <connections>
                         <outlet property="emailField" destination="pPj-sG-Ody" id="Ho1-v0-SY4"/>
                         <outlet property="loginErrorLabel" destination="GSe-pV-a6a" id="dW5-wh-ru7"/>
@@ -574,6 +580,9 @@
         <image name="qrcode.viewfinder" catalog="system" width="128" height="115"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseStorage
 //import FirebaseUI
 
 
@@ -22,7 +23,7 @@ class GreetingCardCell: UITableViewCell {
 
 // MARK: - Greeting Card Controller
 
-class GreetingCardController: UITableViewController { //, NSFetchedResultsControllerDelegate {
+class GreetingCardController: UITableViewController {
     
     // MARK: - Properties
     
@@ -35,7 +36,8 @@ class GreetingCardController: UITableViewController { //, NSFetchedResultsContro
     var uid: String!
     var query: Query!
     var listener: ListenerRegistration!
-    var greetingCards: [MagicGreetingCard]!
+    var greetingCards: [MagicGreetingCard] = []
+    var greetingCardAssets: [GreetingCardAsset] = []
     
     
     // MARK: - Initialization
@@ -43,11 +45,38 @@ class GreetingCardController: UITableViewController { //, NSFetchedResultsContro
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        uid = Auth.auth().currentUser!.uid
-        query = Firestore.firestore().collection("greetingcards").whereField("greetingIdentifier", isEqualTo: uid!)
-        greetingCards = []
+        guard let currentUser = Auth.auth().currentUser else {
+            fatalError("Something went wrong... no user logged in. Quitting perfunctorily.")
+        }
+        
+        uid = currentUser.uid
+        query = Firestore.firestore().collection(FIR.collection).whereField(FIR.greetingUID, isEqualTo: uid!)
+        
+        //Grab the images in Storage by looking at the files in Firestore. Genius!
+        query.getDocuments { [weak self] (querySnapshot, error) in
+            guard error == nil else {
+                print("Error getting documents: \(error!)")
+                return
+            }
 
-        //So I deleted the getDocuments code because I figured the listener calls it occasionally in viewWillAppear, i.e. no need to have it in two different places.
+            guard let self = self else { return }
+
+            for document in querySnapshot!.documents {
+                let imageRef = Storage.storage().reference().child(FIR.storageImage).child("\(document.documentID).png")
+
+                imageRef.getData(maxSize: 5 * 1024 * 1024) { (data, error) in
+                    guard error == nil else {
+                        print("\(error!.localizedDescription)")
+                        return
+                    }
+
+                    self.greetingCardAssets.append(GreetingCardAsset(documentID: document.documentID,
+                                                                     image: UIImage(data: data!),
+                                                                     video: nil,
+                                                                     qrCode: nil))
+                }//end imageRef.getData
+            }//end for
+        }//end query.snapshotListener
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,37 +96,34 @@ class GreetingCardController: UITableViewController { //, NSFetchedResultsContro
             
             for document in querySnapshot!.documents {
                 let data = document.data()
-                
-                guard let tryDate = data["greetingDate"] as? String,
-                      let greetingDate = self.dateFormatter.date(from: tryDate),
-                      let greetingCategory = data["greetingCategory"] as? String,
-                      let greetingDescription = data["greetingDescription"] as? String,
-                      let greetingHeading = data["greetingHeading"] as? String,
-                      let greetingIdentifier = data["greetingIdentifier"] as? String else {
+                                
+                guard let greetingDate = data[FIR.greetingDate] as? Timestamp,
+                      let greetingCategory = data[FIR.greetingCategory] as? String,
+                      let greetingDescription = data[FIR.greetingDescription] as? String,
+                      let greetingHeading = data[FIR.greetingHeading] as? String,
+                      let greetingUID = data[FIR.greetingUID] as? String else {
                     continue
                 }
-                                                                 
-                let card = MagicGreetingCard(greetingDate: greetingDate,
-                                             greetingCategory: greetingCategory,
-                                             greetingDescription: greetingDescription,
-                                             greetingHeading: greetingHeading,
-                                             greetingIdentifier: greetingIdentifier,
-                                             //NEED TO IMPLEMENT THESE!!
-                                             greetingImage: UIImage(),
-                                             greetingQRCode: UIImage(),
-                                             greetingVideo: UIImage())
                 
-                self.greetingCards.append(card)
-            }
+                self.greetingCards.append(MagicGreetingCard(id: document.documentID,
+                                                            greetingDate: greetingDate.dateValue(),
+                                                            greetingCategory: greetingCategory,
+                                                            greetingDescription: greetingDescription,
+                                                            greetingHeading: greetingHeading,
+                                                            greetingUID: greetingUID,
+                                                            //NEED TO IMPLEMENT THESE!!
+                                                            greetingImage: "image",
+                                                            greetingQRCode: "qr",
+                                                            greetingVideo: "video"))
+            }//end for
             
             //Need this otherwise tableView will not udpate when listener updates the model!
             self.tableView.reloadData()
-        }
+        }//end listener = query.addSnapshotListener
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         listener.remove()
     }
     
@@ -129,27 +155,60 @@ class GreetingCardController: UITableViewController { //, NSFetchedResultsContro
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nc = segue.destination as! UINavigationController
-        let controller = nc.topViewController as! GreetingCardDetailsController
-        
-        if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
-            if segue.identifier == "EditGreetingCard" {
-                controller.greetingCard = greetingCards[indexPath.row]
-            }
+        if segue.identifier == "AddGreetingCard" {
+            let nc = segue.destination as! UINavigationController
+            let controller = nc.topViewController as! GreetingCardDetailsController
             controller.uid = uid
+            controller.delegate = self
         }
-    }
+
+        if segue.identifier == "EditGreetingCard" {
+            let nc = segue.destination as! UINavigationController
+            let controller = nc.topViewController as! GreetingCardDetailsController
+            controller.uid = uid
+            controller.delegate = self
+
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                controller.docRef = Firestore.firestore().collection(FIR.collection).document(greetingCards[indexPath.row].id!)
+                controller.greetingCard = greetingCards[indexPath.row]
+                
+                if let asset = greetingCardAssets.first(where: { $0.documentID == greetingCards[indexPath.row].id! }) {
+                    controller.image = asset.image
+                    controller.video = asset.video
+                    controller.qrCode = asset.qrCode
+                }
+            }
+        }
         
-    //WHY THIS SHIT AIN'T POPPIN?
-    @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
-        do {
-            try Auth.auth().signOut()
-            print("Sign out.")
-            navigationController?.popToRootViewController(animated: true)
-        }
-        catch let error as NSError {
-            print("Error signing out: \(error)")
-        }
     }
+   
     
+    
+}
+
+
+extension GreetingCardController: GreetingCardDetailsControllerDelegate {
+    func greetingCardDetailsController(_ controller: GreetingCardDetailsController,
+                                       image: UIImage?,
+                                       video: UIImage?,
+                                       qrCode: UIImage?) {
+        guard let greetingCard = controller.greetingCard else {
+            print("No greetingCard object attached.")
+            return
+        }
+
+        
+        if let index = greetingCardAssets.firstIndex(where: { $0.documentID == greetingCard.id! }) {
+            greetingCardAssets[index].image = image
+            greetingCardAssets[index].video = video
+            greetingCardAssets[index].qrCode = qrCode
+        }
+        else {
+            greetingCardAssets.append(GreetingCardAsset(documentID: greetingCard.id!,
+                                                        image: image,
+                                                        video: video,
+                                                        qrCode: qrCode))
+        }
+        print("Added an image. greetingCardAssets now has: \(greetingCardAssets.count) items.")
+    }
 }

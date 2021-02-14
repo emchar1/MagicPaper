@@ -22,12 +22,25 @@ struct K {
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.impactOccurred()
     }
+}
+
+struct FIR {
+    //Firestore
+    static let collection = "greetingcards"
+    static let greetingUID = "greetingUID"
+    static let greetingDate = "greetingDate"
+    static let greetingCategory = "greetingCategory"
+    static let greetingHeading = "greetingHeading"
+    static let greetingDescription = "greetingDescription"
+    static let greetingImage = "greetingImage"
+    static let greetingQRCode = "greetingQRCode"
+    static let greetingVideo = "greetingVideo"
     
-    
-//    static func getRandomString(of length: Int) -> String {
-//      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-//      return String((0..<length).map{ _ in letters.randomElement()! })
-//    }
+    //Cloud Storage
+    static let storageImage = "images"
+    static let storageVideo = "videos"
+    static let storageQR = "qrCodes"
+
 }
 
 
@@ -42,5 +55,14 @@ extension Comparable {
      */
     func clamp(min minValue: Self, max maxValue: Self) -> Self {
         return max(min(self, maxValue), minValue)
+    }
+}
+
+
+// MARK: - CGPoint
+
+extension CGPoint {
+    func isOutside(of rect: CGRect) -> Bool {
+        return self.x < rect.origin.x || self.x > rect.width || self.y < rect.origin.y || self.y > rect.height
     }
 }
