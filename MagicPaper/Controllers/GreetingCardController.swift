@@ -62,8 +62,11 @@ class GreetingCardController: UITableViewController {
             guard let self = self else { return }
 
             for document in querySnapshot!.documents {
-                let imageRef = Storage.storage().reference().child(FIR.storageImage).child("\(document.documentID).png")
-
+                let imageRef = Storage.storage().reference()
+                    .child(self.uid)
+                    .child(FIR.storageImage)
+                    .child("\(document.documentID).png")
+                
                 imageRef.getData(maxSize: 5 * 1024 * 1024) { (data, error) in
                     guard error == nil else {
                         print("\(error!.localizedDescription)")

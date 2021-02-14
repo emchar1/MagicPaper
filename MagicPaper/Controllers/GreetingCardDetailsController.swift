@@ -115,7 +115,10 @@ class GreetingCardDetailsController: UITableViewController {
         if imageView.image != nil {
             var data = Data()
             data = imageView.image!.pngData()!
-            let imageRef = Storage.storage().reference().child(FIR.storageImage).child("\(docRef.documentID).png")
+            let imageRef = Storage.storage().reference()
+                .child(uid)
+                .child(FIR.storageImage)
+                .child("\(docRef.documentID).png")
             let metadata = StorageMetadata()
             metadata.contentType = "image/png"
             
