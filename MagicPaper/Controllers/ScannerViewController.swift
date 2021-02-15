@@ -16,7 +16,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     @IBOutlet weak var scannerView: UIView!
     
     var checkmarkView: CheckmarkView!
-    let validQRCode = "magicpaper"
     let segueMagic = "segueMagic"
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
@@ -124,7 +123,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         if let metadataObject = metadataObjects.first {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
-            
+
             found(code: stringValue)
         }
     }
@@ -134,7 +133,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
      - parameter code: The string info used to create the QR Code
      */
     func found(code: String) {
-        guard code.contains(validQRCode) else {
+        guard code.contains(K.validQRCodePrefix) else {
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
 
             let errorLabel = UILabel(frame: CGRect(x: 20, y: view.frame.height / 2 + 180, width: view.frame.width - 40, height: 100))
@@ -198,6 +197,7 @@ extension ScannerViewController {
         case .notDetermined: // The user has not yet been asked for camera access.
             AVCaptureDevice.requestAccess(for: .video) { granted in
                 if granted {
+                    print("Camera granted.")
                     return
                 }
             }

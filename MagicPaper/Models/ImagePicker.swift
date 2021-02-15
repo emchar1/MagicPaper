@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import Photos
 
 public protocol ImagePickerDelegate: class {
     func didSelect(image: UIImage?)
 }
 
 open class ImagePicker: NSObject {
+    
     private let pickerController: UIImagePickerController
     private weak var presentationController: UIViewController?
     private weak var delegate: ImagePickerDelegate?
@@ -63,7 +65,11 @@ open class ImagePicker: NSObject {
             alertController.popoverPresentationController?.permittedArrowDirections = [.down, .up]
         }
         
-        self.presentationController?.present(alertController, animated: true)
+        self.presentationController?.present(alertController, animated: true) { [weak self] in
+            guard let self = self else { return }
+            
+            self.requestPhotos()
+        }
     }
     
     private func pickerController(_ controller: UIImagePickerController, didSelect image: UIImage?) {
@@ -79,6 +85,8 @@ extension ImagePicker: UIImagePickerControllerDelegate {
     }
 
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        
+        
         guard let image = info[.editedImage] as? UIImage else {
             return self.pickerController(picker, didSelect: nil)
         }
@@ -89,4 +97,27 @@ extension ImagePicker: UIImagePickerControllerDelegate {
 
 extension ImagePicker: UINavigationControllerDelegate {
     //This extension intentionally left blank.
+    
+    func requestPhotos() {
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .authorized:
+            return
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization { granted in
+                if granted == .authorized{
+                    print("Photos granted.")
+                    return
+                } else {
+                    //Present message to allow photos...
+                }
+            }
+        case .denied:
+            return
+        case .restricted:
+            return
+        default:
+            return
+        }
+
+    }
 }

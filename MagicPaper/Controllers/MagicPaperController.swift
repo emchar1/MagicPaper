@@ -253,14 +253,16 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             self.replayButtonWidthAnchor.constant = 260
             self.replayButtonHeightAnchor.constant = 80
             
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: { [weak self] in
+                guard let self = self else { return }
 
                 self.scanButton.layoutIfNeeded()
             }, completion: { _ in
                 
             })
             
-            UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: { [weak self] in
+                guard let self = self else { return }
                 
                 self.replayButton.layoutIfNeeded()
             }, completion: nil)

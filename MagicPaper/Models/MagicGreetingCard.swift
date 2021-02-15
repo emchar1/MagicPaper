@@ -36,6 +36,6 @@ struct MagicGreetingCard: Identifiable, Codable {
 struct GreetingCardAsset {
     let documentID: String
     var image: UIImage?
-    var video: UIImage? //Obviously this needs to be changed to Data or something...
+    var video: URL?
     var qrCode: UIImage?
 }

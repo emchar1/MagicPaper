@@ -52,7 +52,7 @@ class GreetingCardController: UITableViewController {
         uid = currentUser.uid
         query = Firestore.firestore().collection(FIR.collection).whereField(FIR.greetingUID, isEqualTo: uid!)
         
-        //Grab the images in Storage by looking at the files in Firestore. Genius!
+        //Grab the assets in Storage by looking at the files in Firestore. Genius!
         query.getDocuments { [weak self] (querySnapshot, error) in
             guard error == nil else {
                 print("Error getting documents: \(error!)")
@@ -62,25 +62,52 @@ class GreetingCardController: UITableViewController {
             guard let self = self else { return }
 
             for document in querySnapshot!.documents {
-                let imageRef = Storage.storage().reference()
-                    .child(self.uid)
-                    .child(FIR.storageImage)
-                    .child("\(document.documentID).png")
+                let storageRef = Storage.storage().reference().child(self.uid)
                 
+                let imageRef = storageRef.child(FIR.storageImage).child("\(document.documentID).png")
                 imageRef.getData(maxSize: 5 * 1024 * 1024) { (data, error) in
-                    guard error == nil else {
-                        print("\(error!.localizedDescription)")
-                        return
-                    }
+                    guard error == nil else { return }
 
-                    self.greetingCardAssets.append(GreetingCardAsset(documentID: document.documentID,
-                                                                     image: UIImage(data: data!),
-                                                                     video: nil,
-                                                                     qrCode: nil))
-                }//end imageRef.getData
+                    self.updateAssets(for: document.documentID, image: UIImage(data: data!))
+                }
+                
+                //THIS IS NOT LOADING THE VIDEO!!!
+                let videoRef = storageRef.child(FIR.storageVideo).child("\(document.documentID).mov")
+                videoRef.getData(maxSize: INT64_MAX) { (data, error) in
+                    guard error == nil else { return }
+                    
+                    videoRef.downloadURL { (url, error) in
+                        guard let downloadURL = url else { return }
+                        
+                        self.updateAssets(for: document.documentID, video: downloadURL)
+                    }
+                }
+                
+                let qrCodeRef = storageRef.child(FIR.storageQR).child("\(document.documentID).png")
+                qrCodeRef.getData(maxSize: 1 * 1024 * 1024) { (data, error) in
+                    guard error == nil else { return }
+                    
+                    self.updateAssets(for: document.documentID, qrCode: UIImage(data: data!))
+                }
+                
             }//end for
         }//end query.snapshotListener
-    }
+        
+        
+        
+        
+        //TEST LIST ALL FILES IN STORAGE. SO FAR, ONLY SHOWS FILES IN ROOT FOLDER, DOESN'T RECURSIVELY SEARCH SUBFOLDERS???
+        let store = Storage.storage().reference()
+        store.listAll { (result, error) in
+            guard error == nil else {
+                return
+            }
+            
+            for item in result.items {
+                print("Item: \(item.fullPath)")
+            }
+        }
+    }//end viewDidLoad
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -131,6 +158,27 @@ class GreetingCardController: UITableViewController {
     }
     
     
+    private func updateAssets(for id: String,
+                              image: UIImage? = nil,
+                              video: URL? = nil,
+                              qrCode: UIImage? = nil) {
+        
+        if let index = greetingCardAssets.firstIndex(where: { $0.documentID == id }) {
+            //Update the assets...
+            if image != nil { greetingCardAssets[index].image = image }
+            if video != nil { greetingCardAssets[index].video = video }
+            if qrCode != nil { greetingCardAssets[index].qrCode = qrCode }
+        }
+        else {
+            //...or create a new entry if it doesn't exist.
+            greetingCardAssets.append(GreetingCardAsset(documentID: id,
+                                                        image: image,
+                                                        video: video,
+                                                        qrCode: qrCode))
+        }
+    }
+    
+    
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -177,8 +225,7 @@ class GreetingCardController: UITableViewController {
                 
                 if let asset = greetingCardAssets.first(where: { $0.documentID == greetingCards[indexPath.row].id! }) {
                     controller.image = asset.image
-                    controller.video = asset.video
-                    controller.qrCode = asset.qrCode
+                    controller.videoURL = asset.video
                 }
             }
         }
@@ -192,26 +239,13 @@ class GreetingCardController: UITableViewController {
 
 extension GreetingCardController: GreetingCardDetailsControllerDelegate {
     func greetingCardDetailsController(_ controller: GreetingCardDetailsController,
-                                       image: UIImage?,
-                                       video: UIImage?,
+                                       didUpdateFor image: UIImage?,
+                                       video: URL?,
                                        qrCode: UIImage?) {
         guard let greetingCard = controller.greetingCard else {
-            print("No greetingCard object attached.")
-            return
+            fatalError("fatalError: greetingCard object nil in GreetingCardController delegate function.")
         }
-
         
-        if let index = greetingCardAssets.firstIndex(where: { $0.documentID == greetingCard.id! }) {
-            greetingCardAssets[index].image = image
-            greetingCardAssets[index].video = video
-            greetingCardAssets[index].qrCode = qrCode
-        }
-        else {
-            greetingCardAssets.append(GreetingCardAsset(documentID: greetingCard.id!,
-                                                        image: image,
-                                                        video: video,
-                                                        qrCode: qrCode))
-        }
-        print("Added an image. greetingCardAssets now has: \(greetingCardAssets.count) items.")
+        updateAssets(for: greetingCard.id!, image: image, video: video, qrCode: qrCode)
     }
 }

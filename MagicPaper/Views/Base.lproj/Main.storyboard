@@ -294,17 +294,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MXT-iY-nj0">
+                                                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Toi-ZF-2vt" customClass="VideoView" customModule="MagicPaper" customModuleProvider="target">
                                                     <rect key="frame" x="127" y="10" width="160" height="160"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="160" id="T45-1f-oLE"/>
-                                                        <constraint firstAttribute="width" constant="160" id="g3Z-eD-A9I"/>
+                                                        <constraint firstAttribute="height" constant="160" id="age-45-1eE"/>
+                                                        <constraint firstAttribute="width" constant="160" id="jYX-VZ-fAa"/>
                                                     </constraints>
-                                                </imageView>
+                                                </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="MXT-iY-nj0" firstAttribute="centerY" secondItem="w1b-z1-4va" secondAttribute="centerY" id="4mk-XF-kw0"/>
-                                                <constraint firstItem="MXT-iY-nj0" firstAttribute="centerX" secondItem="w1b-z1-4va" secondAttribute="centerX" id="yc3-BZ-Wkk"/>
+                                                <constraint firstItem="Toi-ZF-2vt" firstAttribute="centerY" secondItem="w1b-z1-4va" secondAttribute="centerY" id="GTt-nR-Z4C"/>
+                                                <constraint firstItem="Toi-ZF-2vt" firstAttribute="centerX" secondItem="w1b-z1-4va" secondAttribute="centerX" id="nea-tF-GK9"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -361,7 +362,7 @@
                         <outlet property="headingField" destination="OgZ-Ia-ups" id="sFK-TT-Usi"/>
                         <outlet property="imageView" destination="9UP-Mf-w9R" id="Laz-bm-LPG"/>
                         <outlet property="qrView" destination="caK-Gu-oTV" id="WPA-ed-zQ4"/>
-                        <outlet property="videoView" destination="MXT-iY-nj0" id="1nN-Jj-fCR"/>
+                        <outlet property="videoView" destination="Toi-ZF-2vt" id="LYa-UC-bWk"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BDF-fN-d2i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

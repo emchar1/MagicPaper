@@ -11,6 +11,8 @@ import AVFoundation
 var audioManager = AudioManager()
 
 struct K {
+    static let validQRCodePrefix = "magicpaper"
+    static let qrDelim = "-"
     static var qrCode: String?
     static var showInstructions = true
     
@@ -26,6 +28,7 @@ struct K {
 
 struct FIR {
     //Firestore
+    static let rootPath = "users"
     static let collection = "greetingcards"
     static let greetingUID = "greetingUID"
     static let greetingDate = "greetingDate"
