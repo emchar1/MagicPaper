@@ -71,7 +71,6 @@ class GreetingCardController: UITableViewController {
                     self.updateAssets(for: document.documentID, image: UIImage(data: data!))
                 }
                 
-                //THIS IS NOT LOADING THE VIDEO!!!
                 let videoRef = storageRef.child(FIR.storageVideo).child("\(document.documentID).mov")
                 videoRef.getData(maxSize: INT64_MAX) { (data, error) in
                     guard error == nil else { return }
@@ -104,7 +103,7 @@ class GreetingCardController: UITableViewController {
             }
             
             for item in result.items {
-                print("Item: \(item.fullPath)")
+//                print("Item: \(item.fullPath)")
             }
         }
     }//end viewDidLoad

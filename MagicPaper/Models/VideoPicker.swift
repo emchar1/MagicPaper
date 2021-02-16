@@ -88,7 +88,8 @@ extension VideoPicker: UIImagePickerControllerDelegate {
         self.pickerController(picker, didSelect: nil)
     }
 
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+    public func imagePickerController(_ picker: UIImagePickerController,
+                                      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 
         //difference is it uses url instead of image
         guard let url = info[.mediaURL] as? URL else {
@@ -101,7 +102,6 @@ extension VideoPicker: UIImagePickerControllerDelegate {
 //        }
         
         self.pickerController(picker, didSelect: url)
-        
     }
 }
 
@@ -141,6 +141,5 @@ extension VideoPicker: UINavigationControllerDelegate {
         default:
             return
         }
-
     }
 }
