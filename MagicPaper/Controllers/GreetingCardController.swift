@@ -139,11 +139,7 @@ class GreetingCardController: UITableViewController {
                                                             greetingCategory: greetingCategory,
                                                             greetingDescription: greetingDescription,
                                                             greetingHeading: greetingHeading,
-                                                            greetingUID: greetingUID,
-                                                            //NEED TO IMPLEMENT THESE!!
-                                                            greetingImage: "image",
-                                                            greetingQRCode: "qr",
-                                                            greetingVideo: "video"))
+                                                            greetingUID: greetingUID))
             }//end for
             
             //Need this otherwise tableView will not udpate when listener updates the model!

@@ -92,10 +92,7 @@ class GreetingCardDetailsController: UITableViewController {
                                          greetingCategory: "🎄",
                                          greetingDescription: descriptionField.text!,
                                          greetingHeading: headingField.text!,
-                                         greetingUID: uid,
-                                         greetingImage: "image",
-                                         greetingQRCode: "qr",
-                                         greetingVideo: "video")
+                                         greetingUID: uid)
         do {
             try docRef.setData(from: greetingCard)
             print("Document ID: \(docRef.documentID) has been created or updated in Firestore.")

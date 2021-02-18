@@ -73,6 +73,8 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     var node: SCNNode?
     var avPlayer: AVPlayer?
     
+    var newReferenceImages: Set<ARReferenceImage> = Set<ARReferenceImage>()
+    
     
     // MARK: - Initialization
     
@@ -122,6 +124,25 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             K.showInstructions = false
         }
         
+        
+        
+        
+//        configuration = ARImageTrackingConfiguration()
+//
+//        loadImageFrom(url: URL(string: "https://akns-images.eonline.com/eol_images/Entire_Site/2018019/rs_634x951-180119063216-634.chris-evans.11918.jpg")!) { [weak self] image in
+//            guard let self = self else { return }
+//
+//            let arImage = ARReferenceImage(image.cgImage!, orientation: CGImagePropertyOrientation.up, physicalWidth: 0.072)
+//            arImage.name = "doggiepoo"
+//            self.newReferenceImages.insert(arImage)
+//
+//            self.configuration.trackingImages = self.newReferenceImages
+//            self.configuration.maximumNumberOfTrackedImages = 1
+//        }
+        
+        
+        
+        //OLD WAY - uses xcassets
         configuration = ARImageTrackingConfiguration()
 
         //Ensure you can read the images in the NewsPaperImages AR Resource Group in Assets.xcassets
@@ -129,6 +150,9 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             configuration.trackingImages = trackedImages
             configuration.maximumNumberOfTrackedImages = 1
         }
+        
+        
+        
 
         sceneView.session.run(configuration)
     }
@@ -150,6 +174,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         }
         
         if let myVideo = makeVideo(for: imageAnchor, referenceImage: videoName, videoExtension: "mov") {
+            print("videoName: \(videoName)")
             return myVideo
         }
         
@@ -158,6 +183,28 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     
     
     // MARK: - Helper Functions
+    
+    /**
+     Loads an image from Firebase instead of xcassets.
+     */
+    func loadImageFrom(url: URL, completion: @escaping (UIImage) -> ()) {
+        DispatchQueue.global().async {
+            guard let data = try? Data(contentsOf: url), let image = UIImage(data: data) else { return }
+            
+            DispatchQueue.main.async {
+                print("Asset loaded for: \(url.absoluteString)")
+                completion(image)
+            }
+        }
+    }
+    
+//    public func resetTracking() {
+//        let configuration = ARWorldTrackingConfiguration()
+//        configuration.detectionImages = newReferenceImages
+//        configuration.maximumNumberOfTrackedImages = 1
+//
+//        session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+//    }
     
     /**
      Creates the video based on the key image file.

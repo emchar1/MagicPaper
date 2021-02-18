@@ -38,7 +38,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         scannerBorder.layer.borderColor = UIColor.white.cgColor
         view.addSubview(scannerBorder)
         checkmarkView = CheckmarkView(frame: .zero, in: view)
-        checkmarkView.delegate = self
         
         guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
         
@@ -125,6 +124,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             guard let stringValue = readableObject.stringValue else { return }
 
             found(code: stringValue)
+            print("stringValue: \(stringValue)")
         }
     }
     
@@ -158,7 +158,11 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         
         K.qrCode = code
         
-        checkmarkView.animate()
+        checkmarkView.animate { [weak self] in
+            guard let self = self else { return }
+            
+            self.performSegue(withIdentifier: self.segueMagic, sender: nil)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -174,15 +178,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     
     @IBAction func unwindToScannerViewController(segue: UIStoryboardSegue) {
         
-    }
-}
-
-
-// MARK: - Checkmark
-
-extension ScannerViewController: CheckmarkViewDelegate {
-    func checkmarkViewDidCompleteAnimation(_ controller: CheckmarkView) {
-        performSegue(withIdentifier: segueMagic, sender: nil)
     }
 }
 

@@ -11,13 +11,10 @@ import FirebaseFirestoreSwift
 struct MagicGreetingCard: Identifiable, Codable {
     @DocumentID public var id: String?
     let greetingDate: Date
-    let greetingCategory: String
+    let greetingCategory: String    //Is this needed??
     let greetingDescription: String
     let greetingHeading: String
     let greetingUID: String
-    let greetingImage: String
-    let greetingQRCode: String
-    let greetingVideo: String
     
     //Use CodingKeys enum if Firestore object has different field names compared to Swift struct. In this case, it doesn't so don't really need the enum CodingKeys: String, CodingKey
 //    enum CodingKeys: String, CodingKey {

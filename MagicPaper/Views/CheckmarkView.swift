@@ -8,15 +8,10 @@
 import UIKit
 import AVFoundation
 
-protocol CheckmarkViewDelegate {
-    func checkmarkViewDidCompleteAnimation(_ controller: CheckmarkView)
-}
-
 class CheckmarkView: UIView {
     var superView: UIView!
     let checkmarkSize: CGFloat = 200
     let checkmarkScale: CGFloat = 1/3
-    var delegate: CheckmarkViewDelegate?
 
     init(frame: CGRect, in superView: UIView) {
         super.init(frame: frame)
@@ -28,7 +23,7 @@ class CheckmarkView: UIView {
         fatalError("Unable to load CheckmarkView")
     }
     
-    func animate() {
+    func animate(completion: @escaping () -> ()) {
         let checkmarkView = UIView()
         let bezierPath = UIBezierPath()
         bezierPath.addArc(withCenter: CGPoint(x: (checkmarkView.frame.width  + checkmarkSize) / 2,
@@ -91,7 +86,7 @@ class CheckmarkView: UIView {
             checkmarkView.alpha = 1.0
             checkmarkView.backgroundColor = .systemGreen
         }, completion: { _ in
-            self.delegate?.checkmarkViewDidCompleteAnimation(self)
+            completion()
         })
     }
     
