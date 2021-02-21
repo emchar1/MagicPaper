@@ -5,8 +5,8 @@
 //  Created by Eddie Char on 1/2/21.
 //
 
-import AVFoundation
 import UIKit
+import AVFoundation
 
 class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
@@ -16,9 +16,9 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     @IBOutlet weak var scannerView: UIView!
     
     var checkmarkView: CheckmarkView!
-    let segueMagic = "segueMagic"
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
+    var qrCodeString: String?
     
     
     // MARK: - Initialization
@@ -121,19 +121,18 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         
         if let metadataObject = metadataObjects.first {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
-            guard let stringValue = readableObject.stringValue else { return }
+            guard let qrCodeString = readableObject.stringValue else { return }
 
-            found(code: stringValue)
-            print("stringValue: \(stringValue)")
+            found(qrCodeString: qrCodeString)
         }
     }
     
     /**
      This determines what to do once a QR Code is found.
-     - parameter code: The string info used to create the QR Code
+     - parameter qrCodeString: The string info used to create the QR Code
      */
-    func found(code: String) {
-        guard code.contains(K.validQRCodePrefix) else {
+    func found(qrCodeString: String) {
+        guard QRCode.isValidCode(string: qrCodeString) else {
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
 
             let errorLabel = UILabel(frame: CGRect(x: 20, y: view.frame.height / 2 + 180, width: view.frame.width - 40, height: 100))
@@ -151,26 +150,25 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             })
             
             captureSession.startRunning()
-
             return
         }
         
         
-        K.qrCode = code
+        self.qrCodeString = qrCodeString
         
         checkmarkView.animate { [weak self] in
             guard let self = self else { return }
             
-            self.performSegue(withIdentifier: self.segueMagic, sender: nil)
+            self.performSegue(withIdentifier: "segueMagic", sender: nil)
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == segueMagic {
+        if segue.identifier == "segueMagic" {
             let controller = segue.destination as! MagicPaperController
             
-            if let qrCode = K.qrCode {
-                controller.videoName = qrCode
+            if let qrCodeString = qrCodeString {
+                controller.qrCode = QRCode(string: qrCodeString)
             }
         }
     }

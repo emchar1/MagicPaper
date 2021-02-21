@@ -63,13 +63,14 @@ class GreetingCardDetailsController: UITableViewController {
             descriptionField.text = greetingCard.greetingDescription
             imageView.image = image
             videoView.url = videoURL
+            videoView.player?.play()
         }
         else {
             docRef = Firestore.firestore().collection(FIR.collection).document()
             dateLabel.text = dateFormatter.string(from: Date())
         }
         
-        let code = QRCode(string: K.validQRCodePrefix + K.qrDelim + uid + K.qrDelim + docRef.documentID)
+        let code = QRCode(uid: uid, docID: docRef.documentID)
         qrView.image = code.generate()
         imagePicker = ImagePicker(presentationController: self, delegate: self)
         videoPicker = VideoPicker(presentationController: self, delegate: self)

@@ -12,8 +12,7 @@ var audioManager = AudioManager()
 
 struct K {
     static let validQRCodePrefix = "magicpaper"
-    static let qrDelim = "-"
-    static var qrCode: String?
+    static let qrDelim: Character = "-"
     static var showInstructions = true
     
     /**

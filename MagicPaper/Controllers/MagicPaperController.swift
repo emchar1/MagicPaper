@@ -8,17 +8,18 @@
 import UIKit
 import SceneKit
 import ARKit
+import FirebaseStorage
 import AVFoundation
 
 class MagicPaperController: UIViewController, ARSCNViewDelegate {
     
     // MARK: - Properties
     
+    @IBOutlet var sceneView: ARSCNView!
+
     enum ImageOrientation {
         case portrait, landscape
     }
-    
-    @IBOutlet var sceneView: ARSCNView!
     
     let instructionsView: UIView = {
         let label = UILabel()
@@ -62,19 +63,20 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         return button
     }()
     
+    var configuration: ARImageTrackingConfiguration!
+    var node: SCNNode?
+    var avPlayer: AVPlayer?
+    var storageRef: StorageReference!
+    var newReferenceImages: Set<ARReferenceImage> = Set<ARReferenceImage>()
+    var qrCode: QRCode!
+    var arVideoURL: URL!
+    var arUIImage: UIImage!
+
     var replayButtonWidthAnchor: NSLayoutConstraint!
     var replayButtonHeightAnchor: NSLayoutConstraint!
     var scanButtonWidthAnchor: NSLayoutConstraint!
     var scanButtonHeightAnchor: NSLayoutConstraint!
 
-    let segueReplay = "segueReplay"
-    var configuration: ARImageTrackingConfiguration!
-    var videoName: String?
-    var node: SCNNode?
-    var avPlayer: AVPlayer?
-    
-    var newReferenceImages: Set<ARReferenceImage> = Set<ARReferenceImage>()
-    
     
     // MARK: - Initialization
     
@@ -82,10 +84,8 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         super.viewDidLoad()
         
         sceneView.delegate = self
-//        sceneView.showsStatistics = true
-
+        storageRef = Storage.storage().reference().child(qrCode.uid)
         instructionsView.alpha = 0
-//        navigationItem.setHidesBackButton(true, animated: false)
 
         //Only show instructions once.
         if K.showInstructions {
@@ -100,7 +100,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         scanButtonHeightAnchor = scanButton.heightAnchor.constraint(equalToConstant: 0)
         replayButtonWidthAnchor = replayButton.widthAnchor.constraint(equalToConstant: 0)
         replayButtonHeightAnchor = replayButton.heightAnchor.constraint(equalToConstant: 0)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -126,35 +125,36 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         
         
         
-        
-//        configuration = ARImageTrackingConfiguration()
-//
-//        loadImageFrom(url: URL(string: "https://akns-images.eonline.com/eol_images/Entire_Site/2018019/rs_634x951-180119063216-634.chris-evans.11918.jpg")!) { [weak self] image in
-//            guard let self = self else { return }
-//
-//            let arImage = ARReferenceImage(image.cgImage!, orientation: CGImagePropertyOrientation.up, physicalWidth: 0.072)
-//            arImage.name = "doggiepoo"
-//            self.newReferenceImages.insert(arImage)
-//
-//            self.configuration.trackingImages = self.newReferenceImages
-//            self.configuration.maximumNumberOfTrackedImages = 1
-//        }
-        
-        
-        
-        //OLD WAY - uses xcassets
+        //Set up ARImageTrackingConfiguration
         configuration = ARImageTrackingConfiguration()
 
-        //Ensure you can read the images in the NewsPaperImages AR Resource Group in Assets.xcassets
-        if let trackedImages = ARReferenceImage.referenceImages(inGroupNamed: "NewsPaperImages", bundle: .main) {
-            configuration.trackingImages = trackedImages
-            configuration.maximumNumberOfTrackedImages = 1
+        let imageRef = storageRef.child(FIR.storageImage).child("\(qrCode.docID).png")
+        imageRef.getData(maxSize: 5 * 1024 * 1024) { [weak self] (data, error) in
+            guard error == nil else { return }
+            guard let self = self else { return }
+            guard let image = UIImage(data: data!) else { return }
+            
+            let arReferenceImage = ARReferenceImage(image.cgImage!, orientation: CGImagePropertyOrientation.up, physicalWidth: 0.25)
+            arReferenceImage.name = "\(self.qrCode.docID)"
+            self.newReferenceImages.insert(arReferenceImage)
+
+            self.arUIImage = image
+            self.configuration.trackingImages = self.newReferenceImages
+            self.configuration.maximumNumberOfTrackedImages = 1
+            self.sceneView.session.run(self.configuration)
         }
         
-        
-        
+        let videoRef = storageRef.child(FIR.storageVideo).child("\(qrCode.docID).mov")
+        videoRef.getData(maxSize: INT64_MAX) { [weak self] (data, error) in
+            guard error == nil else { return }
+            guard let self = self else { return }
 
-        sceneView.session.run(configuration)
+            videoRef.downloadURL { (url, error) in
+                guard let downloadURL = url else { return }
+                
+                self.arVideoURL = downloadURL
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -168,43 +168,16 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     // Override to create and configure nodes for anchors added to the view's session.
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
         guard let imageAnchor = anchor as? ARImageAnchor,
-              let videoName = videoName else {
-            print("couldn't find videoName")
+              let myVideo = makeVideo(for: imageAnchor, referenceImage: self.qrCode.docID) else {
+            print("Unable to makeVideo...")
             return nil
         }
         
-        if let myVideo = makeVideo(for: imageAnchor, referenceImage: videoName, videoExtension: "mov") {
-            print("videoName: \(videoName)")
-            return myVideo
-        }
-        
-        return nil
+        return myVideo
     }
     
     
     // MARK: - Helper Functions
-    
-    /**
-     Loads an image from Firebase instead of xcassets.
-     */
-    func loadImageFrom(url: URL, completion: @escaping (UIImage) -> ()) {
-        DispatchQueue.global().async {
-            guard let data = try? Data(contentsOf: url), let image = UIImage(data: data) else { return }
-            
-            DispatchQueue.main.async {
-                print("Asset loaded for: \(url.absoluteString)")
-                completion(image)
-            }
-        }
-    }
-    
-//    public func resetTracking() {
-//        let configuration = ARWorldTrackingConfiguration()
-//        configuration.detectionImages = newReferenceImages
-//        configuration.maximumNumberOfTrackedImages = 1
-//
-//        session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-//    }
     
     /**
      Creates the video based on the key image file.
@@ -215,45 +188,35 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         - imageOrientation: the physical orientation of the image, i.e. portrait or landscape
         - imageDimensions: the dimensions of the image file
      */
-    private func makeVideo(for imageAnchor: ARImageAnchor, referenceImage: String, videoExtension: String) -> SCNNode? {
+    private func makeVideo(for imageAnchor: ARImageAnchor, referenceImage: String) -> SCNNode? {
+        print("attempting to make video")
         guard imageAnchor.referenceImage.name == referenceImage else {
             //Do not use fatalError() because it needs to cycle through the list of images.
             print("referenceImage: \(referenceImage) not equal to anchor name: \(imageAnchor.referenceImage.name ?? "nil").")
             return nil
         }
         
-        guard let path = Bundle.main.path(forResource: referenceImage, ofType: videoExtension) else {
-            print("Path not valid.")
-            return nil
-        }
-        
-        guard let image = UIImage(named: referenceImage) else {
-            print("Image is nil.")
-            return nil
-        }
-        
-        
-        let imageDimensions: (width: CGFloat, height: CGFloat) = (image.size.width, image.size.height)
+
+        let imageDimensions: (width: CGFloat, height: CGFloat) = (arUIImage.size.width, arUIImage.size.height)
         let imageOrientation: ImageOrientation = imageDimensions.width > imageDimensions.height ? .landscape : .portrait
-        let url = URL(fileURLWithPath: path)
-        let item = AVPlayerItem(url: url)
-        avPlayer = AVPlayer(playerItem: item)
+        let item = AVPlayerItem(url: arVideoURL)
+        self.avPlayer = AVPlayer(playerItem: item)
         
-        let videoNode = SKVideoNode(avPlayer: avPlayer!)
+        let videoNode = SKVideoNode(avPlayer: self.avPlayer!)
         //sets the center position of the video, i.e. the midpoint of the image
         videoNode.position = CGPoint(x: imageDimensions.width / 2, y: imageDimensions.height / 2)
         //flips the video horizontally. I added an xScale with the same size as the absolute value of the yScale. I tested various values and found that 0.5 works for all image/video pairs. Eh.
         videoNode.yScale = -0.5
         videoNode.xScale = 0.5
-
+        
 //        //Alternately, this works to the above...
 //        videoNode.yScale = -1.0
 //        videoNode.size = CGSize(width: imageDimensions.width, height: imageDimensions.height)
         
         //So... this is only needed for portrait oriented photos/videos!
         videoNode.zRotation = imageOrientation == .portrait ? .pi / 2 : 0
-        avPlayer!.seek(to: CMTime.zero)
-        avPlayer!.play()
+        self.avPlayer!.seek(to: CMTime.zero)
+        self.avPlayer!.play()
         
         let videoScene = SKScene(size: CGSize(width: imageDimensions.width, height: imageDimensions.height))
         videoScene.addChild(videoNode)
@@ -268,12 +231,12 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         //flips the plane so that it's flat on the screen/paper instead of jutting out along the z-axis
         planeNode.eulerAngles.x = -.pi / 2
         
-        node = SCNNode()
-        node!.addChildNode(planeNode)
+        self.node = SCNNode()
+        self.node!.addChildNode(planeNode)
         
         //Determine what to do once playback ends.
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
-                                               object: avPlayer?.currentItem,
+                                               object: self.avPlayer?.currentItem,
                                                queue: nil) { [weak self] notification in
             guard let self = self else { return print("Notification Center weakness return") }
             
@@ -290,7 +253,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             
             self.scanButtonWidthAnchor.constant = 260
             self.scanButtonHeightAnchor.constant = 80
-
+            
             self.view.addSubview(self.replayButton)
             NSLayoutConstraint.activate([self.replayButtonWidthAnchor,
                                          self.replayButtonHeightAnchor,
@@ -300,17 +263,13 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             self.replayButtonWidthAnchor.constant = 260
             self.replayButtonHeightAnchor.constant = 80
             
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: { [weak self] in
-                guard let self = self else { return }
-
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: {
                 self.scanButton.layoutIfNeeded()
             }, completion: { _ in
                 
             })
             
-            UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: { [weak self] in
-                guard let self = self else { return }
-                
+            UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseIn, animations: {
                 self.replayButton.layoutIfNeeded()
             }, completion: nil)
             
@@ -320,12 +279,14 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         return node!
     }
     
-    
     @objc func scanPressed(_ sender: UIButton) {
         K.addHapticFeedback(withStyle: .medium)
         
         shrinkButtons(replayPressed: false) { [weak self] in
             guard let self = self else { return }
+            
+            //DO I NEED TO DO CLEAN UP HERE TO PREVENT MEMORY LEAKS???
+//            NotificationCenter.default.removeObserver(self)
             self.performSegue(withIdentifier: "segueScan", sender: nil)
         }
     }

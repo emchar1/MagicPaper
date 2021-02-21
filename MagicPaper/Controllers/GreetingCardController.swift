@@ -152,24 +152,32 @@ class GreetingCardController: UITableViewController {
         listener.remove()
     }
     
-    
-    private func updateAssets(for id: String,
-                              image: UIImage? = nil,
-                              video: URL? = nil,
-                              qrCode: UIImage? = nil) {
-        
+    /**
+     Helper function that uploads asset(s) to the array by 1.) replacing it if it exists or 2.) appending if it doesn't exist.
+     - parameters:
+        - id: document ID to search for in the array
+        - image: key image to replace/append (optional)
+        - video: movie to replace/append (optional)
+        - qrCode: QR code to replace/append (optional)
+     */
+    private func updateAssets(for id: String, image: UIImage? = nil, video: URL? = nil, qrCode: UIImage? = nil) {
         if let index = greetingCardAssets.firstIndex(where: { $0.documentID == id }) {
             //Update the assets...
-            if image != nil { greetingCardAssets[index].image = image }
-            if video != nil { greetingCardAssets[index].video = video }
-            if qrCode != nil { greetingCardAssets[index].qrCode = qrCode }
+            if image != nil {
+                greetingCardAssets[index].image = image
+            }
+            
+            if video != nil {
+                greetingCardAssets[index].video = video
+            }
+            
+            if qrCode != nil {
+                greetingCardAssets[index].qrCode = qrCode
+            }
         }
         else {
             //...or create a new entry if it doesn't exist.
-            greetingCardAssets.append(GreetingCardAsset(documentID: id,
-                                                        image: image,
-                                                        video: video,
-                                                        qrCode: qrCode))
+            greetingCardAssets.append(GreetingCardAsset(documentID: id, image: image, video: video, qrCode: qrCode))
         }
     }
     
