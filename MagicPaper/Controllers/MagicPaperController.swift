@@ -152,7 +152,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             self.arUIImage = image
             self.configuration.trackingImages = self.newReferenceImages
             self.configuration.maximumNumberOfTrackedImages = 1
-            self.sceneView.session.run(self.configuration)
         }
         
         let videoRef = storageRef.child(FIR.storageVideo).child("\(qrCode.docID).mov")
@@ -162,13 +161,11 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
 
             videoRef.downloadURL { (url, error) in
                 guard let downloadURL = url else { return }
-                
+
                 self.arVideoURL = downloadURL
                 print("Video download complete.")
-                
-//                self.configuration.trackingImages = self.newReferenceImages
-//                self.configuration.maximumNumberOfTrackedImages = 1
-//                self.sceneView.session.run(self.configuration)
+
+                self.sceneView.session.run(self.configuration)
 
             }
         }

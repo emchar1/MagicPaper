@@ -44,6 +44,9 @@ struct QRCode {
         }
     }
     
+    /**
+     Generates a QRCode image based on the "string" value sent in as a data used to create and return the UIImage.
+     */
     func generate() -> UIImage {
         let data = string.data(using: String.Encoding.ascii)
         
