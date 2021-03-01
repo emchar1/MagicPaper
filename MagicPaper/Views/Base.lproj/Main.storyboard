@@ -262,18 +262,18 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Image Anchor" id="mnk-gP-N8r">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="180" id="SZN-vJ-8Ax">
-                                        <rect key="frame" x="0.0" y="510.5" width="414" height="180"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="340" id="SZN-vJ-8Ax">
+                                        <rect key="frame" x="0.0" y="510.5" width="414" height="340"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SZN-vJ-8Ax" id="e9K-7K-nia">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="340"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9UP-Mf-w9R">
-                                                    <rect key="frame" x="127" y="10" width="160" height="160"/>
+                                                    <rect key="frame" x="127" y="10" width="160" height="320"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="160" id="CE3-eM-3Nx"/>
-                                                        <constraint firstAttribute="height" constant="160" id="Jcd-tf-6af"/>
+                                                        <constraint firstAttribute="height" constant="320" id="Jcd-tf-6af"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
@@ -288,7 +288,7 @@
                             <tableViewSection headerTitle="Video" id="ay4-UG-r4X">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="180" id="LHD-aV-7fd">
-                                        <rect key="frame" x="0.0" y="746.5" width="414" height="180"/>
+                                        <rect key="frame" x="0.0" y="906.5" width="414" height="180"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LHD-aV-7fd" id="w1b-z1-4va">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
@@ -314,7 +314,7 @@
                             <tableViewSection headerTitle="QR Code" id="Mbc-gj-ymC">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="180" id="5uj-VI-SzG">
-                                        <rect key="frame" x="0.0" y="982.5" width="414" height="180"/>
+                                        <rect key="frame" x="0.0" y="1142.5" width="414" height="180"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5uj-VI-SzG" id="wv9-C5-rE4">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>

@@ -69,8 +69,8 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     var storageRef: StorageReference!
     var newReferenceImages: Set<ARReferenceImage> = Set<ARReferenceImage>()
     var qrCode: QRCode!
-    var arVideoURL: URL!
-    var arUIImage: UIImage!
+    var arUIImage: UIImage?
+    var arVideoURL: URL?
 
     var replayButtonWidthAnchor: NSLayoutConstraint!
     var replayButtonHeightAnchor: NSLayoutConstraint!
@@ -100,6 +100,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         scanButtonHeightAnchor = scanButton.heightAnchor.constraint(equalToConstant: 0)
         replayButtonWidthAnchor = replayButton.widthAnchor.constraint(equalToConstant: 0)
         replayButtonHeightAnchor = replayButton.heightAnchor.constraint(equalToConstant: 0)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,7 +125,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         }
         
         
-        
         //Set up ARImageTrackingConfiguration
         configuration = ARImageTrackingConfiguration()
 
@@ -133,6 +133,17 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             guard error == nil else { return }
             guard let self = self else { return }
             guard let image = UIImage(data: data!) else { return }
+            
+            
+            
+            switch image.imageOrientation {
+            case .up: print("Up")
+            case.left: print("Left")
+            case .right: print("Right")
+            default: print("Other")
+            }
+            
+            
             
             let arReferenceImage = ARReferenceImage(image.cgImage!, orientation: CGImagePropertyOrientation.up, physicalWidth: 0.25)
             arReferenceImage.name = "\(self.qrCode.docID)"
@@ -153,12 +164,19 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
                 guard let downloadURL = url else { return }
                 
                 self.arVideoURL = downloadURL
+                print("Video download complete.")
+                
+//                self.configuration.trackingImages = self.newReferenceImages
+//                self.configuration.maximumNumberOfTrackedImages = 1
+//                self.sceneView.session.run(self.configuration)
+
             }
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        print("viewWillDisappear from MagicPaperController called.")
         sceneView.session.pause()
     }
     
@@ -172,6 +190,8 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             print("Unable to makeVideo...")
             return nil
         }
+        
+        
         
         return myVideo
     }
@@ -189,13 +209,19 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         - imageDimensions: the dimensions of the image file
      */
     private func makeVideo(for imageAnchor: ARImageAnchor, referenceImage: String) -> SCNNode? {
-        print("attempting to make video")
+        guard let arVideoURL = arVideoURL, let arUIImage = arUIImage else {
+            print("Assets not completed downloading. Exiting early.")
+            return nil
+        }
+
         guard imageAnchor.referenceImage.name == referenceImage else {
             //Do not use fatalError() because it needs to cycle through the list of images.
             print("referenceImage: \(referenceImage) not equal to anchor name: \(imageAnchor.referenceImage.name ?? "nil").")
             return nil
         }
         
+        print("Guard checks passed! Attempting makeVideo()")
+
 
         let imageDimensions: (width: CGFloat, height: CGFloat) = (arUIImage.size.width, arUIImage.size.height)
         let imageOrientation: ImageOrientation = imageDimensions.width > imageDimensions.height ? .landscape : .portrait
@@ -206,8 +232,8 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         //sets the center position of the video, i.e. the midpoint of the image
         videoNode.position = CGPoint(x: imageDimensions.width / 2, y: imageDimensions.height / 2)
         //flips the video horizontally. I added an xScale with the same size as the absolute value of the yScale. I tested various values and found that 0.5 works for all image/video pairs. Eh.
-        videoNode.yScale = -0.5
-        videoNode.xScale = 0.5
+        videoNode.yScale = -1.5//-0.5
+        videoNode.xScale = 1.5//0.5
         
 //        //Alternately, this works to the above...
 //        videoNode.yScale = -1.0

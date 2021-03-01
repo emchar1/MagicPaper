@@ -96,16 +96,16 @@ class GreetingCardController: UITableViewController {
         
         
         //TEST LIST ALL FILES IN STORAGE. SO FAR, ONLY SHOWS FILES IN ROOT FOLDER, DOESN'T RECURSIVELY SEARCH SUBFOLDERS???
-        let store = Storage.storage().reference()
-        store.listAll { (result, error) in
-            guard error == nil else {
-                return
-            }
-            
-            for item in result.items {
+//        let store = Storage.storage().reference()
+//        store.listAll { (result, error) in
+//            guard error == nil else {
+//                return
+//            }
+//
+//            for item in result.items {
 //                print("Item: \(item.fullPath)")
-            }
-        }
+//            }
+//        }
     }//end viewDidLoad
     
     override func viewWillAppear(_ animated: Bool) {
@@ -209,19 +209,25 @@ class GreetingCardController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Identifier: \(segue.identifier)")
+        
+        guard let nc = segue.destination as? UINavigationController else {
+            print("Logout pressed.")
+            return
+        }
+        
+        
+        let controller = nc.topViewController as! GreetingCardDetailsController
+        controller.uid = uid
+        controller.delegate = self
+
+        //Segue to AddGreetingCard
         if segue.identifier == "AddGreetingCard" {
-            let nc = segue.destination as! UINavigationController
-            let controller = nc.topViewController as! GreetingCardDetailsController
-            controller.uid = uid
-            controller.delegate = self
+
         }
 
+        //Segue to EditGreetingCard
         if segue.identifier == "EditGreetingCard" {
-            let nc = segue.destination as! UINavigationController
-            let controller = nc.topViewController as! GreetingCardDetailsController
-            controller.uid = uid
-            controller.delegate = self
-
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
                 controller.docRef = Firestore.firestore().collection(FIR.collection).document(greetingCards[indexPath.row].id!)
                 controller.greetingCard = greetingCards[indexPath.row]
@@ -234,7 +240,6 @@ class GreetingCardController: UITableViewController {
         }
         
     }
-   
     
     
 }

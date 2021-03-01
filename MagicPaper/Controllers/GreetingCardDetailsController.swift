@@ -156,12 +156,12 @@ class GreetingCardDetailsController: UITableViewController {
             }
             
             storageRef.downloadURL { (url, error) in
-                guard let downloadURL = url else {
-                    print("   Error with the downloadURL: \(error!.localizedDescription)")
+                guard let uploadURL = url else {
+                    print("   Error with the uploadURL: \(error!.localizedDescription)")
                     return
                 }
                 
-                print("   File uploaded: \(downloadURL)")
+                print("   File uploaded: \(uploadURL)")
             }
         }
         
@@ -199,6 +199,9 @@ class GreetingCardDetailsController: UITableViewController {
         if indexPath.section == 0 || indexPath.section == 1 {
             return 44
         }
+        else if indexPath.section == 3 {
+            return 340
+        }
         else {
             return 180
         }
@@ -210,13 +213,14 @@ class GreetingCardDetailsController: UITableViewController {
 
 extension GreetingCardDetailsController: ImagePickerDelegate, VideoPickerDelegate {
     func didSelect(image: UIImage?) {
-        self.imageView.image = image
-        self.imageChanged = true
+        imageView.image = image
+        imageChanged = true
     }
     
     func didSelect(url: URL?) {
-        self.videoView.url = url
-        self.videoView.player?.play()
-        self.videoChanged = true
+        videoView.url = url
+        videoView.contentMode = .scaleAspectFit         //THIS ISN'T WORKING!!! Need to aspect fit video in square uiview
+        videoView.player?.play()
+        videoChanged = true
     }
 }
