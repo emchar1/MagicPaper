@@ -37,7 +37,7 @@ class GreetingCardController: UITableViewController {
     var query: Query!
     var listener: ListenerRegistration!
     var greetingCards: [MagicGreetingCard] = []
-    var greetingCardAssets: [GreetingCardAsset] = []
+//    var greetingCardAssets: [GreetingCardAsset] = []
     
     
     // MARK: - Initialization
@@ -51,7 +51,19 @@ class GreetingCardController: UITableViewController {
         
         uid = currentUser.uid
         query = Firestore.firestore().collection(FIR.collection).whereField(FIR.greetingUID, isEqualTo: uid!)
+        if FIR.allUsers == nil {
+            FIR.allUsers = uid
+        }
+
+        guard FIR.allUsers! == uid || FIR.allUsers!.range(of: uid) == nil else {
+            print("Only grab Storage assets once.")
+            return
+        }
         
+        
+        print("Grabbing Storage assets for the first time.")
+        FIR.allUsers!.append(uid)
+
         //Grab the assets in Storage by looking at the files in Firestore. Genius!
         query.getDocuments { [weak self] (querySnapshot, error) in
             guard error == nil else {
@@ -161,23 +173,27 @@ class GreetingCardController: UITableViewController {
         - qrCode: QR code to replace/append (optional)
      */
     private func updateAssets(for id: String, image: UIImage? = nil, video: URL? = nil, qrCode: UIImage? = nil) {
-        if let index = greetingCardAssets.firstIndex(where: { $0.documentID == id }) {
+        if let index = FIR.storageAssets.firstIndex(where: { $0.documentID == id }) {
             //Update the assets...
             if image != nil {
-                greetingCardAssets[index].image = image
+                FIR.storageAssets[index].image = image
+                print("updateAssets called - added image: \(id).png")
             }
             
             if video != nil {
-                greetingCardAssets[index].video = video
+                FIR.storageAssets[index].video = video
+                print("updateAssets called - added video: \(id).mov")
             }
             
             if qrCode != nil {
-                greetingCardAssets[index].qrCode = qrCode
+                FIR.storageAssets[index].qrCode = qrCode
+                print("updateAssets called - added qrCode: \(id).png")
             }
         }
         else {
             //...or create a new entry if it doesn't exist.
-            greetingCardAssets.append(GreetingCardAsset(documentID: id, image: image, video: video, qrCode: qrCode))
+            FIR.storageAssets.append(GreetingCardAsset(documentID: id, image: image, video: video, qrCode: qrCode))
+            print("FIR.storageAssets count: \(FIR.storageAssets.count)")
         }
     }
     
@@ -209,8 +225,6 @@ class GreetingCardController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("Identifier: \(segue.identifier)")
-        
         guard let nc = segue.destination as? UINavigationController else {
             print("Logout pressed.")
             return
@@ -232,7 +246,7 @@ class GreetingCardController: UITableViewController {
                 controller.docRef = Firestore.firestore().collection(FIR.collection).document(greetingCards[indexPath.row].id!)
                 controller.greetingCard = greetingCards[indexPath.row]
                 
-                if let asset = greetingCardAssets.first(where: { $0.documentID == greetingCards[indexPath.row].id! }) {
+                if let asset = FIR.storageAssets.first(where: { $0.documentID == greetingCards[indexPath.row].id! }) {
                     controller.image = asset.image
                     controller.videoURL = asset.video
                 }

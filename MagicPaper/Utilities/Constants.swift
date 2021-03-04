@@ -42,6 +42,8 @@ struct FIR {
     static let storageImage = "images"
     static let storageVideo = "videos"
     static let storageQR = "qrCodes"
+    static var storageAssets: [GreetingCardAsset] = []
+    static var allUsers: String? = nil
 
 }
 
