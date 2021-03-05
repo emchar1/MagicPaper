@@ -115,8 +115,8 @@ class GreetingCardDetailsController: UITableViewController {
             //Use try if you want to catch the error and investigate. Use try? if you just care about success and failure without the "why". Use try! if you're certain it'll succeed.
             putInStorage(withData: try? Data(contentsOf: dataFile),
                          inFolder: FIR.storageVideo,
-                         forFilename: docRef.documentID + ".mov",
-                         contentType: "video/quicktime")
+                         forFilename: docRef.documentID + ".mp4",
+                         contentType: "video/mp4")
         }
         
         if let dataFile = qrView.image {
@@ -224,3 +224,61 @@ extension GreetingCardDetailsController: ImagePickerDelegate, VideoPickerDelegat
         videoChanged = true
     }
 }
+
+/*
+// MARK: - AVCapture File Output Recording Delegate
+
+extension GreetingCardDetailsController: AVCaptureFileOutputRecordingDelegate {
+    func fileOutput(_ output: AVCaptureFileOutput,
+                    didFinishRecordingTo outputFileURL: URL,
+                    from connections: [AVCaptureConnection],
+                    error: Error?) {
+        
+        guard let data = try? Data(contentsOf: outputFileURL) else { return }
+        
+        print("File size before compression: \(Double(data.count / Int(K.mb))) MB.")
+        
+        let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + UUID().uuidString + ".mp4")
+        compressVideo(inputURL: outputFileURL as URL, outputURL: compressedURL) { exportSession in
+            guard let session = exportSession else { return }
+            
+            switch session.status {
+            case .unknown:
+                break
+            case .waiting:
+                break
+            case .exporting:
+                break
+            case .completed:
+                guard let compressedData = try? Data(contentsOf: compressedURL) else { return }
+                print("File created: \(compressedURL)\nFile size after compression: \(Double(compressedData.count / Int(K.mb))) MB.")
+            case .failed:
+                break
+            case .cancelled:
+                break
+            @unknown default:
+                fatalError("Unknown case!")
+            }
+        }
+        
+    }
+    
+    private func compressVideo(inputURL: URL,
+                       outputURL: URL,
+                       handler: @escaping (_ exportSession: AVAssetExportSession?) -> Void) {
+        
+        let urlAsset = AVURLAsset(url: inputURL, options: nil)
+        
+        guard let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetLowQuality) else {
+            handler(nil)
+            return
+        }
+        
+        exportSession.outputURL = outputURL
+        exportSession.outputFileType = .mp4
+        exportSession.exportAsynchronously {
+            handler(exportSession)
+        }
+    }
+}
+*/

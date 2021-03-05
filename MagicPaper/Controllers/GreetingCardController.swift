@@ -61,8 +61,8 @@ class GreetingCardController: UITableViewController {
         }
         
         
-        print("Grabbing Storage assets for the first time.")
-        FIR.allUsers!.append(uid)
+        print("Grabbing Storage assets for the first time for users: \(FIR.allUsers!)")
+        FIR.allUsers!.append(", " + uid)
 
         //Grab the assets in Storage by looking at the files in Firestore. Genius!
         query.getDocuments { [weak self] (querySnapshot, error) in
@@ -77,13 +77,13 @@ class GreetingCardController: UITableViewController {
                 let storageRef = Storage.storage().reference().child(self.uid)
                 
                 let imageRef = storageRef.child(FIR.storageImage).child("\(document.documentID).png")
-                imageRef.getData(maxSize: 5 * 1024 * 1024) { (data, error) in
+                imageRef.getData(maxSize: 5 * K.mb) { (data, error) in
                     guard error == nil else { return }
 
                     self.updateAssets(for: document.documentID, image: UIImage(data: data!))
                 }
                 
-                let videoRef = storageRef.child(FIR.storageVideo).child("\(document.documentID).mov")
+                let videoRef = storageRef.child(FIR.storageVideo).child("\(document.documentID).mp4")
                 videoRef.getData(maxSize: INT64_MAX) { (data, error) in
                     guard error == nil else { return }
                     
@@ -95,7 +95,7 @@ class GreetingCardController: UITableViewController {
                 }
                 
                 let qrCodeRef = storageRef.child(FIR.storageQR).child("\(document.documentID).png")
-                qrCodeRef.getData(maxSize: 1 * 1024 * 1024) { (data, error) in
+                qrCodeRef.getData(maxSize: K.mb) { (data, error) in
                     guard error == nil else { return }
                     
                     self.updateAssets(for: document.documentID, qrCode: UIImage(data: data!))
@@ -182,7 +182,7 @@ class GreetingCardController: UITableViewController {
             
             if video != nil {
                 FIR.storageAssets[index].video = video
-                print("updateAssets called - added video: \(id).mov")
+                print("updateAssets called - added video: \(id).mp4")
             }
             
             if qrCode != nil {

@@ -29,7 +29,8 @@ open class VideoPicker: NSObject {
         self.pickerController.delegate = self
         self.pickerController.allowsEditing = true
         self.pickerController.mediaTypes = ["public.movie"]
-        self.pickerController.videoQuality = .typeHigh
+        self.pickerController.videoQuality = .typeLow                    //3/4/21 THIS CHANGED THE VIDEO QUALITY
+        self.pickerController.videoMaximumDuration = K.videoMaximumDuration
     }
 
     private func action(for type: UIImagePickerController.SourceType, title: String) -> UIAlertAction? {
@@ -83,6 +84,9 @@ open class VideoPicker: NSObject {
     }
 }
 
+
+// MARK: - UIImage Picker Controller Delegate
+
 extension VideoPicker: UIImagePickerControllerDelegate {
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.pickerController(picker, didSelect: nil)
@@ -104,6 +108,9 @@ extension VideoPicker: UIImagePickerControllerDelegate {
         self.pickerController(picker, didSelect: url)
     }
 }
+
+
+// MARK: - UINavigation Controller Delegate
 
 extension VideoPicker: UINavigationControllerDelegate {
     

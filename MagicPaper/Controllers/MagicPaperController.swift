@@ -129,7 +129,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         configuration = ARImageTrackingConfiguration()
 
         let imageRef = storageRef.child(FIR.storageImage).child("\(qrCode.docID).png")
-        imageRef.getData(maxSize: 5 * 1024 * 1024) { [weak self] (data, error) in
+        imageRef.getData(maxSize: 5 * K.mb) { [weak self] (data, error) in
             guard error == nil else { return }
             guard let self = self else { return }
             guard let image = UIImage(data: data!) else { return }
@@ -154,7 +154,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             self.configuration.maximumNumberOfTrackedImages = 1
         }
         
-        let videoRef = storageRef.child(FIR.storageVideo).child("\(qrCode.docID).mov")
+        let videoRef = storageRef.child(FIR.storageVideo).child("\(qrCode.docID).mp4")
         videoRef.getData(maxSize: INT64_MAX) { [weak self] (data, error) in
             guard error == nil else { return }
             guard let self = self else { return }
