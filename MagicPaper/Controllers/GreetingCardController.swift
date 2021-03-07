@@ -78,14 +78,14 @@ class GreetingCardController: UITableViewController {
                 
                 let imageRef = storageRef.child(FIR.storageImage).child("\(document.documentID).png")
                 imageRef.getData(maxSize: 5 * K.mb) { (data, error) in
-                    guard error == nil else { return }
+                    guard error == nil else { return print("Error loading image: \(error!)") }
 
                     self.updateAssets(for: document.documentID, image: UIImage(data: data!))
                 }
                 
                 let videoRef = storageRef.child(FIR.storageVideo).child("\(document.documentID).mp4")
-                videoRef.getData(maxSize: INT64_MAX) { (data, error) in
-                    guard error == nil else { return }
+                videoRef.getData(maxSize: 18 * K.mb) { (data, error) in
+                    guard error == nil else { return print("Error loading video: \(error!)")}
                     
                     videoRef.downloadURL { (url, error) in
                         guard let downloadURL = url else { return }

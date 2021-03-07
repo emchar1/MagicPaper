@@ -15,8 +15,6 @@
 		EA01F4A225AADC0200188BC1 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F4A125AADC0200188BC1 /* AudioManager.swift */; };
 		EA01F4AA25AAEEAD00188BC1 /* main_LaunchButton.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA01F4A925AAEEAD00188BC1 /* main_LaunchButton.mp3 */; };
 		EA01F4AF25AB0A7800188BC1 /* main_PageTurn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA01F4AE25AB0A7800188BC1 /* main_PageTurn.mp3 */; };
-		EA49A37C2598218F003FF00B /* gidget.mov in Resources */ = {isa = PBXBuildFile; fileRef = EA49A37B2598218F003FF00B /* gidget.mov */; };
-		EA49A384259859E1003FF00B /* pushups.mov in Resources */ = {isa = PBXBuildFile; fileRef = EA49A383259859E1003FF00B /* pushups.mov */; };
 		EA49D77C25908A0D00C52847 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA49D77B25908A0D00C52847 /* CloudKit.framework */; };
 		EA5E4EBE25BCFB300013B539 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5E4EBD25BCFB300013B539 /* ImagePicker.swift */; };
 		EA5E4EC325BD65120013B539 /* VideoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5E4EC225BD65120013B539 /* VideoPicker.swift */; };
@@ -25,11 +23,9 @@
 		EA9CC8F325A6EE980040122E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9CC8F225A6EE980040122E /* Constants.swift */; };
 		EA9FA1DD25D11E52001AE96E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA9FA1DC25D11E52001AE96E /* GoogleService-Info.plist */; };
 		EA9FA1E225D128ED001AE96E /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9FA1E125D128ED001AE96E /* AuthController.swift */; };
-		EAAB12D025ABA33A00D55262 /* magicpaperdisco.mov in Resources */ = {isa = PBXBuildFile; fileRef = EAAB12CF25ABA33A00D55262 /* magicpaperdisco.mov */; };
 		EAAB12DE25AC327F00D55262 /* GreetingCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB12DD25AC327F00D55262 /* GreetingCardController.swift */; };
 		EAAB12E625AC361F00D55262 /* MagicGreetingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB12E525AC361F00D55262 /* MagicGreetingCard.swift */; };
 		EAAB12EB25AC40E900D55262 /* GreetingCardDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB12EA25AC40E900D55262 /* GreetingCardDetailsController.swift */; };
-		EAD14243259AF27500FA8474 /* magicpaperchristmas.mov in Resources */ = {isa = PBXBuildFile; fileRef = EAD14242259AF27500FA8474 /* magicpaperchristmas.mov */; };
 		EAD1424E259AF35E00FA8474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAD1424D259AF35E00FA8474 /* Assets.xcassets */; };
 		EAD1426725A136EF00FA8474 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD1426625A136EF00FA8474 /* QRCode.swift */; };
 		EAD1426F25A149D400FA8474 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD1426E25A149D400FA8474 /* ScannerViewController.swift */; };
@@ -39,7 +35,6 @@
 		EAD6199C2522A1DE003E425F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAD6199A2522A1DE003E425F /* LaunchScreen.storyboard */; };
 		EAD619A72522A1DE003E425F /* MagicPaperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD619A62522A1DE003E425F /* MagicPaperTests.swift */; };
 		EAD619B22522A1DE003E425F /* MagicPaperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD619B12522A1DE003E425F /* MagicPaperUITests.swift */; };
-		EAD619CE25230CAD003E425F /* wfh.mov in Resources */ = {isa = PBXBuildFile; fileRef = EAD619CD25230CAD003E425F /* wfh.mov */; };
 		FFF84C3D3AD9F9DD2E154F99 /* Pods_MagicPaper_MagicPaperUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BC2BDDA6659E3770924FA3 /* Pods_MagicPaper_MagicPaperUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -76,8 +71,6 @@
 		EA01F4A925AAEEAD00188BC1 /* main_LaunchButton.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = main_LaunchButton.mp3; sourceTree = "<group>"; };
 		EA01F4AE25AB0A7800188BC1 /* main_PageTurn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = main_PageTurn.mp3; sourceTree = "<group>"; };
 		EA0C1906A94E59050EF536C8 /* Pods-MagicPaper-MagicPaperUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicPaper-MagicPaperUITests.release.xcconfig"; path = "Target Support Files/Pods-MagicPaper-MagicPaperUITests/Pods-MagicPaper-MagicPaperUITests.release.xcconfig"; sourceTree = "<group>"; };
-		EA49A37B2598218F003FF00B /* gidget.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = gidget.mov; sourceTree = "<group>"; };
-		EA49A383259859E1003FF00B /* pushups.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = pushups.mov; sourceTree = "<group>"; };
 		EA49D77625908A0700C52847 /* MagicPaper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MagicPaper.entitlements; sourceTree = "<group>"; };
 		EA49D77B25908A0D00C52847 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		EA5E4EBD25BCFB300013B539 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -87,11 +80,9 @@
 		EA9CC8F225A6EE980040122E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EA9FA1DC25D11E52001AE96E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EA9FA1E125D128ED001AE96E /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
-		EAAB12CF25ABA33A00D55262 /* magicpaperdisco.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = magicpaperdisco.mov; sourceTree = "<group>"; };
 		EAAB12DD25AC327F00D55262 /* GreetingCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCardController.swift; sourceTree = "<group>"; };
 		EAAB12E525AC361F00D55262 /* MagicGreetingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicGreetingCard.swift; sourceTree = "<group>"; };
 		EAAB12EA25AC40E900D55262 /* GreetingCardDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCardDetailsController.swift; sourceTree = "<group>"; };
-		EAD14242259AF27500FA8474 /* magicpaperchristmas.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = magicpaperchristmas.mov; sourceTree = "<group>"; };
 		EAD1424D259AF35E00FA8474 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EAD1426625A136EF00FA8474 /* QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
 		EAD1426E25A149D400FA8474 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
@@ -107,7 +98,6 @@
 		EAD619AD2522A1DE003E425F /* MagicPaperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagicPaperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAD619B12522A1DE003E425F /* MagicPaperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicPaperUITests.swift; sourceTree = "<group>"; };
 		EAD619B32522A1DE003E425F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EAD619CD25230CAD003E425F /* wfh.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = wfh.mov; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,7 +239,6 @@
 				EAD1426225A134E800FA8474 /* Views */,
 				EAD1424D259AF35E00FA8474 /* Assets.xcassets */,
 				EA01F49B25AADBAC00188BC1 /* Sounds */,
-				EAD619C72522D597003E425F /* Videos */,
 				EAD6199A2522A1DE003E425F /* LaunchScreen.storyboard */,
 				EA99286025AEC8F400A64947 /* GreetingCard.xcdatamodeld */,
 				EA9FA1DC25D11E52001AE96E /* GoogleService-Info.plist */,
@@ -274,18 +263,6 @@
 				EAD619B32522A1DE003E425F /* Info.plist */,
 			);
 			path = MagicPaperUITests;
-			sourceTree = "<group>";
-		};
-		EAD619C72522D597003E425F /* Videos */ = {
-			isa = PBXGroup;
-			children = (
-				EAAB12CF25ABA33A00D55262 /* magicpaperdisco.mov */,
-				EA49A383259859E1003FF00B /* pushups.mov */,
-				EAD14242259AF27500FA8474 /* magicpaperchristmas.mov */,
-				EA49A37B2598218F003FF00B /* gidget.mov */,
-				EAD619CD25230CAD003E425F /* wfh.mov */,
-			);
-			path = Videos;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -396,17 +373,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA49A384259859E1003FF00B /* pushups.mov in Resources */,
 				EAD6199C2522A1DE003E425F /* LaunchScreen.storyboard in Resources */,
-				EAD14243259AF27500FA8474 /* magicpaperchristmas.mov in Resources */,
-				EA49A37C2598218F003FF00B /* gidget.mov in Resources */,
 				EAD619972522A1DC003E425F /* Main.storyboard in Resources */,
-				EAAB12D025ABA33A00D55262 /* magicpaperdisco.mov in Resources */,
 				EAD1424E259AF35E00FA8474 /* Assets.xcassets in Resources */,
 				EA01F4AF25AB0A7800188BC1 /* main_PageTurn.mp3 in Resources */,
 				EA9FA1DD25D11E52001AE96E /* GoogleService-Info.plist in Resources */,
 				EA01F4AA25AAEEAD00188BC1 /* main_LaunchButton.mp3 in Resources */,
-				EAD619CE25230CAD003E425F /* wfh.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
