@@ -28,11 +28,3 @@ struct MagicGreetingCard: Identifiable, Codable {
 //        case greetingVideo
 //    }
 }
-
-
-struct GreetingCardAsset {
-    let documentID: String
-    var image: UIImage?
-    var video: URL?
-    var qrCode: UIImage?
-}

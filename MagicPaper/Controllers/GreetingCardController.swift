@@ -49,20 +49,17 @@ class GreetingCardController: UITableViewController {
             fatalError("Something went wrong... no user logged in. Quitting perfunctorily.")
         }
         
-        uid = currentUser.uid
-        query = Firestore.firestore().collection(FIR.collection).whereField(FIR.greetingUID, isEqualTo: uid!)
-        if FIR.allUsers == nil {
-            FIR.allUsers = uid
-        }
-
-        guard FIR.allUsers! == uid || FIR.allUsers!.range(of: uid) == nil else {
+        query = Firestore.firestore().collection(FIR.collection).whereField(FIR.greetingUID, isEqualTo: currentUser.uid)
+        
+        guard FIR.allUsers == nil || FIR.allUsers!.range(of: currentUser.uid) == nil else {
             print("Only grab Storage assets once.")
             return
         }
         
-        
-        print("Grabbing Storage assets for the first time for users: \(FIR.allUsers!)")
-        FIR.allUsers!.append(", " + uid)
+
+        uid = currentUser.uid
+        FIR.allUsers = FIR.allUsers == nil ? uid : (FIR.allUsers! + ", " + uid)
+        print("Grabbing Storage assets for the first time for user(s): \(FIR.allUsers!)")
 
         //Grab the assets in Storage by looking at the files in Firestore. Genius!
         query.getDocuments { [weak self] (querySnapshot, error) in
@@ -78,14 +75,14 @@ class GreetingCardController: UITableViewController {
                 
                 let imageRef = storageRef.child(FIR.storageImage).child("\(document.documentID).png")
                 imageRef.getData(maxSize: 5 * K.mb) { (data, error) in
-                    guard error == nil else { return print("Error loading image: \(error!)") }
+                    guard error == nil else { return }
 
                     self.updateAssets(for: document.documentID, image: UIImage(data: data!))
                 }
                 
                 let videoRef = storageRef.child(FIR.storageVideo).child("\(document.documentID).mp4")
                 videoRef.getData(maxSize: 18 * K.mb) { (data, error) in
-                    guard error == nil else { return print("Error loading video: \(error!)")}
+                    guard error == nil else { return }
                     
                     videoRef.downloadURL { (url, error) in
                         guard let downloadURL = url else { return }
@@ -100,24 +97,8 @@ class GreetingCardController: UITableViewController {
                     
                     self.updateAssets(for: document.documentID, qrCode: UIImage(data: data!))
                 }
-                
             }//end for
         }//end query.snapshotListener
-        
-        
-        
-        
-        //TEST LIST ALL FILES IN STORAGE. SO FAR, ONLY SHOWS FILES IN ROOT FOLDER, DOESN'T RECURSIVELY SEARCH SUBFOLDERS???
-//        let store = Storage.storage().reference()
-//        store.listAll { (result, error) in
-//            guard error == nil else {
-//                return
-//            }
-//
-//            for item in result.items {
-//                print("Item: \(item.fullPath)")
-//            }
-//        }
     }//end viewDidLoad
     
     override func viewWillAppear(_ animated: Bool) {
@@ -230,18 +211,21 @@ class GreetingCardController: UITableViewController {
             return
         }
         
-        
-        let controller = nc.topViewController as! GreetingCardDetailsController
-        controller.uid = uid
-        controller.delegate = self
 
         //Segue to AddGreetingCard
         if segue.identifier == "AddGreetingCard" {
+            let controller = nc.topViewController as! GreetingCardDetailsController
+            controller.uid = uid
+            controller.delegate = self
 
         }
 
         //Segue to EditGreetingCard
         if segue.identifier == "EditGreetingCard" {
+            let controller = nc.topViewController as! GreetingCardDetailsController
+            controller.uid = uid
+            controller.delegate = self
+
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
                 controller.docRef = Firestore.firestore().collection(FIR.collection).document(greetingCards[indexPath.row].id!)
                 controller.greetingCard = greetingCards[indexPath.row]
@@ -250,6 +234,25 @@ class GreetingCardController: UITableViewController {
                     controller.image = asset.image
                     controller.videoURL = asset.video
                 }
+            }
+        }
+        
+        //Segue to Test0Add (the real greeting card details)
+        if segue.identifier == "SegueTest0Add" {
+            
+        }
+        
+        //Segue to Test0Edit
+        if segue.identifier == "SegueTest0Edit" {
+            let controller = nc.topViewController as! GreetingCardDetailsController2
+            
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell),
+               let asset = FIR.storageAssets.first(where: { $0.documentID == greetingCards[indexPath.row].id! }) {
+                
+                controller.image = asset.image
+                controller.qrCode = asset.qrCode
+                controller.heading = greetingCards[indexPath.row].greetingHeading
+                controller.details = greetingCards[indexPath.row].greetingDescription
             }
         }
         
