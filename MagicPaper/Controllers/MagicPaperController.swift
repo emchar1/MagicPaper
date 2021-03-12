@@ -206,29 +206,29 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
 
         let imageOrientation: ImageOrientation = (arUIImage.size.width > arUIImage.size.height) ? .landscape : .portrait
         let imageDimensions: (width: CGFloat, height: CGFloat) = (arUIImage.size.width, arUIImage.size.height)
-
+        
         let item = AVPlayerItem(url: arVideoURL)
         self.avPlayer = AVPlayer(playerItem: item)
         self.avPlayer!.seek(to: CMTime.zero)
         self.avPlayer!.play()
-
+        
         let videoNode = SKVideoNode(avPlayer: self.avPlayer!)
         videoNode.position = CGPoint(x: imageDimensions.width / 2, y: imageDimensions.height / 2)
         videoNode.zRotation = imageOrientation == .portrait ? .pi / 2 : 0
         videoNode.yScale = -1.0
         videoNode.size = (imageOrientation == .landscape) ? CGSize(width: imageDimensions.width, height: imageDimensions.height) : CGSize(width: imageDimensions.height, height: imageDimensions.width)
-
+        
         let videoScene = SKScene(size: CGSize(width: imageDimensions.width, height: imageDimensions.height))
         videoScene.addChild(videoNode)
         
-        let plane = SCNPlane(width: imageAnchor.referenceImage.physicalSize.width,
-                             height: imageAnchor.referenceImage.physicalSize.height)
         let material = SCNMaterial()
         material.diffuse.contents = videoScene
+        
+        let plane = SCNPlane(width: imageAnchor.referenceImage.physicalSize.width,
+                             height: imageAnchor.referenceImage.physicalSize.height)
         plane.materials = [material]
         
         let planeNode = SCNNode(geometry: plane)
-        //flips the plane so that it's flat on the screen/paper instead of jutting out along the z-axis
         planeNode.eulerAngles.x = -.pi / 2
         
         self.node = SCNNode()
@@ -238,7 +238,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
                                                object: self.avPlayer?.currentItem,
                                                queue: nil) { [weak self] notification in
-            guard let self = self else { return print("Notification Center weakness return") }
+            guard let self = self else { return }
             
             self.node?.removeFromParentNode()
             self.sceneView.session.remove(anchor: imageAnchor)
@@ -250,7 +250,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
                                          self.scanButtonHeightAnchor,
                                          self.scanButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
                                          self.view.layoutMarginsGuide.bottomAnchor.constraint(equalTo: self.scanButton.bottomAnchor, constant: 140)])
-            
             self.scanButtonWidthAnchor.constant = 260
             self.scanButtonHeightAnchor.constant = 80
             
@@ -259,7 +258,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
                                          self.replayButtonHeightAnchor,
                                          self.replayButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
                                          self.view.layoutMarginsGuide.bottomAnchor.constraint(equalTo: self.replayButton.bottomAnchor, constant: 40)])
-            
             self.replayButtonWidthAnchor.constant = 260
             self.replayButtonHeightAnchor.constant = 80
             
@@ -367,6 +365,3 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         }
     }
 }
-
-
-
