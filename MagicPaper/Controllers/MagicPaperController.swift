@@ -100,7 +100,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         scanButtonHeightAnchor = scanButton.heightAnchor.constraint(equalToConstant: 0)
         replayButtonWidthAnchor = replayButton.widthAnchor.constraint(equalToConstant: 0)
         replayButtonHeightAnchor = replayButton.heightAnchor.constraint(equalToConstant: 0)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -134,17 +133,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             guard let self = self else { return }
             guard let image = UIImage(data: data!) else { return }
             
-            
-            
-            switch image.imageOrientation {
-            case .up: print("Up")
-            case.left: print("Left")
-            case .right: print("Right")
-            default: print("Other")
-            }
-            
-            
-            
+    
             let arReferenceImage = ARReferenceImage(image.cgImage!, orientation: CGImagePropertyOrientation.up, physicalWidth: 0.25)
             arReferenceImage.name = "\(self.qrCode.docID)"
             self.newReferenceImages.insert(arReferenceImage)
@@ -156,17 +145,16 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         
         let videoRef = storageRef.child(FIR.storageVideo).child("\(qrCode.docID).mp4")
         videoRef.getData(maxSize: INT64_MAX) { [weak self] (data, error) in
-            guard error == nil else { return }
+            guard error == nil else { fatalError("No video file found! Unable to load the sceneView.") }
             guard let self = self else { return }
 
             videoRef.downloadURL { (url, error) in
                 guard let downloadURL = url else { return }
 
                 self.arVideoURL = downloadURL
-                print("Video download complete.")
+                print("Video download complete. Loading sceneView.")
 
                 self.sceneView.session.run(self.configuration)
-
             }
         }
     }
@@ -187,8 +175,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             print("Unable to makeVideo...")
             return nil
         }
-        
-        
         
         return myVideo
     }
@@ -217,30 +203,21 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
             return nil
         }
         
-        print("Guard checks passed! Attempting makeVideo()")
 
-
+        let imageOrientation: ImageOrientation = (arUIImage.size.width > arUIImage.size.height) ? .landscape : .portrait
         let imageDimensions: (width: CGFloat, height: CGFloat) = (arUIImage.size.width, arUIImage.size.height)
-        let imageOrientation: ImageOrientation = imageDimensions.width > imageDimensions.height ? .landscape : .portrait
+
         let item = AVPlayerItem(url: arVideoURL)
         self.avPlayer = AVPlayer(playerItem: item)
-        
-        let videoNode = SKVideoNode(avPlayer: self.avPlayer!)
-        //sets the center position of the video, i.e. the midpoint of the image
-        videoNode.position = CGPoint(x: imageDimensions.width / 2, y: imageDimensions.height / 2)
-        //flips the video horizontally. I added an xScale with the same size as the absolute value of the yScale. I tested various values and found that 0.5 works for all image/video pairs. Eh.
-        videoNode.yScale = -1.5//-0.5
-        videoNode.xScale = 1.5//0.5
-        
-//        //Alternately, this works to the above...
-//        videoNode.yScale = -1.0
-//        videoNode.size = CGSize(width: imageDimensions.width, height: imageDimensions.height)
-        
-        //So... this is only needed for portrait oriented photos/videos!
-        videoNode.zRotation = imageOrientation == .portrait ? .pi / 2 : 0
         self.avPlayer!.seek(to: CMTime.zero)
         self.avPlayer!.play()
-        
+
+        let videoNode = SKVideoNode(avPlayer: self.avPlayer!)
+        videoNode.position = CGPoint(x: imageDimensions.width / 2, y: imageDimensions.height / 2)
+        videoNode.zRotation = imageOrientation == .portrait ? .pi / 2 : 0
+        videoNode.yScale = -1.0
+        videoNode.size = (imageOrientation == .landscape) ? CGSize(width: imageDimensions.width, height: imageDimensions.height) : CGSize(width: imageDimensions.height, height: imageDimensions.width)
+
         let videoScene = SKScene(size: CGSize(width: imageDimensions.width, height: imageDimensions.height))
         videoScene.addChild(videoNode)
         

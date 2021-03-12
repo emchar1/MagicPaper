@@ -30,24 +30,25 @@ class GreetingCardDetailsController: UITableViewController {
     @IBOutlet weak var videoView: VideoView!
     @IBOutlet weak var qrView: UIImageView!
     
-    let dateFormatter: DateFormatter = {
+    private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d, yyyy"
         return formatter
     }()
     
+    private var imagePicker: ImagePicker!
+    private var videoPicker: VideoPicker!
+    private var imageChanged: Bool!
+    private var videoChanged: Bool!
+    private var isNewDoc: Bool!
+
     var uid: String!
     var docRef: DocumentReference!
     var greetingCard: MagicGreetingCard?
-    var image: UIImage?
-    var videoURL: URL?
-    var imageChanged: Bool!
-    var videoChanged: Bool!
     var delegate: GreetingCardDetailsControllerDelegate?
-    
-    var imagePicker: ImagePicker!
-    var videoPicker: VideoPicker!
-    
+    var image: UIImage?
+    var videoURL: URL?    
+
 
     // MARK: - Initialization
     
@@ -64,10 +65,12 @@ class GreetingCardDetailsController: UITableViewController {
             imageView.image = image
             videoView.url = videoURL
             videoView.player?.play()
+            isNewDoc = false
         }
         else {
             docRef = Firestore.firestore().collection(FIR.collection).document()
             dateLabel.text = dateFormatter.string(from: Date())
+            isNewDoc = true
         }
         
         let code = QRCode(uid: uid, docID: docRef.documentID)
@@ -94,42 +97,44 @@ class GreetingCardDetailsController: UITableViewController {
                                          greetingDescription: descriptionField.text!,
                                          greetingHeading: headingField.text!,
                                          greetingUID: uid)
+        
         do {
             try docRef.setData(from: greetingCard)
+            
+            
+            //Save image, video and QR code to Firebase Cloud Storage
+            if imageChanged, let dataFile = imageView.image {
+                putInStorage(withData: dataFile.pngData(),
+                             inFolder: FIR.storageImage,
+                             forFilename: docRef.documentID + ".png",
+                             contentType: "image/png")
+            }
+            
+            if videoChanged, let dataFile = videoView.url {
+                //Use try if you want to catch the error and investigate. Use try? if you just care about success and failure without the "why". Use try! if you're certain it'll succeed.
+                putInStorage(withData: try? Data(contentsOf: dataFile),
+                             inFolder: FIR.storageVideo,
+                             forFilename: docRef.documentID + ".mp4",
+                             contentType: "video/mp4")
+            }
+            
+            if isNewDoc, let dataFile = qrView.image {
+                putInStorage(withData: dataFile.pngData(),
+                             inFolder: FIR.storageQR,
+                             forFilename: docRef.documentID + ".png",
+                             contentType: "image/png")
+            }
+
+            delegate?.greetingCardDetailsController(self,
+                                                    didUpdateFor: imageView.image,
+                                                    video: videoView.url,
+                                                    qrCode: qrView.image)
+            
             print("Document ID: \(docRef.documentID) has been created or updated in Firestore.")
         }
         catch {
             print("Error writing to Firestore: \(error)")
         }
-        
-                
-        //Firebase Cloud Storage
-        if imageChanged, let dataFile = imageView.image {
-            putInStorage(withData: dataFile.pngData(),
-                         inFolder: FIR.storageImage,
-                         forFilename: docRef.documentID + ".png",
-                         contentType: "image/png")
-        }
-        
-        if videoChanged, let dataFile = videoView.url {
-            //Use try if you want to catch the error and investigate. Use try? if you just care about success and failure without the "why". Use try! if you're certain it'll succeed.
-            putInStorage(withData: try? Data(contentsOf: dataFile),
-                         inFolder: FIR.storageVideo,
-                         forFilename: docRef.documentID + ".mp4",
-                         contentType: "video/mp4")
-        }
-        
-        if let dataFile = qrView.image {
-            putInStorage(withData: dataFile.pngData(),
-                         inFolder: FIR.storageQR,
-                         forFilename: docRef.documentID + ".png",
-                         contentType: "image/png")
-        }
-
-        delegate?.greetingCardDetailsController(self,
-                                                didUpdateFor: imageView.image,
-                                                video: videoView.url,
-                                                qrCode: qrView.image)
         
         dismiss(animated: true, completion: nil)
     }
