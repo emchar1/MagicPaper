@@ -86,6 +86,7 @@ class CheckmarkView: UIView {
             checkmarkView.alpha = 1.0
             checkmarkView.backgroundColor = .systemGreen
         }, completion: { _ in
+            checkmarkView.removeFromSuperview()
             completion()
         })
     }

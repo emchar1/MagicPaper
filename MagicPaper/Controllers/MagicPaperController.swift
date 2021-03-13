@@ -154,7 +154,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
                 self.arVideoURL = downloadURL
                 print("Video download complete. Loading sceneView.")
 
-                self.sceneView.session.run(self.configuration)
+                self.sceneView.session.run(self.configuration, options: [.removeExistingAnchors, .resetTracking])
             }
         }
     }
@@ -283,9 +283,8 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         shrinkButtons(replayPressed: false) { [weak self] in
             guard let self = self else { return }
             
-            //DO I NEED TO DO CLEAN UP HERE TO PREVENT MEMORY LEAKS???
-//            NotificationCenter.default.removeObserver(self)
-            self.performSegue(withIdentifier: "segueScan", sender: nil)
+            self.sceneView.session.pause()
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -358,6 +357,13 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         })
     }
     
+    
+    
+    //DEBUG PURPOSES ONLY!!
+    @IBAction func goBack(_ sender: UIButton) {
+        self.sceneView.session.pause()
+        dismiss(animated: true, completion: nil)
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueCreate" {
