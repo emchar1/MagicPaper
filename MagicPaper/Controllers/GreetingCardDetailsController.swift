@@ -224,7 +224,7 @@ extension GreetingCardDetailsController: ImagePickerDelegate, VideoPickerDelegat
     
     func didSelect(url: URL?) {
         videoView.url = url
-        videoView.contentMode = .scaleAspectFit         //THIS ISN'T WORKING!!! Need to aspect fit video in square uiview
+        videoView.contentMode = .scaleAspectFit
         videoView.player?.play()
         videoChanged = true
     }

@@ -152,8 +152,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
                 guard let downloadURL = url else { return }
 
                 self.arVideoURL = downloadURL
-                print("Video download complete. Loading sceneView.")
-
                 self.sceneView.session.run(self.configuration, options: [.removeExistingAnchors, .resetTracking])
             }
         }
@@ -161,7 +159,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("viewWillDisappear from MagicPaperController called.")
         sceneView.session.pause()
     }
     
@@ -298,64 +295,57 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     }
     
     private func shrinkButtons(replayPressed: Bool, completion: @escaping () -> Void) {
-        
-        UIView.animate(withDuration: 0, animations: {
-            //Don't do anything here, but you need it to be a nested UIView.animate because otherwise it doesn't animate for some reason. Bug???
-        }, completion: { [weak self] _ in
-            guard let self = self else { return }
-            
-            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
-                if replayPressed {
-                    self.scanButton.alpha = 0
-                }
-                else {
-                    self.replayButton.alpha = 0
-                }
-            }, completion: { _ in
-                if replayPressed {
-                    self.scanButtonWidthAnchor.constant = 0
-                    self.scanButtonHeightAnchor.constant = 0
-                    self.scanButton.alpha = 1
-                    self.scanButton.layoutIfNeeded()
-                    self.scanButton.removeFromSuperview()
-                }
-                else {
-                    self.replayButtonWidthAnchor.constant = 0
-                    self.replayButtonHeightAnchor.constant = 0
-                    self.replayButton.alpha = 1
-                    self.replayButton.layoutIfNeeded()
-                    self.replayButton.removeFromSuperview()
-                }
-            })
-            
-            UIView.animate(withDuration: 0, delay: 1, options: .curveEaseIn, animations: {
-                if !replayPressed {
-                    self.scanButton.alpha = 0
-                }
-                else {
-                    self.replayButton.alpha = 0
-                }
-            }, completion: { _ in
-                if !replayPressed {
-                    self.scanButtonWidthAnchor.constant = 0
-                    self.scanButtonHeightAnchor.constant = 0
-                    self.scanButton.alpha = 1
-                    self.scanButton.layoutIfNeeded()
-                    self.scanButton.removeFromSuperview()
-                }
-                else {
-                    self.replayButtonWidthAnchor.constant = 0
-                    self.replayButtonHeightAnchor.constant = 0
-                    self.replayButton.alpha = 1
-                    self.replayButton.layoutIfNeeded()
-                    self.replayButton.removeFromSuperview()
-                }
-
-                completion()
-            })
-            
+        //Animates the button that wasn't pressed.
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
+            if replayPressed {
+                self.scanButton.alpha = 0
+                self.replayButton.transform = CGAffineTransform(rotationAngle: .pi / 12)
+            }
+            else {
+                self.replayButton.alpha = 0
+                self.scanButton.transform = CGAffineTransform(rotationAngle: .pi / 12)
+            }
+        }, completion: { _ in
+            if replayPressed {
+                self.scanButtonWidthAnchor.constant = 0
+                self.scanButtonHeightAnchor.constant = 0
+                self.scanButton.alpha = 1
+                self.scanButton.layoutIfNeeded()
+                self.scanButton.removeFromSuperview()
+            }
+            else {
+                self.replayButtonWidthAnchor.constant = 0
+                self.replayButtonHeightAnchor.constant = 0
+                self.replayButton.alpha = 1
+                self.replayButton.layoutIfNeeded()
+                self.replayButton.removeFromSuperview()
+            }
         })
+        
+        //Animates the button that WAS pressed.
+        UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 4, options: .curveEaseIn) {
+            self.scanButton.transform = CGAffineTransform(rotationAngle: 0)
+            self.replayButton.transform = CGAffineTransform(rotationAngle: 0)
+        } completion: { _ in
+            if !replayPressed {
+                self.scanButtonWidthAnchor.constant = 0
+                self.scanButtonHeightAnchor.constant = 0
+                self.scanButton.layoutIfNeeded()
+                self.scanButton.removeFromSuperview()
+            }
+            else {
+                self.replayButtonWidthAnchor.constant = 0
+                self.replayButtonHeightAnchor.constant = 0
+                self.replayButton.layoutIfNeeded()
+                self.replayButton.removeFromSuperview()
+            }
+            
+            completion()
+        }
     }
+    
+    
+    
     
     
     

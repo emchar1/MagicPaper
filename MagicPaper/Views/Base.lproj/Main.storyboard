@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Scanner-->
+        <!--Scan-->
         <scene sceneID="ugC-H2-XIk">
             <objects>
                 <viewController modalTransitionStyle="partialCurl" modalPresentationStyle="fullScreen" id="T2I-Hm-52y" customClass="ScannerViewController" customModule="MagicPaper" customModuleProvider="target" sceneMemberID="viewController">
@@ -41,7 +41,7 @@
                             <constraint firstAttribute="trailing" secondItem="S5b-4H-ULj" secondAttribute="trailing" constant="20" id="wus-y0-ksb"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Scanner" image="qrcode.viewfinder" catalog="system" id="Rge-iO-S23"/>
+                    <tabBarItem key="tabBarItem" title="Scan" image="qrcode.viewfinder" catalog="system" id="Rge-iO-S23"/>
                     <navigationItem key="navigationItem" id="26f-Ob-se7"/>
                     <connections>
                         <outlet property="qrLabel" destination="S5b-4H-ULj" id="ana-UP-iWq"/>
@@ -65,12 +65,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </arscnView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krV-QM-Ty4">
-                                <rect key="frame" x="20" y="84" width="24" height="24"/>
+                                <rect key="frame" x="20" y="64.5" width="36" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="9t3-Yt-Ak8"/>
-                                    <constraint firstAttribute="width" constant="24" id="fwU-ec-eaV"/>
+                                    <constraint firstAttribute="height" constant="36" id="9t3-Yt-Ak8"/>
+                                    <constraint firstAttribute="width" constant="36" id="fwU-ec-eaV"/>
                                 </constraints>
-                                <state key="normal" image="arrow.left.circle.fill" catalog="system"/>
+                                <color key="tintColor" systemColor="systemGray3Color"/>
+                                <state key="normal" backgroundImage="arrow.backward.circle.fill" catalog="system"/>
                                 <connections>
                                     <action selector="goBack:" destination="BV1-FR-VrT" eventType="touchUpInside" id="gkC-7u-DDN"/>
                                 </connections>
@@ -84,7 +85,7 @@
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="bottom" secondItem="U0K-SW-4ec" secondAttribute="bottom" id="VpT-BR-CcM"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="rJc-2c-zQA"/>
-                            <constraint firstItem="krV-QM-Ty4" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="40" id="wMF-nR-8FV"/>
+                            <constraint firstItem="krV-QM-Ty4" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="20" id="wMF-nR-8FV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="cIw-Gf-VFF"/>
@@ -716,7 +717,7 @@
         <segue reference="DRa-ig-C7D"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="arrow.left.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="arrow.backward.circle.fill" catalog="system" width="128" height="121"/>
         <image name="eye" catalog="system" width="128" height="81"/>
         <image name="greetingcard" catalog="system" width="107" height="128"/>
         <image name="qrcode.viewfinder" catalog="system" width="128" height="115"/>
@@ -728,6 +729,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray3Color">
+            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
