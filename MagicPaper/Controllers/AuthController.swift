@@ -67,11 +67,14 @@ class AuthController: UIViewController {
     @IBAction func loginPressed(_ sender: UIButton) {
         guard let email = emailField.text, let password = passwordField.text else { return }
         
+        
         //prevents multiple button taps resulting in stupid warning saying presenting view is not in window hierarchy
         loginButton.isEnabled = false
-        
+                
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
             guard error == nil else {
+                self.loginButton.isEnabled = true
+
                 self.loginErrorLabel.alpha = 1
                 UIView.animate(withDuration: 0.5, delay: 2.0, options: .curveEaseIn, animations: {
                     self.loginErrorLabel.alpha = 0
@@ -80,7 +83,7 @@ class AuthController: UIViewController {
                 print(error!.localizedDescription)
                 return
             }
-            
+                        
             //Save password to UserDefaults
             UserDefaults.standard.set(email, forKey: "loginEmail")
             UserDefaults.standard.set(password, forKey: "loginPassword")
