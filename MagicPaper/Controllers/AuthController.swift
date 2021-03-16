@@ -13,11 +13,13 @@ class AuthController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginErrorLabel: UILabel!
     @IBOutlet weak var peekPasswordButton: UIButton!
+    @IBOutlet weak var loginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loginErrorLabel.alpha = 0
+        loginButton.isEnabled = true
                 
         let email = UserDefaults.standard.string(forKey: "loginEmail")
         let password = UserDefaults.standard.string(forKey: "loginPassword")
@@ -51,6 +53,8 @@ class AuthController: UIViewController {
     
     //Logout button segue
     @IBAction func unwindToAuthController(segue: UIStoryboardSegue) {
+        loginButton.isEnabled = true
+
         do {
             try Auth.auth().signOut()
             print("Sign out.")
@@ -62,6 +66,9 @@ class AuthController: UIViewController {
 
     @IBAction func loginPressed(_ sender: UIButton) {
         guard let email = emailField.text, let password = passwordField.text else { return }
+        
+        //prevents multiple button taps resulting in stupid warning saying presenting view is not in window hierarchy
+        loginButton.isEnabled = false
         
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
             guard error == nil else {

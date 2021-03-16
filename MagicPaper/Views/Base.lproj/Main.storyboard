@@ -683,6 +683,7 @@
                     <tabBarItem key="tabBarItem" title="Create" image="greetingcard" catalog="system" id="mso-zo-wyV"/>
                     <connections>
                         <outlet property="emailField" destination="pPj-sG-Ody" id="Ho1-v0-SY4"/>
+                        <outlet property="loginButton" destination="B5n-sx-1Fd" id="rAs-ek-qR9"/>
                         <outlet property="loginErrorLabel" destination="GSe-pV-a6a" id="dW5-wh-ru7"/>
                         <outlet property="passwordField" destination="jNZ-Di-fLh" id="Bo7-gb-TYB"/>
                         <outlet property="peekPasswordButton" destination="eJE-6w-lPC" id="CgA-pt-FN1"/>

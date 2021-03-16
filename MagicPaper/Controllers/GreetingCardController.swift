@@ -49,15 +49,15 @@ class GreetingCardController: UITableViewController {
             fatalError("Something went wrong... no user logged in. Quitting perfunctorily.")
         }
         
+        uid = currentUser.uid
         query = Firestore.firestore().collection(FIR.collection).whereField(FIR.greetingUID, isEqualTo: currentUser.uid)
         
         guard FIR.allUsers == nil || FIR.allUsers!.range(of: currentUser.uid) == nil else {
             print("Only grab Storage assets once.")
             return
         }
-        
 
-        uid = currentUser.uid
+
         FIR.allUsers = FIR.allUsers == nil ? uid : (FIR.allUsers! + ", " + uid)
         print("Grabbing Storage assets for the first time for user(s): \(FIR.allUsers!)")
 
