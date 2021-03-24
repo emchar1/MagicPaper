@@ -128,8 +128,8 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         configuration = ARImageTrackingConfiguration()
 
         let imageRef = storageRef.child(FIR.storageImage).child("\(qrCode.docID).png")
-        imageRef.getData(maxSize: 5 * K.mb) { [weak self] (data, error) in
-            guard error == nil else { return }
+        imageRef.getData(maxSize: K.maxImageSize * K.mb) { [weak self] (data, error) in
+            guard error == nil else { return print("Error getting imageRef in MagicPaperController: \(error!)")}
             guard let self = self else { return }
             guard let image = UIImage(data: data!) else { return }
             
@@ -144,8 +144,8 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         }
         
         let videoRef = storageRef.child(FIR.storageVideo).child("\(qrCode.docID).mp4")
-        videoRef.getData(maxSize: INT64_MAX) { [weak self] (data, error) in
-            guard error == nil else { fatalError("No video file found! Unable to load the sceneView.") }
+        videoRef.getData(maxSize: K.maxVideoSize * K.mb) { [weak self] (data, error) in
+            guard error == nil else { return print("Error getting videoRef in MagicPaperController: \(error!)") }
             guard let self = self else { return }
 
             videoRef.downloadURL { (url, error) in

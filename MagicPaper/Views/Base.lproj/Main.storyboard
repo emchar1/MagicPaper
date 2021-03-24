@@ -489,6 +489,13 @@
                                     <constraint firstAttribute="width" secondItem="id3-jN-1fm" secondAttribute="height" multiplier="4:3" id="qWr-EV-n6r"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgM-wN-XiW">
+                                <rect key="frame" x="20" y="138" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="You-10-5qh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -498,17 +505,29 @@
                             <constraint firstItem="id3-jN-1fm" firstAttribute="centerY" secondItem="hWg-iP-n2l" secondAttribute="centerY" id="QwC-xL-z3L"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="5xh-wb-RMi"/>
+                    <navigationItem key="navigationItem" id="5xh-wb-RMi">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="4EZ-7Q-FPn">
+                            <connections>
+                                <action selector="cancelPressed:" destination="r8a-cf-wab" id="s8n-rg-azB"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="PC9-hf-2pW">
+                            <connections>
+                                <action selector="donePressed:" destination="r8a-cf-wab" id="iEh-jh-s1W"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="detailsLabel" destination="k6Z-Ok-cM3" id="TMY-kz-ICi"/>
+                        <outlet property="dateLabel" destination="cgM-wN-XiW" id="EHl-ee-j61"/>
+                        <outlet property="descriptionLabel" destination="k6Z-Ok-cM3" id="TMY-kz-ICi"/>
                         <outlet property="headingLabel" destination="ajS-7S-snb" id="kY8-IJ-Zth"/>
                         <outlet property="imageView" destination="vPL-mF-Q2k" id="b55-0e-5NT"/>
-                        <outlet property="qrCodeView" destination="bx4-K9-ACI" id="o5q-X0-Ch5"/>
+                        <outlet property="qrView" destination="bx4-K9-ACI" id="o5q-X0-Ch5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="knd-Jc-pDe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3745" y="1926"/>
+            <point key="canvasLocation" x="2829" y="1926"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ab7-Ek-97q">

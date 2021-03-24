@@ -14,6 +14,8 @@ struct K {
     static let validQRCodePrefix = "magicpaper"
     static let qrDelim: Character = "-"
     static let mb: Int64 = 1 * 1024 * 1024
+    static let maxImageSize: Int64 = 5
+    static let maxVideoSize: Int64 = 18
     static let videoMaximumDuration: TimeInterval = 30
     static var showInstructions = true
     

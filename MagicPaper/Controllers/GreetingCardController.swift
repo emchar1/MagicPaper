@@ -74,15 +74,15 @@ class GreetingCardController: UITableViewController {
                 let storageRef = Storage.storage().reference().child(self.uid)
                 
                 let imageRef = storageRef.child(FIR.storageImage).child("\(document.documentID).png")
-                imageRef.getData(maxSize: 5 * K.mb) { (data, error) in
-                    guard error == nil else { return }
+                imageRef.getData(maxSize: K.maxImageSize * K.mb) { (data, error) in
+                    guard error == nil else { return print("Error getting imageRef in GreetingCardController: \(error!)")}
 
                     self.updateAssets(for: document.documentID, image: UIImage(data: data!))
                 }
                 
                 let videoRef = storageRef.child(FIR.storageVideo).child("\(document.documentID).mp4")
-                videoRef.getData(maxSize: 18 * K.mb) { (data, error) in
-                    guard error == nil else { return }
+                videoRef.getData(maxSize: K.maxVideoSize * K.mb) { (data, error) in
+                    guard error == nil else { return print("Error getting videoRef in GreetingCardController: \(error!)") }
                     
                     videoRef.downloadURL { (url, error) in
                         guard let downloadURL = url else { return }
@@ -245,22 +245,28 @@ class GreetingCardController: UITableViewController {
         //Segue to Test0Edit
         if segue.identifier == "SegueTest0Edit" {
             let controller = nc.topViewController as! GreetingCardDetailsController2
+            controller.uid = uid
+            controller.delegate = self
             
-            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell),
-               let asset = FIR.storageAssets.first(where: { $0.documentID == greetingCards[indexPath.row].id! }) {
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                controller.docRef = Firestore.firestore().collection(FIR.collection).document(greetingCards[indexPath.row].id!)
+                controller.greetingCard = greetingCards[indexPath.row]
                 
-                controller.image = asset.image
-                controller.qrCode = asset.qrCode
-                controller.heading = greetingCards[indexPath.row].greetingHeading
-                controller.details = greetingCards[indexPath.row].greetingDescription
+                if let asset = FIR.storageAssets.first(where: { $0.documentID == greetingCards[indexPath.row].id! }) {
+                    controller.image = asset.image
+                    controller.videoURL = asset.video
+//                    controller.qrCode = asset.qrCode
+//                    controller.heading = greetingCards[indexPath.row].greetingHeading
+//                    controller.details = greetingCards[indexPath.row].greetingDescription
+                }
             }
         }
-        
     }
-    
     
 }
 
+
+// MARK: - GreetingCardDetailsControllerDelegate
 
 extension GreetingCardController: GreetingCardDetailsControllerDelegate {
     func greetingCardDetailsController(_ controller: GreetingCardDetailsController,
@@ -272,5 +278,21 @@ extension GreetingCardController: GreetingCardDetailsControllerDelegate {
         }
         
         updateAssets(for: greetingCard.id!, image: image, video: video, qrCode: qrCode)
+    }
+}
+
+
+// MARK: - GreetingCardDetailsController2Delegate
+
+extension GreetingCardController: GreetingCardDetailsController2Delegate {
+    func greetingCardDetailsController2(_ controller: GreetingCardDetailsController2,
+                                        didUpdateFor image: UIImage?,
+//                                        video: URL?,
+                                        qrCode: UIImage?) {
+        guard let greetingCard = controller.greetingCard else {
+            fatalError("fatalError: greetingCard object nil in GreetingCardController delegate function.")
+        }
+        
+        updateAssets(for: greetingCard.id!, image: image, qrCode: qrCode)
     }
 }
