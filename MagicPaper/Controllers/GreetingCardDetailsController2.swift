@@ -49,9 +49,9 @@ class GreetingCardDetailsController2: UIViewController {
     var videoURL: URL?
 
     
-    var qrCode: UIImage?
-    var heading: String?
-    var details: String?
+//    var qrCode: UIImage?
+//    var heading: String?
+//    var details: String?
     
 
     // MARK: - Initialization
