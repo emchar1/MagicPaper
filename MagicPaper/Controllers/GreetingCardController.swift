@@ -239,7 +239,9 @@ class GreetingCardController: UITableViewController {
         
         //Segue to Test0Add (the real greeting card details)
         if segue.identifier == "SegueTest0Add" {
-            
+            let controller = nc.topViewController as! GreetingCardDetailsController2
+            controller.uid = uid
+            controller.delegate = self
         }
         
         //Segue to Test0Edit
