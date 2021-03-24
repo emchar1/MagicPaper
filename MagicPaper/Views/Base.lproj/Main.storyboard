@@ -184,7 +184,7 @@
                             </barButtonItem>
                             <barButtonItem title="Test0" id="bs2-bK-BAp">
                                 <connections>
-                                    <segue destination="nlT-nM-2TZ" kind="presentation" identifier="SegueTest0New" id="bKL-g5-Etf"/>
+                                    <segue destination="nlT-nM-2TZ" kind="presentation" identifier="SegueTest0Add" id="bKL-g5-Etf"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -489,9 +489,8 @@
                                     <constraint firstAttribute="width" secondItem="id3-jN-1fm" secondAttribute="height" multiplier="4:3" id="qWr-EV-n6r"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgM-wN-XiW">
-                                <rect key="frame" x="20" y="138" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgM-wN-XiW">
+                                <rect key="frame" x="20" y="138" width="374" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -501,8 +500,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="You-10-5qh" firstAttribute="trailing" secondItem="id3-jN-1fm" secondAttribute="trailing" constant="10" id="0CK-Go-HWX"/>
+                            <constraint firstItem="cgM-wN-XiW" firstAttribute="leading" secondItem="You-10-5qh" secondAttribute="leading" constant="20" id="A0f-6f-Xr0"/>
                             <constraint firstItem="id3-jN-1fm" firstAttribute="leading" secondItem="You-10-5qh" secondAttribute="leading" constant="10" id="GPe-Je-9ii"/>
                             <constraint firstItem="id3-jN-1fm" firstAttribute="centerY" secondItem="hWg-iP-n2l" secondAttribute="centerY" id="QwC-xL-z3L"/>
+                            <constraint firstItem="You-10-5qh" firstAttribute="trailing" secondItem="cgM-wN-XiW" secondAttribute="trailing" constant="20" id="ZEG-vz-NOg"/>
+                            <constraint firstItem="cgM-wN-XiW" firstAttribute="top" secondItem="You-10-5qh" secondAttribute="top" constant="82" id="iLm-Pe-Ejf"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5xh-wb-RMi">
@@ -733,7 +735,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Fot-VI-Iif"/>
+        <segue reference="bKL-g5-Etf"/>
         <segue reference="DRa-ig-C7D"/>
     </inferredMetricsTieBreakers>
     <resources>
