@@ -217,7 +217,7 @@ class GreetingCardDetailsController: UITableViewController {
 // MARK: - CUSTOM Image Picker Delegate
 
 extension GreetingCardDetailsController: ImagePickerDelegate, VideoPickerDelegate {
-    func didSelect(image: UIImage?) {
+    func didSelect(image: UIImage?, imageView: UIImageView, scrollView: UIScrollView) {
         imageView.image = image
         imageChanged = true
     }

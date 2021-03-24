@@ -9,7 +9,7 @@ import UIKit
 import Photos
 
 public protocol ImagePickerDelegate: class {
-    func didSelect(image: UIImage?)
+    func didSelect(image: UIImage?, imageView: UIImageView, scrollView: UIScrollView)
 }
 
 open class ImagePicker: NSObject {
@@ -74,8 +74,39 @@ open class ImagePicker: NSObject {
     
     private func pickerController(_ controller: UIImagePickerController, didSelect image: UIImage?) {
         controller.dismiss(animated: true, completion: nil)
+
+        guard let image = image else { return print("No image!") }
+
+        //Set imageView and ScrollViews
+        let imageView = UIImageView()
+        imageView.frame = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = .lightGray
         
-        self.delegate?.didSelect(image: image)
+        let scrollView = UIScrollView()
+        scrollView.maximumZoomScale = 4
+        scrollView.minimumZoomScale = 0.02
+        scrollView.bounces = true
+        scrollView.bouncesZoom = true
+        scrollView.contentMode = .scaleAspectFit
+        scrollView.contentSize = image.size
+        scrollView.autoresizingMask = .flexibleWidth
+//        scrollView.addSubview(imageView)
+        
+        
+        //Set zoom scales
+        let imageViewSize = imageView.bounds.size
+        let scrollViewSize = scrollView.bounds.size
+        let widthScale = scrollViewSize.width / imageViewSize.width
+        let heightScale = scrollViewSize.height / imageViewSize.height
+        let minZoomScale = max(widthScale, heightScale)
+        scrollView.minimumZoomScale = minZoomScale
+        scrollView.zoomScale = minZoomScale
+        
+        
+        //Call delegate function
+        self.delegate?.didSelect(image: image, imageView: imageView, scrollView: scrollView)
     }
 }
 
@@ -87,8 +118,8 @@ extension ImagePicker: UIImagePickerControllerDelegate {
     public func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 
-        guard let image = info[.editedImage] as? UIImage else {
-//        guard let image = info[.originalImage] as? UIImage else {
+//        guard let image = info[.editedImage] as? UIImage else {
+        guard let image = info[.originalImage] as? UIImage else {
             return self.pickerController(picker, didSelect: nil)
         }
         

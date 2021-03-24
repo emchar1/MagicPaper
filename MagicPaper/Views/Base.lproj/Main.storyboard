@@ -405,13 +405,14 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="SF2-lV-Lnt" userLabel="Stack - Main">
                                         <rect key="frame" x="4" y="4" width="386" height="287.5"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vPL-mF-Q2k" userLabel="Photo">
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0TC-s6-Q0k" userLabel="photoScrollView">
                                                 <rect key="frame" x="0.0" y="0.0" width="386" height="217"/>
-                                                <color key="backgroundColor" red="1" green="0.2527923882" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="vPL-mF-Q2k" secondAttribute="height" multiplier="16:9" id="dG4-e4-vOr"/>
+                                                    <constraint firstAttribute="width" secondItem="0TC-s6-Q0k" secondAttribute="height" multiplier="16:9" id="Zgk-RI-Uq6"/>
                                                 </constraints>
-                                            </imageView>
+                                                <viewLayoutGuide key="contentLayoutGuide" id="6sR-V5-E5d"/>
+                                                <viewLayoutGuide key="frameLayoutGuide" id="KCB-pj-WcP"/>
+                                            </scrollView>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qep-aM-14y" userLabel="Stack - Bottom">
                                                 <rect key="frame" x="0.0" y="221" width="386" height="66.5"/>
                                                 <subviews>
@@ -473,10 +474,10 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="Qep-aM-14y" secondAttribute="trailing" id="3xL-tv-2Ue"/>
                                             <constraint firstItem="Qep-aM-14y" firstAttribute="leading" secondItem="SF2-lV-Lnt" secondAttribute="leading" id="67Y-hw-H6Y"/>
+                                            <constraint firstItem="0TC-s6-Q0k" firstAttribute="top" secondItem="SF2-lV-Lnt" secondAttribute="top" id="84J-v9-Jkz"/>
                                             <constraint firstAttribute="bottom" secondItem="Qep-aM-14y" secondAttribute="bottom" id="Dxc-gN-H2m"/>
-                                            <constraint firstAttribute="trailing" secondItem="vPL-mF-Q2k" secondAttribute="trailing" id="OVX-x2-MCd"/>
-                                            <constraint firstItem="vPL-mF-Q2k" firstAttribute="top" secondItem="SF2-lV-Lnt" secondAttribute="top" id="Pbe-KO-z1L"/>
-                                            <constraint firstItem="vPL-mF-Q2k" firstAttribute="leading" secondItem="SF2-lV-Lnt" secondAttribute="leading" id="pKS-uQ-biT"/>
+                                            <constraint firstItem="0TC-s6-Q0k" firstAttribute="leading" secondItem="SF2-lV-Lnt" secondAttribute="leading" id="YDt-BC-hW2"/>
+                                            <constraint firstAttribute="trailing" secondItem="0TC-s6-Q0k" secondAttribute="trailing" id="r1g-vi-lNc"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -489,9 +490,8 @@
                                     <constraint firstAttribute="width" secondItem="id3-jN-1fm" secondAttribute="height" multiplier="4:3" id="qWr-EV-n6r"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgM-wN-XiW">
-                                <rect key="frame" x="20" y="138" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgM-wN-XiW">
+                                <rect key="frame" x="20" y="136" width="374" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -502,7 +502,10 @@
                         <constraints>
                             <constraint firstItem="You-10-5qh" firstAttribute="trailing" secondItem="id3-jN-1fm" secondAttribute="trailing" constant="10" id="0CK-Go-HWX"/>
                             <constraint firstItem="id3-jN-1fm" firstAttribute="leading" secondItem="You-10-5qh" secondAttribute="leading" constant="10" id="GPe-Je-9ii"/>
+                            <constraint firstItem="cgM-wN-XiW" firstAttribute="leading" secondItem="You-10-5qh" secondAttribute="leading" constant="20" id="I01-LM-4Ow"/>
                             <constraint firstItem="id3-jN-1fm" firstAttribute="centerY" secondItem="hWg-iP-n2l" secondAttribute="centerY" id="QwC-xL-z3L"/>
+                            <constraint firstItem="cgM-wN-XiW" firstAttribute="top" secondItem="You-10-5qh" secondAttribute="top" constant="80" id="ZeS-ag-Ilb"/>
+                            <constraint firstItem="You-10-5qh" firstAttribute="trailing" secondItem="cgM-wN-XiW" secondAttribute="trailing" constant="20" id="cNO-uN-6T8"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5xh-wb-RMi">
@@ -521,13 +524,13 @@
                         <outlet property="dateLabel" destination="cgM-wN-XiW" id="EHl-ee-j61"/>
                         <outlet property="descriptionLabel" destination="k6Z-Ok-cM3" id="TMY-kz-ICi"/>
                         <outlet property="headingLabel" destination="ajS-7S-snb" id="kY8-IJ-Zth"/>
-                        <outlet property="imageView" destination="vPL-mF-Q2k" id="b55-0e-5NT"/>
+                        <outlet property="photoScrollView" destination="0TC-s6-Q0k" id="jFy-ht-EZa"/>
                         <outlet property="qrView" destination="bx4-K9-ACI" id="o5q-X0-Ch5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="knd-Jc-pDe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2829" y="1926"/>
+            <point key="canvasLocation" x="2828.985507246377" y="1925.8928571428571"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ab7-Ek-97q">

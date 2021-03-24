@@ -26,7 +26,9 @@ class GreetingCardDetailsController2: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var headingLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
+//    @IBOutlet weak var imageView: UIImageView!
+    var imageView = UIImageView()
+    @IBOutlet weak var photoScrollView: UIScrollView!
     @IBOutlet weak var qrView: UIImageView!
     
     private let dateFormatter: DateFormatter = {
@@ -49,9 +51,10 @@ class GreetingCardDetailsController2: UIViewController {
     var videoURL: URL?
 
     
-    var qrCode: UIImage?
-    var heading: String?
-    var details: String?
+    var minZoomScale: CGFloat!
+//    var qrCode: UIImage?
+//    var heading: String?
+//    var details: String?
     
 
     // MARK: - Initialization
@@ -89,6 +92,7 @@ class GreetingCardDetailsController2: UIViewController {
             descriptionLabel.text = greetingCard.greetingDescription
             imageView.image = image
 //            videoView.url = videoURL
+            photoScrollView.addSubview(imageView)
             isNewDoc = false
         }
         else {
@@ -103,11 +107,15 @@ class GreetingCardDetailsController2: UIViewController {
         videoPicker = VideoPicker(presentationController: self, delegate: self)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setImage(_:)))
-        imageView.addGestureRecognizer(tapGestureRecognizer)
-        imageView.isUserInteractionEnabled = true
+        photoScrollView.addGestureRecognizer(tapGestureRecognizer)
+        photoScrollView.isUserInteractionEnabled = true
 
         //Debug purposes only
         title = docRef.documentID
+        
+        
+        
+        photoScrollView.delegate = self
     }
     
     @objc func setImage(_ sender: UITapGestureRecognizer) {
@@ -214,14 +222,28 @@ class GreetingCardDetailsController2: UIViewController {
 // MARK: - CUSTOM Image Picker Delegate
 
 extension GreetingCardDetailsController2: ImagePickerDelegate, VideoPickerDelegate {
-    func didSelect(image: UIImage?) {
+    func didSelect(image: UIImage?, imageView: UIImageView, scrollView: UIScrollView) {
         self.image = image
+        self.imageView = imageView
         imageView.image = image
+
+        self.photoScrollView = scrollView
+//        photoScrollView.addSubview(imageView)
+
         imageChanged = true
     }
     
     func didSelect(url: URL?) {
         self.videoURL = url
         videoChanged = true
+    }
+}
+
+
+// MARK: - UIScrollView Delegate
+
+extension GreetingCardDetailsController2: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
     }
 }
