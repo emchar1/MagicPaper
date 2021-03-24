@@ -228,7 +228,7 @@ extension GreetingCardDetailsController2: ImagePickerDelegate, VideoPickerDelega
         imageView.image = image
 
         self.photoScrollView = scrollView
-//        photoScrollView.addSubview(imageView)
+        photoScrollView.addSubview(imageView)
 
         imageChanged = true
     }
