@@ -74,3 +74,35 @@ extension CGPoint {
         return self.x < rect.origin.x || self.x > rect.width || self.y < rect.origin.y || self.y > rect.height
     }
 }
+
+
+// MARK: - UIImageView
+
+extension UIImageView {
+    /**
+     When the content mode of ImageView is Aspect Fit, the image may not fill all the space of ImageView so, the frame of image inside the ImageView may not be equal to its bounds. Create an extension of UIImageView and  write a function that calculates the frame of image in ImageView.
+     - returns: the imageFrame in CGRect
+     */
+    func imageFrame() -> CGRect {
+        guard let imageSize = self.image?.size else { return CGRect.zero }
+        
+        let imageViewSize = self.frame.size
+        let imageRatio = imageSize.width / imageSize.height
+        let imageViewRatio = imageViewSize.width / imageViewSize.height
+        
+        if imageRatio < imageViewRatio {
+            let scaleFactor = imageViewSize.height / imageSize.height
+            let width = imageSize.width * scaleFactor
+            let topLeftX = (imageViewSize.width - width) * 0.5
+            
+            return CGRect(x: topLeftX, y: 0, width: width, height: imageViewSize.height)
+        }
+        else {
+            let scaleFactor = imageViewSize.width / imageSize.width
+            let height = imageSize.height * scaleFactor
+            let topLeftY = (imageViewSize.height - height) * 0.5
+            
+            return CGRect(x: 0, y: topLeftY, width: imageViewSize.width, height: height)
+        }
+    }
+}

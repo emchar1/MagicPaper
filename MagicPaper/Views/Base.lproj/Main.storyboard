@@ -531,6 +531,75 @@
             </objects>
             <point key="canvasLocation" x="2829" y="1926"/>
         </scene>
+        <!--Crop-->
+        <scene sceneID="xOd-uY-tuG">
+            <objects>
+                <viewController id="263-v7-R7P" customClass="ImageCropperController" customModule="MagicPaper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RxG-vO-oqz">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yEr-q4-mMP">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="drum mapping" translatesAutoresizingMaskIntoConstraints="NO" id="yAd-LH-y0z">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="769"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="yAd-LH-y0z" firstAttribute="bottom" secondItem="wPe-8k-3BT" secondAttribute="bottom" id="63W-ZT-cj8"/>
+                                    <constraint firstItem="yAd-LH-y0z" firstAttribute="centerX" secondItem="yEr-q4-mMP" secondAttribute="centerX" id="9YM-8L-jYE"/>
+                                    <constraint firstAttribute="trailing" secondItem="yAd-LH-y0z" secondAttribute="trailing" id="bVX-NK-P0g"/>
+                                    <constraint firstItem="yAd-LH-y0z" firstAttribute="top" secondItem="wPe-8k-3BT" secondAttribute="top" id="cuS-LM-YGm"/>
+                                    <constraint firstItem="yAd-LH-y0z" firstAttribute="leading" secondItem="wPe-8k-3BT" secondAttribute="leading" id="iPH-kb-yhc"/>
+                                    <constraint firstAttribute="bottom" secondItem="yAd-LH-y0z" secondAttribute="bottom" id="sMc-7d-xJt"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="adG-QC-Ttm"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="wPe-8k-3BT"/>
+                            </scrollView>
+                            <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eiX-Da-zEL" customClass="CropAreaView" customModule="MagicPaper" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="331.5" width="414" height="233"/>
+                                <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="eiX-Da-zEL" secondAttribute="height" multiplier="16:9" id="snp-iq-qo2"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mZw-V2-KMe">
+                                <rect key="frame" x="167" y="731" width="80" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="rA9-5q-PUe"/>
+                                </constraints>
+                                <state key="normal" title="CROP"/>
+                                <connections>
+                                    <action selector="crop:" destination="263-v7-R7P" eventType="touchUpInside" id="YMN-Jg-VYA"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Rcx-xh-Eio"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Rcx-xh-Eio" firstAttribute="bottom" secondItem="mZw-V2-KMe" secondAttribute="bottom" constant="52" id="4fd-QC-y79"/>
+                            <constraint firstItem="yEr-q4-mMP" firstAttribute="centerX" secondItem="RxG-vO-oqz" secondAttribute="centerX" id="6Br-LM-nNR"/>
+                            <constraint firstItem="eiX-Da-zEL" firstAttribute="centerY" secondItem="RxG-vO-oqz" secondAttribute="centerY" id="9im-gd-B5n"/>
+                            <constraint firstItem="yEr-q4-mMP" firstAttribute="bottom" secondItem="Rcx-xh-Eio" secondAttribute="bottom" id="ABr-45-mQI"/>
+                            <constraint firstItem="yEr-q4-mMP" firstAttribute="top" secondItem="Rcx-xh-Eio" secondAttribute="top" id="ADI-fg-VtM"/>
+                            <constraint firstItem="eiX-Da-zEL" firstAttribute="leading" secondItem="Rcx-xh-Eio" secondAttribute="leading" id="gEW-cW-KPy"/>
+                            <constraint firstItem="Rcx-xh-Eio" firstAttribute="trailing" secondItem="eiX-Da-zEL" secondAttribute="trailing" id="hC3-4W-Kep"/>
+                            <constraint firstItem="yEr-q4-mMP" firstAttribute="leading" secondItem="Rcx-xh-Eio" secondAttribute="leading" id="pXl-1u-kjl"/>
+                            <constraint firstItem="mZw-V2-KMe" firstAttribute="centerX" secondItem="RxG-vO-oqz" secondAttribute="centerX" id="xOl-yu-GRK"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Crop" id="ag4-fb-073"/>
+                    <connections>
+                        <outlet property="cropAreaView" destination="eiX-Da-zEL" id="gau-Oj-dnN"/>
+                        <outlet property="imageView" destination="yAd-LH-y0z" id="Usc-aI-6JK"/>
+                        <outlet property="scrollView" destination="yEr-q4-mMP" id="QW1-pO-ywG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GTm-ny-MKQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4315.9420289855079" y="2205.1339285714284"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ab7-Ek-97q">
             <objects>
@@ -544,6 +613,7 @@
                     <connections>
                         <segue destination="T2I-Hm-52y" kind="relationship" relationship="viewControllers" id="nRj-5C-y3m"/>
                         <segue destination="OaK-d7-XwJ" kind="relationship" relationship="viewControllers" id="ufe-rO-A0O"/>
+                        <segue destination="263-v7-R7P" kind="relationship" relationship="viewControllers" id="12q-aK-AVE"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u41-21-TBY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -740,6 +810,7 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.backward.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="drum mapping" width="2286" height="432"/>
         <image name="eye" catalog="system" width="128" height="81"/>
         <image name="greetingcard" catalog="system" width="107" height="128"/>
         <image name="qrcode.viewfinder" catalog="system" width="128" height="115"/>
@@ -763,6 +834,9 @@
         </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
