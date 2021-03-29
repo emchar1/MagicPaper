@@ -31,6 +31,7 @@ class GreetingCardDetailsController2: UIViewController {
     @IBOutlet weak var qrView: UIImageView!
     @IBOutlet weak var cameraVideoButton: UIButton!
     @IBOutlet weak var selectImageButton: UIButton!
+    @IBOutlet weak var playVideoButton: UIButton!
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -68,7 +69,6 @@ class GreetingCardDetailsController2: UIViewController {
             descriptionLabel.text = greetingCard.greetingDescription
             imageView.image = image
             videoView.url = videoURL
-            videoView.player?.play()
             isNewDoc = false
         }
         else {
@@ -87,8 +87,6 @@ class GreetingCardDetailsController2: UIViewController {
         view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
         view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
 
-        
-        
         //Debug purposes only
         title = docRef.documentID
     }
@@ -134,12 +132,16 @@ class GreetingCardDetailsController2: UIViewController {
         let midPoint: Float = .pi / 2
         
         
-        //Prepare to hide the imageView...
+        //Prepare to hide the current view...
         CATransaction.begin()
         CATransaction.setCompletionBlock {
             self.imageView.isHidden = isImage ? true : false
             self.videoView.isHidden = isImage ? false : true
             self.selectImageButton.setImage(UIImage(systemName: isImage ? "video.fill" : "camera.fill"), for: .normal)
+
+            if !isImage {
+                self.videoView.player?.pause()
+            }
         }
         
         if isImage {
@@ -147,6 +149,7 @@ class GreetingCardDetailsController2: UIViewController {
             self.imageView.animate(keyPath: keyPath, fromValue: 0, toValue: midPoint, duration: speed, delay: 0)
         }
         else {
+            self.playVideoButton.isHidden = true
             self.videoView.isUserInteractionEnabled = false
             self.videoView.animate(keyPath: keyPath, fromValue: 0, toValue: midPoint, duration: speed, delay: 0)
         }
@@ -154,11 +157,13 @@ class GreetingCardDetailsController2: UIViewController {
         CATransaction.commit()
         
         
-        //...and show the videoView.
+        //...and show the next view.
         CATransaction.begin()
         CATransaction.setCompletionBlock {
             if isImage {
                 self.imageView.isUserInteractionEnabled = true
+                self.videoView.player?.play()
+                self.playVideoButton.isHidden = true
             }
             else {
                 self.videoView.isUserInteractionEnabled = true
@@ -173,6 +178,16 @@ class GreetingCardDetailsController2: UIViewController {
         }
         
         CATransaction.commit()
+        
+        
+        //Notification observer
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+                                               object: self.videoView.player?.currentItem,
+                                               queue: nil) { [weak self] notification in
+            guard let self = self else { return }
+            self.videoView.player?.seek(to: CMTime.zero)
+            self.playVideoButton.isHidden = false
+        }
     }
     
     @IBAction func selectImagePressed(_ sender: UIButton) {
@@ -184,6 +199,11 @@ class GreetingCardDetailsController2: UIViewController {
         else {
             videoPicker.present(from: view)
         }
+    }
+    
+    @IBAction func playVideoPressed(_ sender: UIButton) {
+        self.videoView.player?.play()
+        self.playVideoButton.isHidden = true
     }
 
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
@@ -292,8 +312,8 @@ extension GreetingCardDetailsController2: ImagePickerDelegate, VideoPickerDelega
     func didSelect(url: URL?) {
         videoURL = url
         videoView.url = url
-        videoView.contentMode = .scaleAspectFit
         videoView.player?.play()
+        playVideoButton.isHidden = true
         videoChanged = true
     }
 }

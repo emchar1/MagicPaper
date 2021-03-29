@@ -142,15 +142,15 @@ open class VideoView: UIView {
             self.teardown()
         }
         
-        if
-            keyPath == "rate",
-            let player = self.player,
-            player.rate == 0,
-            let item = player.currentItem,
-            !item.isPlaybackBufferEmpty,
-            CMTimeGetSeconds(item.duration) != CMTimeGetSeconds(player.currentTime())
-        {
-            self.player?.play()
+        if keyPath == "rate",
+           let player = self.player,
+           player.rate == 0,
+           let item = player.currentItem,
+           !item.isPlaybackBufferEmpty,
+           CMTimeGetSeconds(item.duration) != CMTimeGetSeconds(player.currentTime()) {
+
+//            self.player?.play()
+            print("Wants to play 2..")
         }
     }
     
