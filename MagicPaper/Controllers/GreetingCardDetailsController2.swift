@@ -86,6 +86,16 @@ class GreetingCardDetailsController2: UIViewController {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
         view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
         view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
+        
+        //Notification observer for videoView player
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+                                               object: self.videoView.player?.currentItem,
+                                               queue: nil) { [weak self] notification in
+            guard let self = self else { return }
+            self.videoView.player?.seek(to: CMTime.zero)
+            self.playVideoButton.isHidden = false
+        }
+        
 
         //Debug purposes only
         title = docRef.documentID
@@ -178,16 +188,6 @@ class GreetingCardDetailsController2: UIViewController {
         }
         
         CATransaction.commit()
-        
-        
-        //Notification observer
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
-                                               object: self.videoView.player?.currentItem,
-                                               queue: nil) { [weak self] notification in
-            guard let self = self else { return }
-            self.videoView.player?.seek(to: CMTime.zero)
-            self.playVideoButton.isHidden = false
-        }
     }
     
     @IBAction func selectImagePressed(_ sender: UIButton) {

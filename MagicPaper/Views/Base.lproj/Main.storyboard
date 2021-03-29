@@ -409,14 +409,14 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="SF2-lV-Lnt" userLabel="Stack - Main">
                                         <rect key="frame" x="4" y="4" width="386" height="287.5"/>
                                         <subviews>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DGl-M3-Loe" customClass="VideoView" customModule="MagicPaper" customModuleProvider="target">
+                                            <view hidden="YES" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="DGl-M3-Loe" customClass="VideoView" customModule="MagicPaper" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="386" height="217"/>
                                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="DGl-M3-Loe" secondAttribute="height" multiplier="16:9" id="XUv-bN-uvX"/>
                                                 </constraints>
                                             </view>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vPL-mF-Q2k" userLabel="Photo">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vPL-mF-Q2k" userLabel="Photo">
                                                 <rect key="frame" x="0.0" y="0.0" width="386" height="217"/>
                                                 <color key="backgroundColor" red="1" green="0.2527923882" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -557,7 +557,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="camera.rotate.fill" catalog="system">
+                                <state key="normal" image="arrow.triangle.2.circlepath.camera.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -824,8 +824,8 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.backward.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="arrow.triangle.2.circlepath.camera.fill" catalog="system" width="128" height="94"/>
         <image name="camera.fill" catalog="system" width="128" height="94"/>
-        <image name="camera.rotate.fill" catalog="system" width="128" height="94"/>
         <image name="eye" catalog="system" width="128" height="81"/>
         <image name="greetingcard" catalog="system" width="107" height="128"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>

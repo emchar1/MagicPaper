@@ -148,9 +148,7 @@ open class VideoView: UIView {
            let item = player.currentItem,
            !item.isPlaybackBufferEmpty,
            CMTimeGetSeconds(item.duration) != CMTimeGetSeconds(player.currentTime()) {
-
 //            self.player?.play()
-            print("Wants to play 2..")
         }
     }
     
