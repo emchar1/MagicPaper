@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,7 +33,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="J3L-6e-b2e"/>
-                        <color key="backgroundColor" red="0.28530922530000002" green="0.18915256859999999" blue="0.32551184300000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" name="colorPurple"/>
                         <constraints>
                             <constraint firstItem="m14-qG-UEs" firstAttribute="centerY" secondItem="Dft-aH-7x3" secondAttribute="centerY" id="4fS-Db-rjl"/>
                             <constraint firstItem="m14-qG-UEs" firstAttribute="centerX" secondItem="Dft-aH-7x3" secondAttribute="centerX" id="VLt-7i-PUo"/>
@@ -64,13 +65,13 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </arscnView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krV-QM-Ty4">
+                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krV-QM-Ty4">
                                 <rect key="frame" x="20" y="64.5" width="36" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="9t3-Yt-Ak8"/>
                                     <constraint firstAttribute="width" constant="36" id="fwU-ec-eaV"/>
                                 </constraints>
-                                <color key="tintColor" systemColor="systemGray3Color"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" backgroundImage="arrow.backward.circle.fill" catalog="system"/>
                                 <connections>
                                     <action selector="goBack:" destination="BV1-FR-VrT" eventType="touchUpInside" id="gkC-7u-DDN"/>
@@ -90,6 +91,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="cIw-Gf-VFF"/>
                     <connections>
+                        <outlet property="goBackButton" destination="krV-QM-Ty4" id="JL9-V5-zAl"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                     </connections>
                 </viewController>
@@ -153,12 +155,13 @@
                                         <constraint firstItem="GTO-NM-aL2" firstAttribute="leading" secondItem="Oay-BK-XxT" secondAttribute="leadingMargin" id="br2-YS-Cir"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="tintColor" name="colorBlue"/>
                                 <connections>
                                     <outlet property="categoryLabel" destination="lvg-3R-OKH" id="rlV-f0-Zav"/>
                                     <outlet property="dateLabel" destination="M6f-au-fjz" id="b62-y1-NSr"/>
                                     <outlet property="descriptionLabel" destination="9MM-Nf-6c1" id="6Z5-BJ-8XM"/>
                                     <segue destination="uWA-fw-aIB" kind="presentation" identifier="EditGreetingCard" id="DRa-ig-C7D"/>
-                                    <segue destination="nlT-nM-2TZ" kind="presentation" identifier="SegueTest0Edit" trigger="accessoryAction" id="Fot-VI-Iif"/>
+                                    <segue destination="nlT-nM-2TZ" kind="presentation" identifier="SegueTest0Edit" trigger="accessoryAction" id="CWm-nS-a4y"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -170,19 +173,20 @@
                     <tabBarItem key="tabBarItem" title="Create" image="greetingcard" catalog="system" id="SkY-Ru-t1s"/>
                     <navigationItem key="navigationItem" id="FDD-ig-oTG">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="8iv-RA-u4T">
-                            <color key="tintColor" systemColor="linkColor"/>
+                            <color key="tintColor" name="colorBlue"/>
                             <connections>
                                 <segue destination="dor-BW-rpU" kind="unwind" unwindAction="unwindToAuthControllerWithSegue:" id="Fsd-aW-BuA"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="SUE-VG-ZFE">
-                                <color key="tintColor" systemColor="linkColor"/>
+                                <color key="tintColor" name="colorBlue"/>
                                 <connections>
                                     <segue destination="uWA-fw-aIB" kind="presentation" identifier="AddGreetingCard" id="bAc-pe-2X1"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Test0" id="bs2-bK-BAp">
+                                <color key="tintColor" name="colorBlue"/>
                                 <connections>
                                     <segue destination="nlT-nM-2TZ" kind="presentation" identifier="SegueTest0Add" id="bKL-g5-Etf"/>
                                 </connections>
@@ -239,7 +243,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OgZ-Ia-ups">
-                                                    <rect key="frame" x="20" y="13" width="374" height="18.5"/>
+                                                    <rect key="frame" x="20" y="12.5" width="374" height="19"/>
                                                     <color key="tintColor" systemColor="linkColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -405,6 +409,13 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="SF2-lV-Lnt" userLabel="Stack - Main">
                                         <rect key="frame" x="4" y="4" width="386" height="287.5"/>
                                         <subviews>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DGl-M3-Loe" customClass="VideoView" customModule="MagicPaper" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="386" height="217"/>
+                                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="DGl-M3-Loe" secondAttribute="height" multiplier="16:9" id="XUv-bN-uvX"/>
+                                                </constraints>
+                                            </view>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vPL-mF-Q2k" userLabel="Photo">
                                                 <rect key="frame" x="0.0" y="0.0" width="386" height="217"/>
                                                 <color key="backgroundColor" red="1" green="0.2527923882" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -474,9 +485,12 @@
                                             <constraint firstAttribute="trailing" secondItem="Qep-aM-14y" secondAttribute="trailing" id="3xL-tv-2Ue"/>
                                             <constraint firstItem="Qep-aM-14y" firstAttribute="leading" secondItem="SF2-lV-Lnt" secondAttribute="leading" id="67Y-hw-H6Y"/>
                                             <constraint firstAttribute="bottom" secondItem="Qep-aM-14y" secondAttribute="bottom" id="Dxc-gN-H2m"/>
+                                            <constraint firstItem="DGl-M3-Loe" firstAttribute="leading" secondItem="SF2-lV-Lnt" secondAttribute="leading" id="EPE-KC-vfd"/>
+                                            <constraint firstAttribute="trailing" secondItem="DGl-M3-Loe" secondAttribute="trailing" id="HcR-4N-jwk"/>
                                             <constraint firstAttribute="trailing" secondItem="vPL-mF-Q2k" secondAttribute="trailing" id="OVX-x2-MCd"/>
                                             <constraint firstItem="vPL-mF-Q2k" firstAttribute="top" secondItem="SF2-lV-Lnt" secondAttribute="top" id="Pbe-KO-z1L"/>
                                             <constraint firstItem="vPL-mF-Q2k" firstAttribute="leading" secondItem="SF2-lV-Lnt" secondAttribute="leading" id="pKS-uQ-biT"/>
+                                            <constraint firstItem="DGl-M3-Loe" firstAttribute="top" secondItem="SF2-lV-Lnt" secondAttribute="top" id="q3v-fL-9jZ"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -495,14 +509,62 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRO-1E-gNi">
+                                <rect key="frame" x="370" y="283.5" width="24" height="24"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="O6X-Pm-zgk"/>
+                                    <constraint firstAttribute="height" constant="24" id="l0M-zl-ioh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="2" minY="5" maxX="2" maxY="5"/>
+                                <state key="normal" image="camera.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="12.25"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="selectImagePressed:" destination="r8a-cf-wab" eventType="touchUpInside" id="34j-RP-66v"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4va-Ef-mmh">
+                                <rect key="frame" x="20" y="283.5" width="24" height="24"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="DW3-ug-2hW"/>
+                                    <constraint firstAttribute="height" constant="24" id="qMi-p2-I31"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="2" minY="5" maxX="2" maxY="5"/>
+                                <state key="normal" image="camera.rotate.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="12.25"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="cameraVideoButtonPressed:" destination="r8a-cf-wab" eventType="touchUpInside" id="b5b-q0-M8y"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="You-10-5qh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="You-10-5qh" firstAttribute="trailing" secondItem="id3-jN-1fm" secondAttribute="trailing" constant="10" id="0CK-Go-HWX"/>
+                            <constraint firstItem="id3-jN-1fm" firstAttribute="top" secondItem="4va-Ef-mmh" secondAttribute="bottom" constant="-34" id="6yQ-d4-Eai"/>
                             <constraint firstItem="cgM-wN-XiW" firstAttribute="leading" secondItem="You-10-5qh" secondAttribute="leading" constant="20" id="A0f-6f-Xr0"/>
                             <constraint firstItem="id3-jN-1fm" firstAttribute="leading" secondItem="You-10-5qh" secondAttribute="leading" constant="10" id="GPe-Je-9ii"/>
+                            <constraint firstItem="You-10-5qh" firstAttribute="leading" secondItem="4va-Ef-mmh" secondAttribute="leading" constant="-20" id="Lxv-In-uv2"/>
+                            <constraint firstItem="You-10-5qh" firstAttribute="trailing" secondItem="jRO-1E-gNi" secondAttribute="trailing" constant="20" id="Pgv-g9-4fZ"/>
                             <constraint firstItem="id3-jN-1fm" firstAttribute="centerY" secondItem="hWg-iP-n2l" secondAttribute="centerY" id="QwC-xL-z3L"/>
+                            <constraint firstItem="id3-jN-1fm" firstAttribute="top" secondItem="jRO-1E-gNi" secondAttribute="bottom" constant="-34" id="T1x-6x-zUX"/>
                             <constraint firstItem="You-10-5qh" firstAttribute="trailing" secondItem="cgM-wN-XiW" secondAttribute="trailing" constant="20" id="ZEG-vz-NOg"/>
                             <constraint firstItem="cgM-wN-XiW" firstAttribute="top" secondItem="You-10-5qh" secondAttribute="top" constant="82" id="iLm-Pe-Ejf"/>
                         </constraints>
@@ -520,11 +582,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="changeImageButton" destination="jRO-1E-gNi" id="glS-1q-iWk"/>
                         <outlet property="dateLabel" destination="cgM-wN-XiW" id="EHl-ee-j61"/>
                         <outlet property="descriptionLabel" destination="k6Z-Ok-cM3" id="TMY-kz-ICi"/>
                         <outlet property="headingLabel" destination="ajS-7S-snb" id="kY8-IJ-Zth"/>
                         <outlet property="imageView" destination="vPL-mF-Q2k" id="b55-0e-5NT"/>
                         <outlet property="qrView" destination="bx4-K9-ACI" id="o5q-X0-Ch5"/>
+                        <outlet property="videoView" destination="DGl-M3-Loe" id="6ks-lz-GpS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="knd-Jc-pDe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -735,14 +799,22 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="bKL-g5-Etf"/>
-        <segue reference="DRa-ig-C7D"/>
+        <segue reference="CWm-nS-a4y"/>
+        <segue reference="bAc-pe-2X1"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.backward.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="camera.fill" catalog="system" width="128" height="94"/>
+        <image name="camera.rotate.fill" catalog="system" width="128" height="94"/>
         <image name="eye" catalog="system" width="128" height="81"/>
         <image name="greetingcard" catalog="system" width="107" height="128"/>
         <image name="qrcode.viewfinder" catalog="system" width="128" height="115"/>
+        <namedColor name="colorBlue">
+            <color red="0.062745098039215685" green="0.67450980392156867" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="colorPurple">
+            <color red="0.44299998879432678" green="0.2669999897480011" blue="0.5220000147819519" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
@@ -752,14 +824,14 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemGray3Color">
-            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
             <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

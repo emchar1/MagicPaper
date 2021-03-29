@@ -289,12 +289,12 @@ extension GreetingCardController: GreetingCardDetailsControllerDelegate {
 extension GreetingCardController: GreetingCardDetailsController2Delegate {
     func greetingCardDetailsController2(_ controller: GreetingCardDetailsController2,
                                         didUpdateFor image: UIImage?,
-//                                        video: URL?,
+                                        video: URL?,
                                         qrCode: UIImage?) {
         guard let greetingCard = controller.greetingCard else {
             fatalError("fatalError: greetingCard object nil in GreetingCardController delegate function.")
         }
         
-        updateAssets(for: greetingCard.id!, image: image, qrCode: qrCode)
+        updateAssets(for: greetingCard.id!, image: image, video: video, qrCode: qrCode)
     }
 }

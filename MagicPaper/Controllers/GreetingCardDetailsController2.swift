@@ -14,7 +14,7 @@ import AVFoundation
 protocol GreetingCardDetailsController2Delegate: class {
     func greetingCardDetailsController2(_ controller: GreetingCardDetailsController2,
                                         didUpdateFor image: UIImage?,
-//                                        video: URL?,
+                                        video: URL?,
                                         qrCode: UIImage?)
 }
 
@@ -27,7 +27,9 @@ class GreetingCardDetailsController2: UIViewController {
     @IBOutlet weak var headingLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var videoView: VideoView!
     @IBOutlet weak var qrView: UIImageView!
+    @IBOutlet weak var changeImageButton: UIButton!
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -40,6 +42,7 @@ class GreetingCardDetailsController2: UIViewController {
     private var imageChanged: Bool!
     private var videoChanged: Bool!
     private var isNewDoc: Bool!
+    private var showImageSide: Bool!
 
     var uid: String!
     var docRef: DocumentReference!
@@ -48,11 +51,6 @@ class GreetingCardDetailsController2: UIViewController {
     var image: UIImage?
     var videoURL: URL?
 
-    
-//    var qrCode: UIImage?
-//    var heading: String?
-//    var details: String?
-    
 
     // MARK: - Initialization
     
@@ -61,34 +59,15 @@ class GreetingCardDetailsController2: UIViewController {
         
         imageChanged = false
         videoChanged = false
+        showImageSide = true
 
-
-//        if let image = image {
-//            imageView.image = image
-//        }
-//        
-//        if let qrCode = qrCode {
-//            qrView.image = qrCode
-//        }
-//        
-//        if let heading = heading {
-//            headingLabel.text = heading
-//        }
-//        
-//        if let details = details {
-//            descriptionLabel.text = details
-//        }
-                
-        
-        
-        
-        
         if let greetingCard = greetingCard {
             dateLabel.text = dateFormatter.string(from: greetingCard.greetingDate)
             headingLabel.text = greetingCard.greetingHeading
             descriptionLabel.text = greetingCard.greetingDescription
             imageView.image = image
-//            videoView.url = videoURL
+            videoView.url = videoURL
+            videoView.player?.play()
             isNewDoc = false
         }
         else {
@@ -102,20 +81,86 @@ class GreetingCardDetailsController2: UIViewController {
         imagePicker = ImagePicker(presentationController: self, delegate: self)
         videoPicker = VideoPicker(presentationController: self, delegate: self)
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setImage(_:)))
-        imageView.addGestureRecognizer(tapGestureRecognizer)
-        imageView.isUserInteractionEnabled = true
-
+        
         //Debug purposes only
         title = docRef.documentID
     }
+
     
-    @objc func setImage(_ sender: UITapGestureRecognizer) {
-        imagePicker.present(from: view)
-    }
-
-
     // MARK: - UIBar Button Items
+    
+    @IBAction func cameraVideoButtonPressed(_ sender: UIButton) {
+        let speed: TimeInterval = 0.5
+        
+        UIView.animateKeyframes(withDuration: 2 * speed, delay: 0, options: [], animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: speed) {
+                sender.transform = CGAffineTransform(rotationAngle: .pi)
+            }
+            UIView.addKeyframe(withRelativeStartTime: speed, relativeDuration: speed) {
+                sender.transform = CGAffineTransform.identity
+            }
+        }, completion: nil)
+        
+        showHelper(isImage: showImageSide)
+                
+        showImageSide = !showImageSide
+    }
+    
+    private func showHelper(isImage: Bool) {
+        let speed: TimeInterval = 0.5
+        let keyPath = "transform.rotation.y"
+        let midPoint: Float = .pi / 2
+        
+        
+        //Prepare to hide the imageView...
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            self.imageView.isHidden = isImage ? true : false
+            self.videoView.isHidden = isImage ? false : true
+            self.changeImageButton.setImage(UIImage(systemName: isImage ? "video.fill" : "camera.fill"), for: .normal)
+        }
+        
+        if isImage {
+            self.imageView.isUserInteractionEnabled = false
+            self.imageView.animate(keyPath: keyPath, fromValue: 0, toValue: midPoint, duration: speed, delay: 0)
+        }
+        else {
+            self.videoView.isUserInteractionEnabled = false
+            self.videoView.animate(keyPath: keyPath, fromValue: 0, toValue: midPoint, duration: speed, delay: 0)
+        }
+        
+        CATransaction.commit()
+        
+        
+        //...and show the videoView.
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            if isImage {
+                self.imageView.isUserInteractionEnabled = true
+            }
+            else {
+                self.videoView.isUserInteractionEnabled = true
+            }
+        }
+        
+        if isImage {
+            self.videoView.animate(keyPath: keyPath, fromValue: midPoint, toValue: 0, duration: speed, delay: speed)
+        }
+        else {
+            self.imageView.animate(keyPath: keyPath, fromValue: midPoint, toValue: 0, duration: speed, delay: speed)
+        }
+        
+        CATransaction.commit()
+    }
+    
+    @IBAction func selectImagePressed(_ sender: UIButton) {
+        if showImageSide {
+            imagePicker.present(from: view)
+        }
+        else {
+            videoPicker.present(from: view)
+        }
+    }
 
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -141,13 +186,13 @@ class GreetingCardDetailsController2: UIViewController {
                              contentType: "image/png")
             }
             
-//            if videoChanged, let dataFile = videoView.url {
-//                //Use try if you want to catch the error and investigate. Use try? if you just care about success and failure without the "why". Use try! if you're certain it'll succeed.
-//                putInStorage(withData: try? Data(contentsOf: dataFile),
-//                             inFolder: FIR.storageVideo,
-//                             forFilename: docRef.documentID + ".mp4",
-//                             contentType: "video/mp4")
-//            }
+            if videoChanged, let dataFile = videoView.url {
+                //Use try if you want to catch the error and investigate. Use try? if you just care about success and failure without the "why". Use try! if you're certain it'll succeed.
+                putInStorage(withData: try? Data(contentsOf: dataFile),
+                             inFolder: FIR.storageVideo,
+                             forFilename: docRef.documentID + ".mp4",
+                             contentType: "video/mp4")
+            }
             
             if isNewDoc, let dataFile = qrView.image {
                 putInStorage(withData: dataFile.pngData(),
@@ -158,7 +203,7 @@ class GreetingCardDetailsController2: UIViewController {
             
             delegate?.greetingCardDetailsController2(self,
                                                     didUpdateFor: imageView.image,
-//                                                    video: videoView.url,
+                                                    video: videoView.url,
                                                     qrCode: qrView.image)
             
             print("Document ID: \(docRef.documentID) has been created or updated in Firestore.")
@@ -211,7 +256,7 @@ class GreetingCardDetailsController2: UIViewController {
 }
 
 
-// MARK: - CUSTOM Image Picker Delegate
+// MARK: - Image & Video Picker Delegates
 
 extension GreetingCardDetailsController2: ImagePickerDelegate, VideoPickerDelegate {
     func didSelect(image: UIImage?) {
@@ -221,7 +266,10 @@ extension GreetingCardDetailsController2: ImagePickerDelegate, VideoPickerDelega
     }
     
     func didSelect(url: URL?) {
-        self.videoURL = url
+        videoURL = url
+        videoView.url = url
+        videoView.contentMode = .scaleAspectFit
+        videoView.player?.play()
         videoChanged = true
     }
 }

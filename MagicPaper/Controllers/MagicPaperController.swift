@@ -16,6 +16,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     // MARK: - Properties
     
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var goBackButton: UIButton!
 
     enum ImageOrientation {
         case portrait, landscape
@@ -45,7 +46,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         let button = UIButton(type: .system)
         button.setTitle("Scan Another Card", for: .normal)
         button.titleLabel?.font = UIFont(name: "Avenir Next Bold", size: 22)
-        button.backgroundColor = UIColor(red: 238/255, green: 82/255, blue: 83/255, alpha: 1)
+        button.backgroundColor = UIColor(named: "colorRed")
         button.layer.cornerRadius = 40
         button.addTarget(self, action: #selector(scanPressed(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +57,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         let button = UIButton(type: .system)
         button.setTitle("Play Again", for: .normal)
         button.titleLabel?.font = UIFont(name: "Avenir Next Bold", size: 22)
-        button.backgroundColor = UIColor(red: 16/255, green: 172/255, blue: 132/255, alpha: 1)
+        button.backgroundColor = UIColor(named: "colorGreen")
         button.layer.cornerRadius = 40
         button.addTarget(self, action: #selector(replayPressed(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -100,6 +101,14 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         scanButtonHeightAnchor = scanButton.heightAnchor.constraint(equalToConstant: 0)
         replayButtonWidthAnchor = replayButton.widthAnchor.constraint(equalToConstant: 0)
         replayButtonHeightAnchor = replayButton.heightAnchor.constraint(equalToConstant: 0)
+        
+        
+        
+        //Debug??
+        sceneView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
+        sceneView.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
+        sceneView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
+        sceneView.isUserInteractionEnabled = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -155,11 +164,25 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
                 self.sceneView.session.run(self.configuration, options: [.removeExistingAnchors, .resetTracking])
             }
         }
+ 
+        
+        //Debug?
+        UIView.animate(withDuration: 0.5, delay: 5.0, options: [.curveLinear, .allowUserInteraction], animations: {
+            self.goBackButton.alpha = 0.1
+        }, completion: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         sceneView.session.pause()
+    }
+    
+    @objc func didGestureAtScreen(_ sender: UIGestureRecognizer) {
+        goBackButton.alpha = 0.8
+        
+        UIView.animate(withDuration: 0.5, delay: 3.0, options: [.curveLinear, .allowUserInteraction], animations: {
+            self.goBackButton.alpha = 0.1
+        }, completion: nil)
     }
     
     

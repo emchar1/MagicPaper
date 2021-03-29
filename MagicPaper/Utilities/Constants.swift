@@ -74,3 +74,19 @@ extension CGPoint {
         return self.x < rect.origin.x || self.x > rect.width || self.y < rect.origin.y || self.y > rect.height
     }
 }
+
+
+// MARK: - UIView
+
+extension UIView {
+    func animate(keyPath: String, fromValue: Float, toValue: Float, duration: TimeInterval, delay: TimeInterval) {
+        let animation: CABasicAnimation = CABasicAnimation(keyPath: keyPath)
+        animation.fromValue = fromValue
+        animation.toValue = toValue
+        animation.beginTime = CACurrentMediaTime() + delay
+        animation.duration = duration
+//        animation.isCumulative = true
+//        animation.repeatCount = Float.greatestFiniteMagnitude
+        self.layer.add(animation, forKey: keyPath + "Animation")
+    }
+}
