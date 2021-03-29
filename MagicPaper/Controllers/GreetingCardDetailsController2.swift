@@ -29,7 +29,8 @@ class GreetingCardDetailsController2: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var videoView: VideoView!
     @IBOutlet weak var qrView: UIImageView!
-    @IBOutlet weak var changeImageButton: UIButton!
+    @IBOutlet weak var cameraVideoButton: UIButton!
+    @IBOutlet weak var selectImageButton: UIButton!
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -82,8 +83,29 @@ class GreetingCardDetailsController2: UIViewController {
         videoPicker = VideoPicker(presentationController: self, delegate: self)
         
         
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
+        view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
+        view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
+
+        
+        
         //Debug purposes only
         title = docRef.documentID
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        fadeButtons(delay: 5.0)
+    }
+    
+    @objc func didGestureAtScreen(_ sender: UIGestureRecognizer) {
+        fadeButtons(delay: 3.0)
+    }
+    
+    private func fadeButtons(delay: TimeInterval) {
+        cameraVideoButton.gentleFade(withDuration: 0.5, delay: delay)
+        selectImageButton.gentleFade(withDuration: 0.5, delay: delay)
     }
 
     
@@ -101,8 +123,8 @@ class GreetingCardDetailsController2: UIViewController {
             }
         }, completion: nil)
         
+        fadeButtons(delay: 3.0)
         showHelper(isImage: showImageSide)
-                
         showImageSide = !showImageSide
     }
     
@@ -117,7 +139,7 @@ class GreetingCardDetailsController2: UIViewController {
         CATransaction.setCompletionBlock {
             self.imageView.isHidden = isImage ? true : false
             self.videoView.isHidden = isImage ? false : true
-            self.changeImageButton.setImage(UIImage(systemName: isImage ? "video.fill" : "camera.fill"), for: .normal)
+            self.selectImageButton.setImage(UIImage(systemName: isImage ? "video.fill" : "camera.fill"), for: .normal)
         }
         
         if isImage {
@@ -154,6 +176,8 @@ class GreetingCardDetailsController2: UIViewController {
     }
     
     @IBAction func selectImagePressed(_ sender: UIButton) {
+        fadeButtons(delay: 3.0)
+
         if showImageSide {
             imagePicker.present(from: view)
         }

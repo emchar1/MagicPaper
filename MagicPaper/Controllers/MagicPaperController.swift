@@ -167,9 +167,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
  
         
         //Debug?
-        UIView.animate(withDuration: 0.5, delay: 5.0, options: [.curveLinear, .allowUserInteraction], animations: {
-            self.goBackButton.alpha = 0.1
-        }, completion: nil)
+        goBackButton.gentleFade(withDuration: 0.5, delay: 5.0)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -178,11 +176,7 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     }
     
     @objc func didGestureAtScreen(_ sender: UIGestureRecognizer) {
-        goBackButton.alpha = 0.8
-        
-        UIView.animate(withDuration: 0.5, delay: 3.0, options: [.curveLinear, .allowUserInteraction], animations: {
-            self.goBackButton.alpha = 0.1
-        }, completion: nil)
+        goBackButton.gentleFade(withDuration: 0.5, delay: 3.0)
     }
     
     

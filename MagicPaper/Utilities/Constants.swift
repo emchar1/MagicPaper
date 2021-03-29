@@ -90,3 +90,15 @@ extension UIView {
         self.layer.add(animation, forKey: keyPath + "Animation")
     }
 }
+
+
+// MARK: - UIButton
+
+extension UIButton {
+    func gentleFade(withDuration: TimeInterval, delay: TimeInterval) {
+        self.alpha = 0.8
+        UIView.animate(withDuration: withDuration, delay: delay, options: [.curveLinear, .allowUserInteraction], animations: {
+            self.alpha = 0.1
+        }, completion: nil)
+    }
+}
