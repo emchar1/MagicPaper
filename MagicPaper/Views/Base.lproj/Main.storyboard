@@ -74,7 +74,7 @@
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" backgroundImage="arrow.backward.circle.fill" catalog="system"/>
                                 <connections>
-                                    <action selector="goBack:" destination="BV1-FR-VrT" eventType="touchUpInside" id="gkC-7u-DDN"/>
+                                    <action selector="goBackPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="gkC-7u-DDN"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -426,17 +426,18 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qep-aM-14y" userLabel="Stack - Bottom">
                                                 <rect key="frame" x="0.0" y="221" width="386" height="66.5"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="5dK-rj-xJm" userLabel="Left Stack">
-                                                        <rect key="frame" x="0.0" y="0.0" width="332.5" height="66.5"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5dK-rj-xJm" userLabel="Left Stack">
+                                                        <rect key="frame" x="0.0" y="0.0" width="329.5" height="66.5"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Merry Heading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajS-7S-snb" userLabel="Heading">
-                                                                <rect key="frame" x="0.0" y="0.0" width="332.5" height="9.5"/>
+                                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" text="Merry Heading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajS-7S-snb" userLabel="Heading">
+                                                                <rect key="frame" x="0.0" y="0.0" width="329.5" height="33"/>
                                                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="24"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Wishing you the best &lt;insert faith holiday here&gt; ever lol Sincerely, the Chars" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k6Z-Ok-cM3" userLabel="Details">
-                                                                <rect key="frame" x="0.0" y="9.5" width="332.5" height="57"/>
+                                                            <label opaque="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" text="Wishing you the best &lt;insert faith holiday here&gt; ever lol Sincerely, the Chars" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k6Z-Ok-cM3" userLabel="Details">
+                                                                <rect key="frame" x="0.0" y="33" width="329.5" height="33.5"/>
+                                                                <color key="backgroundColor" systemColor="systemBlueColor"/>
                                                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="12"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -453,18 +454,21 @@
                                                         </constraints>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="jwy-u0-X63" userLabel="Stack - Right">
-                                                        <rect key="frame" x="332.5" y="0.0" width="53.5" height="66.5"/>
+                                                        <rect key="frame" x="329.5" y="0.0" width="56.5" height="66.5"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bx4-K9-ACI" userLabel="QR Code">
-                                                                <rect key="frame" x="0.0" y="0.0" width="53.5" height="53.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="56.5" height="56.5"/>
                                                                 <color key="backgroundColor" systemColor="systemIndigoColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="bx4-K9-ACI" secondAttribute="height" multiplier="1:1" id="KYt-Em-gqx"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan to Play" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BEo-PQ-7XT">
-                                                                <rect key="frame" x="0.0" y="55.5" width="53.5" height="11"/>
-                                                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="8"/>
+                                                                <rect key="frame" x="0.0" y="58.5" width="56.5" height="8"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="8" id="rkx-Je-gOp"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" name="Avenir-BookOblique" family="Avenir" pointSize="8"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -531,17 +535,17 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NR7-mR-ugz">
-                                <rect key="frame" x="181" y="364.5" width="52" height="52"/>
+                                <rect key="frame" x="175" y="357" width="64" height="64"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="52" id="YCb-Gu-Usd"/>
-                                    <constraint firstAttribute="height" constant="52" id="nqf-N6-jRh"/>
+                                    <constraint firstAttribute="width" constant="64" id="YCb-Gu-Usd"/>
+                                    <constraint firstAttribute="height" constant="64" id="nqf-N6-jRh"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="play.fill" catalog="system"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <integer key="value" value="26"/>
+                                        <integer key="value" value="32"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -577,7 +581,7 @@
                             <constraint firstItem="id3-jN-1fm" firstAttribute="top" secondItem="4va-Ef-mmh" secondAttribute="top" constant="-10" id="6yQ-d4-Eai"/>
                             <constraint firstItem="cgM-wN-XiW" firstAttribute="leading" secondItem="You-10-5qh" secondAttribute="leading" constant="20" id="A0f-6f-Xr0"/>
                             <constraint firstItem="id3-jN-1fm" firstAttribute="leading" secondItem="You-10-5qh" secondAttribute="leading" constant="10" id="GPe-Je-9ii"/>
-                            <constraint firstItem="NR7-mR-ugz" firstAttribute="top" secondItem="id3-jN-1fm" secondAttribute="top" multiplier="4:3" id="Gu7-X0-nlo"/>
+                            <constraint firstItem="NR7-mR-ugz" firstAttribute="top" secondItem="id3-jN-1fm" secondAttribute="centerY" constant="-64" id="Gu7-X0-nlo"/>
                             <constraint firstItem="id3-jN-1fm" firstAttribute="leading" secondItem="4va-Ef-mmh" secondAttribute="leading" constant="-10" id="Lxv-In-uv2"/>
                             <constraint firstItem="id3-jN-1fm" firstAttribute="trailing" secondItem="jRO-1E-gNi" secondAttribute="trailing" constant="10" id="Pgv-g9-4fZ"/>
                             <constraint firstItem="id3-jN-1fm" firstAttribute="centerY" secondItem="hWg-iP-n2l" secondAttribute="centerY" id="QwC-xL-z3L"/>
@@ -844,6 +848,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -87,6 +87,9 @@ class GreetingCardDetailsController2: UIViewController {
         view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
         view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
         
+        headingLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapLabel(_ :))))
+        descriptionLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapLabel(_ :))))
+
         //Notification observer for videoView player
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
                                                object: self.videoView.player?.currentItem,
@@ -107,8 +110,60 @@ class GreetingCardDetailsController2: UIViewController {
         fadeButtons(delay: 5.0)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: .AVPlayerItemDidPlayToEndTime,
+                                                  object: self.videoView.player?.currentItem)
+    }
+    
     @objc func didGestureAtScreen(_ sender: UIGestureRecognizer) {
         fadeButtons(delay: 3.0)
+    }
+    
+    @objc func didTapLabel(_ sender: UITapGestureRecognizer) {
+        guard let tag = sender.view?.tag else { return }
+
+        let alert = UIAlertController(title: tag == 0 ? "Enter Heading" : "Enter Description", message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.autocapitalizationType = tag == 0 ? .words : .sentences
+            textField.autocorrectionType = .default
+        }
+        
+        let submitButton = UIAlertAction(title: "Submit", style: .default) { [unowned alert, weak self] _ in
+            guard let self = self,
+                  let textField = alert.textFields?[0].text,
+                  textField.count > 0 else {
+                return
+            }
+            
+            if tag == 0 {
+                self.headingLabel.text = textField
+            }
+            else {
+                self.descriptionLabel.text = textField
+            }
+        }
+        
+        submitButton.isEnabled = false
+        alert.view.tintColor = UIColor(named: "colorBlue")
+        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification,
+                                               object: alert.textFields?[0],
+                                               queue: .main) { [unowned submitButton] notification in
+            guard let textField = alert.textFields?[0].text else { return }
+
+            submitButton.isEnabled = !textField.isEmpty
+        }
+
+        alert.addAction(submitButton)
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancelButton)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func didTapDescription(_ sender: UITapGestureRecognizer) {
+        
     }
     
     private func fadeButtons(delay: TimeInterval) {
@@ -145,6 +200,8 @@ class GreetingCardDetailsController2: UIViewController {
         //Prepare to hide the current view...
         CATransaction.begin()
         CATransaction.setCompletionBlock {
+            K.addHapticFeedback(withStyle: .light)
+
             self.imageView.isHidden = isImage ? true : false
             self.videoView.isHidden = isImage ? false : true
             self.selectImageButton.setImage(UIImage(systemName: isImage ? "video.fill" : "camera.fill"), for: .normal)
@@ -202,8 +259,8 @@ class GreetingCardDetailsController2: UIViewController {
     }
     
     @IBAction func playVideoPressed(_ sender: UIButton) {
-        self.videoView.player?.play()
-        self.playVideoButton.isHidden = true
+        videoView.player?.play()
+        playVideoButton.isHidden = true
     }
 
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
@@ -315,5 +372,13 @@ extension GreetingCardDetailsController2: ImagePickerDelegate, VideoPickerDelega
         videoView.player?.play()
         playVideoButton.isHidden = true
         videoChanged = true
+        
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+                                               object: self.videoView.player?.currentItem,
+                                               queue: nil) { [weak self] notification in
+            guard let self = self else { return }
+            self.videoView.player?.seek(to: CMTime.zero)
+            self.playVideoButton.isHidden = false
+        }
     }
 }

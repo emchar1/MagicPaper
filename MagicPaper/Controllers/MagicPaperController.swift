@@ -291,6 +291,15 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
         return node!
     }
     
+    
+    // MARK: - Button Functions
+    
+    @IBAction func goBackPressed(_ sender: UIButton) {
+        goBackButton.gentleFade(withDuration: 0.5, delay: 3.0)
+        self.sceneView.session.pause()
+        dismiss(animated: true, completion: nil)
+    }
+    
     @objc func scanPressed(_ sender: UIButton) {
         K.addHapticFeedback(withStyle: .medium)
         
@@ -362,15 +371,6 @@ class MagicPaperController: UIViewController, ARSCNViewDelegate {
     }
     
     
-    
-    
-    
-    
-    //DEBUG PURPOSES ONLY!!
-    @IBAction func goBack(_ sender: UIButton) {
-        self.sceneView.session.pause()
-        dismiss(animated: true, completion: nil)
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueCreate" {
