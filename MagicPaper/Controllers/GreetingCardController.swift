@@ -211,42 +211,17 @@ class GreetingCardController: UITableViewController {
             return
         }
         
-
-        //Segue to AddGreetingCard
-        if segue.identifier == "AddGreetingCard" {
-            let controller = nc.topViewController as! GreetingCardDetailsController
-            controller.uid = uid
-            controller.delegate = self
-
-        }
-
-        //Segue to EditGreetingCard
-        if segue.identifier == "EditGreetingCard" {
-            let controller = nc.topViewController as! GreetingCardDetailsController
-            controller.uid = uid
-            controller.delegate = self
-
-            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
-                controller.docRef = Firestore.firestore().collection(FIR.collection).document(greetingCards[indexPath.row].id!)
-                controller.greetingCard = greetingCards[indexPath.row]
-                
-                if let asset = FIR.storageAssets.first(where: { $0.documentID == greetingCards[indexPath.row].id! }) {
-                    controller.image = asset.image
-                    controller.videoURL = asset.video
-                }
-            }
-        }
         
-        //Segue to Test0Add (the real greeting card details)
-        if segue.identifier == "SegueTest0Add" {
-            let controller = nc.topViewController as! GreetingCardDetailsController2
+        //Segue to Add a greeting card
+        if segue.identifier == "AddGreetingCardSegue" {
+            let controller = nc.topViewController as! GreetingCardDetailsController
             controller.uid = uid
             controller.delegate = self
         }
         
-        //Segue to Test0Edit
-        if segue.identifier == "SegueTest0Edit" {
-            let controller = nc.topViewController as! GreetingCardDetailsController2
+        //Segue to Edit a greeting card
+        if segue.identifier == "EditGreetingCardSegue" {
+            let controller = nc.topViewController as! GreetingCardDetailsController
             controller.uid = uid
             controller.delegate = self
             
@@ -257,9 +232,6 @@ class GreetingCardController: UITableViewController {
                 if let asset = FIR.storageAssets.first(where: { $0.documentID == greetingCards[indexPath.row].id! }) {
                     controller.image = asset.image
                     controller.videoURL = asset.video
-//                    controller.qrCode = asset.qrCode
-//                    controller.heading = greetingCards[indexPath.row].greetingHeading
-//                    controller.details = greetingCards[indexPath.row].greetingDescription
                 }
             }
         }
@@ -275,22 +247,6 @@ extension GreetingCardController: GreetingCardDetailsControllerDelegate {
                                        didUpdateFor image: UIImage?,
                                        video: URL?,
                                        qrCode: UIImage?) {
-        guard let greetingCard = controller.greetingCard else {
-            fatalError("fatalError: greetingCard object nil in GreetingCardController delegate function.")
-        }
-        
-        updateAssets(for: greetingCard.id!, image: image, video: video, qrCode: qrCode)
-    }
-}
-
-
-// MARK: - GreetingCardDetailsController2Delegate
-
-extension GreetingCardController: GreetingCardDetailsController2Delegate {
-    func greetingCardDetailsController2(_ controller: GreetingCardDetailsController2,
-                                        didUpdateFor image: UIImage?,
-                                        video: URL?,
-                                        qrCode: UIImage?) {
         guard let greetingCard = controller.greetingCard else {
             fatalError("fatalError: greetingCard object nil in GreetingCardController delegate function.")
         }

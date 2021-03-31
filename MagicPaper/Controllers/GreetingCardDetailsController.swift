@@ -2,7 +2,7 @@
 //  GreetingCardDetailsController.swift
 //  MagicPaper
 //
-//  Created by Eddie Char on 1/11/21.
+//  Created by Eddie Char on 3/7/21.
 //
 
 import UIKit
@@ -13,22 +13,25 @@ import AVFoundation
 
 protocol GreetingCardDetailsControllerDelegate: class {
     func greetingCardDetailsController(_ controller: GreetingCardDetailsController,
-                                       didUpdateFor image: UIImage?,
-                                       video: URL?,
-                                       qrCode: UIImage?)
+                                        didUpdateFor image: UIImage?,
+                                        video: URL?,
+                                        qrCode: UIImage?)
 }
 
 
-class GreetingCardDetailsController: UITableViewController {
+class GreetingCardDetailsController: UIViewController {
     
     // MARK: - Properties
     
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var headingField: UITextField!
-    @IBOutlet weak var descriptionField: UITextView!
+    @IBOutlet weak var headingLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var videoView: VideoView!
     @IBOutlet weak var qrView: UIImageView!
+    @IBOutlet weak var cameraVideoButton: UIButton!
+    @IBOutlet weak var selectImageButton: UIButton!
+    @IBOutlet weak var playVideoButton: UIButton!
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -41,13 +44,14 @@ class GreetingCardDetailsController: UITableViewController {
     private var imageChanged: Bool!
     private var videoChanged: Bool!
     private var isNewDoc: Bool!
+    private var showImageSide: Bool!
 
     var uid: String!
     var docRef: DocumentReference!
     var greetingCard: MagicGreetingCard?
     var delegate: GreetingCardDetailsControllerDelegate?
     var image: UIImage?
-    var videoURL: URL?    
+    var videoURL: URL?
 
 
     // MARK: - Initialization
@@ -57,14 +61,14 @@ class GreetingCardDetailsController: UITableViewController {
         
         imageChanged = false
         videoChanged = false
-        
+        showImageSide = true
+
         if let greetingCard = greetingCard {
             dateLabel.text = dateFormatter.string(from: greetingCard.greetingDate)
-            headingField.text = greetingCard.greetingHeading
-            descriptionField.text = greetingCard.greetingDescription
+            headingLabel.text = greetingCard.greetingHeading
+            descriptionLabel.text = greetingCard.greetingDescription
             imageView.image = image
             videoView.url = videoURL
-            videoView.player?.play()
             isNewDoc = false
         }
         else {
@@ -77,15 +81,206 @@ class GreetingCardDetailsController: UITableViewController {
         qrView.image = code.generate()
         imagePicker = ImagePicker(presentationController: self, delegate: self)
         videoPicker = VideoPicker(presentationController: self, delegate: self)
-        headingField.becomeFirstResponder()
+        
+        
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
+        view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
+        view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didGestureAtScreen(_ :))))
+        
+        headingLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapLabel(_ :))))
+        descriptionLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapLabel(_ :))))
+
+        //Notification observer for videoView player
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+                                               object: self.videoView.player?.currentItem,
+                                               queue: nil) { [weak self] notification in
+            guard let self = self else { return }
+            self.videoView.player?.seek(to: CMTime.zero)
+            self.playVideoButton.isHidden = false
+        }
+        
 
         //Debug purposes only
         title = docRef.documentID
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        fadeButtons(delay: 5.0)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: .AVPlayerItemDidPlayToEndTime,
+                                                  object: self.videoView.player?.currentItem)
+    }
+    
+    @objc func didGestureAtScreen(_ sender: UIGestureRecognizer) {
+        fadeButtons(delay: 3.0)
+    }
+    
+    @objc func didTapLabel(_ sender: UITapGestureRecognizer) {
+        guard let tag = sender.view?.tag else { return }
+
+        let tagHeading: Int = 0
+        let alert = UIAlertController(title: tag == tagHeading ? "Enter Heading" : "Enter Description",
+                                      message: nil,
+                                      preferredStyle: .alert)
+        
+        alert.addTextField { textField in
+            textField.autocapitalizationType = tag == tagHeading ? .words : .sentences
+            textField.autocorrectionType = .default
+            print(textField.frame)
+
+            if tag != tagHeading {
+                textField.addConstraint(textField.heightAnchor.constraint(equalToConstant: 100))
+            }
+        }
+        
+//        alert.view.autoresizesSubviews = true
+//        let textView = UITextView(frame: .zero)
+//        textView.translatesAutoresizingMaskIntoConstraints = false
+//        alert.view.addSubview(textView)
+//        NSLayoutConstraint.activate([textView.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 8),
+//                                     textView.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 64),
+//                                     alert.view.trailingAnchor.constraint(equalTo: textView.trailingAnchor, constant: 8),
+//                                     alert.view.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 64)])
+
+        let submitButton = UIAlertAction(title: "Submit", style: .default) { [unowned alert, weak self] _ in
+            guard let self = self,
+                  let textField = alert.textFields?[0].text,
+                  textField.count > 0 else {
+                return
+            }
+            
+            if tag == tagHeading {
+                self.headingLabel.text = textField
+            }
+            else {
+                self.descriptionLabel.text = textField
+            }
+        }
+        
+        submitButton.isEnabled = false
+        alert.view.tintColor = UIColor(named: "colorBlue")
+        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification,
+                                               object: alert.textFields?[0],
+                                               queue: .main) { [unowned submitButton] notification in
+            guard let textField = alert.textFields?[0].text else { return }
+
+            submitButton.isEnabled = !textField.isEmpty
+        }
+
+        alert.addAction(submitButton)
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancelButton)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func didTapDescription(_ sender: UITapGestureRecognizer) {
+        
+    }
+    
+    private func fadeButtons(delay: TimeInterval) {
+        cameraVideoButton.gentleFade(withDuration: 0.5, delay: delay)
+        selectImageButton.gentleFade(withDuration: 0.5, delay: delay)
+    }
+
     
     // MARK: - UIBar Button Items
     
+    @IBAction func cameraVideoButtonPressed(_ sender: UIButton) {
+        let speed: TimeInterval = 0.5
+        
+        UIView.animateKeyframes(withDuration: 2 * speed, delay: 0, options: [], animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: speed) {
+                sender.transform = CGAffineTransform(rotationAngle: .pi)
+            }
+            UIView.addKeyframe(withRelativeStartTime: speed, relativeDuration: speed) {
+                sender.transform = CGAffineTransform.identity
+            }
+        }, completion: nil)
+        
+        fadeButtons(delay: 3.0)
+        showHelper(isImage: showImageSide)
+        showImageSide = !showImageSide
+    }
+    
+    private func showHelper(isImage: Bool) {
+        let speed: TimeInterval = 0.5
+        let keyPath = "transform.rotation.y"
+        let midPoint: Float = .pi / 2
+        
+        
+        //Prepare to hide the current view...
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            K.addHapticFeedback(withStyle: .light)
+
+            self.imageView.isHidden = isImage ? true : false
+            self.videoView.isHidden = isImage ? false : true
+            self.selectImageButton.setImage(UIImage(systemName: isImage ? "video.fill" : "camera.fill"), for: .normal)
+
+            if !isImage {
+                self.videoView.player?.pause()
+            }
+        }
+        
+        if isImage {
+            self.imageView.isUserInteractionEnabled = false
+            self.imageView.animate(keyPath: keyPath, fromValue: 0, toValue: midPoint, duration: speed, delay: 0)
+        }
+        else {
+            self.playVideoButton.isHidden = true
+            self.videoView.isUserInteractionEnabled = false
+            self.videoView.animate(keyPath: keyPath, fromValue: 0, toValue: midPoint, duration: speed, delay: 0)
+        }
+        
+        CATransaction.commit()
+        
+        
+        //...and show the next view.
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            if isImage {
+                self.imageView.isUserInteractionEnabled = true
+                self.videoView.player?.play()
+                self.playVideoButton.isHidden = true
+            }
+            else {
+                self.videoView.isUserInteractionEnabled = true
+            }
+        }
+        
+        if isImage {
+            self.videoView.animate(keyPath: keyPath, fromValue: midPoint, toValue: 0, duration: speed, delay: speed)
+        }
+        else {
+            self.imageView.animate(keyPath: keyPath, fromValue: midPoint, toValue: 0, duration: speed, delay: speed)
+        }
+        
+        CATransaction.commit()
+    }
+    
+    @IBAction func selectImagePressed(_ sender: UIButton) {
+        fadeButtons(delay: 3.0)
+
+        if showImageSide {
+            imagePicker.present(from: view)
+        }
+        else {
+            videoPicker.present(from: view)
+        }
+    }
+    
+    @IBAction func playVideoPressed(_ sender: UIButton) {
+        videoView.player?.play()
+        playVideoButton.isHidden = true
+    }
+
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
@@ -94,8 +289,8 @@ class GreetingCardDetailsController: UITableViewController {
         greetingCard = MagicGreetingCard(id: docRef.documentID,
                                          greetingDate: dateFormatter.date(from: dateLabel.text!)!,
                                          greetingCategory: "🎄",
-                                         greetingDescription: descriptionField.text!,
-                                         greetingHeading: headingField.text!,
+                                         greetingDescription: descriptionLabel.text!,
+                                         greetingHeading: headingLabel.text!,
                                          greetingUID: uid)
         
         do {
@@ -124,7 +319,7 @@ class GreetingCardDetailsController: UITableViewController {
                              forFilename: docRef.documentID + ".png",
                              contentType: "image/png")
             }
-
+            
             delegate?.greetingCardDetailsController(self,
                                                     didUpdateFor: imageView.image,
                                                     video: videoView.url,
@@ -177,113 +372,31 @@ class GreetingCardDetailsController: UITableViewController {
         uploadTask.observe(.success) { (snapshot) in print("Data upload SUCCESSFUL!") }
         uploadTask.observe(.failure) { (snapshot) in print("Data upload FAILED!") }
     }
-    
-    
-    // MARK: - Table view data source
-
-    //So gross. Improve this!
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
-            headingField.becomeFirstResponder()
-        }
-        else if indexPath.section == 2 {
-            descriptionField.becomeFirstResponder()
-        }
-        else if indexPath.section == 3 {
-            self.imagePicker.present(from: self.view)
-        }
-        else if indexPath.section == 4 {
-            self.videoPicker.present(from: self.view)
-        }
-
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    //Putting this here to silence the stupid constraint warnings.
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 || indexPath.section == 1 {
-            return 44
-        }
-        else if indexPath.section == 3 {
-            return 340
-        }
-        else {
-            return 180
-        }
-    }
 }
 
 
-// MARK: - CUSTOM Image Picker Delegate
+// MARK: - Image & Video Picker Delegates
 
 extension GreetingCardDetailsController: ImagePickerDelegate, VideoPickerDelegate {
     func didSelect(image: UIImage?) {
+        self.image = image
         imageView.image = image
         imageChanged = true
     }
     
     func didSelect(url: URL?) {
+        videoURL = url
         videoView.url = url
-        videoView.contentMode = .scaleAspectFit
         videoView.player?.play()
+        playVideoButton.isHidden = true
         videoChanged = true
-    }
-}
-
-/*
-// MARK: - AVCapture File Output Recording Delegate
-
-extension GreetingCardDetailsController: AVCaptureFileOutputRecordingDelegate {
-    func fileOutput(_ output: AVCaptureFileOutput,
-                    didFinishRecordingTo outputFileURL: URL,
-                    from connections: [AVCaptureConnection],
-                    error: Error?) {
         
-        guard let data = try? Data(contentsOf: outputFileURL) else { return }
-        
-        print("File size before compression: \(Double(data.count / Int(K.mb))) MB.")
-        
-        let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + UUID().uuidString + ".mp4")
-        compressVideo(inputURL: outputFileURL as URL, outputURL: compressedURL) { exportSession in
-            guard let session = exportSession else { return }
-            
-            switch session.status {
-            case .unknown:
-                break
-            case .waiting:
-                break
-            case .exporting:
-                break
-            case .completed:
-                guard let compressedData = try? Data(contentsOf: compressedURL) else { return }
-                print("File created: \(compressedURL)\nFile size after compression: \(Double(compressedData.count / Int(K.mb))) MB.")
-            case .failed:
-                break
-            case .cancelled:
-                break
-            @unknown default:
-                fatalError("Unknown case!")
-            }
-        }
-        
-    }
-    
-    private func compressVideo(inputURL: URL,
-                       outputURL: URL,
-                       handler: @escaping (_ exportSession: AVAssetExportSession?) -> Void) {
-        
-        let urlAsset = AVURLAsset(url: inputURL, options: nil)
-        
-        guard let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetLowQuality) else {
-            handler(nil)
-            return
-        }
-        
-        exportSession.outputURL = outputURL
-        exportSession.outputFileType = .mp4
-        exportSession.exportAsynchronously {
-            handler(exportSession)
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+                                               object: self.videoView.player?.currentItem,
+                                               queue: nil) { [weak self] notification in
+            guard let self = self else { return }
+            self.videoView.player?.seek(to: CMTime.zero)
+            self.playVideoButton.isHidden = false
         }
     }
 }
-*/

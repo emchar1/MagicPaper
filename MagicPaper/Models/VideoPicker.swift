@@ -45,22 +45,23 @@ open class VideoPicker: NSObject {
     }
 
     public func present(from sourceView: UIView) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "Edit Video", message: nil, preferredStyle: .actionSheet)
 
-        if let action = self.action(for: .camera, title: "Take video") {
+        if let action = self.action(for: .camera, title: "Record Video") {
             requestMicrophone()
             alertController.addAction(action)
         }
         
-        if let action = self.action(for: .savedPhotosAlbum, title: "Camera roll") {
+        if let action = self.action(for: .savedPhotosAlbum, title: "Camera Roll") {
             alertController.addAction(action)
         }
         
-        if let action = self.action(for: .photoLibrary, title: "Video library") {
+        if let action = self.action(for: .photoLibrary, title: "Video Library") {
             alertController.addAction(action)
         }
 
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alertController.view.tintColor = UIColor(named: "colorBlue")
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             alertController.popoverPresentationController?.sourceView = sourceView

@@ -24,7 +24,6 @@
 		EA9FA1E225D128ED001AE96E /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9FA1E125D128ED001AE96E /* AuthController.swift */; };
 		EAAB12DE25AC327F00D55262 /* GreetingCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB12DD25AC327F00D55262 /* GreetingCardController.swift */; };
 		EAAB12E625AC361F00D55262 /* MagicGreetingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB12E525AC361F00D55262 /* MagicGreetingCard.swift */; };
-		EAAB12EB25AC40E900D55262 /* GreetingCardDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB12EA25AC40E900D55262 /* GreetingCardDetailsController.swift */; };
 		EAD1424E259AF35E00FA8474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAD1424D259AF35E00FA8474 /* Assets.xcassets */; };
 		EAD1426725A136EF00FA8474 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD1426625A136EF00FA8474 /* QRCode.swift */; };
 		EAD1426F25A149D400FA8474 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD1426E25A149D400FA8474 /* ScannerViewController.swift */; };
@@ -34,7 +33,7 @@
 		EAD6199C2522A1DE003E425F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAD6199A2522A1DE003E425F /* LaunchScreen.storyboard */; };
 		EAD619A72522A1DE003E425F /* MagicPaperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD619A62522A1DE003E425F /* MagicPaperTests.swift */; };
 		EAD619B22522A1DE003E425F /* MagicPaperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD619B12522A1DE003E425F /* MagicPaperUITests.swift */; };
-		EAD6825225F596B800EA36BB /* GreetingCardDetailsController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD6825125F596B800EA36BB /* GreetingCardDetailsController2.swift */; };
+		EAD6825225F596B800EA36BB /* GreetingCardDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD6825125F596B800EA36BB /* GreetingCardDetailsController.swift */; };
 		EAD6825725F5F5CE00EA36BB /* GreetingCardAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD6825625F5F5CE00EA36BB /* GreetingCardAsset.swift */; };
 		EAD6826025FC36FD00EA36BB /* main_LaunchButton.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EAD6825F25FC36FD00EA36BB /* main_LaunchButton.mp3 */; };
 		FFF84C3D3AD9F9DD2E154F99 /* Pods_MagicPaper_MagicPaperUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BC2BDDA6659E3770924FA3 /* Pods_MagicPaper_MagicPaperUITests.framework */; };
@@ -83,7 +82,6 @@
 		EA9FA1E125D128ED001AE96E /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		EAAB12DD25AC327F00D55262 /* GreetingCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCardController.swift; sourceTree = "<group>"; };
 		EAAB12E525AC361F00D55262 /* MagicGreetingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicGreetingCard.swift; sourceTree = "<group>"; };
-		EAAB12EA25AC40E900D55262 /* GreetingCardDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCardDetailsController.swift; sourceTree = "<group>"; };
 		EAD1424D259AF35E00FA8474 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EAD1426625A136EF00FA8474 /* QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
 		EAD1426E25A149D400FA8474 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
@@ -99,7 +97,7 @@
 		EAD619AD2522A1DE003E425F /* MagicPaperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagicPaperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAD619B12522A1DE003E425F /* MagicPaperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicPaperUITests.swift; sourceTree = "<group>"; };
 		EAD619B32522A1DE003E425F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EAD6825125F596B800EA36BB /* GreetingCardDetailsController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCardDetailsController2.swift; sourceTree = "<group>"; };
+		EAD6825125F596B800EA36BB /* GreetingCardDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCardDetailsController.swift; sourceTree = "<group>"; };
 		EAD6825625F5F5CE00EA36BB /* GreetingCardAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCardAsset.swift; sourceTree = "<group>"; };
 		EAD6825F25FC36FD00EA36BB /* main_LaunchButton.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = main_LaunchButton.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -182,8 +180,7 @@
 				EAD619932522A1DC003E425F /* MagicPaperController.swift */,
 				EA9FA1E125D128ED001AE96E /* AuthController.swift */,
 				EAAB12DD25AC327F00D55262 /* GreetingCardController.swift */,
-				EAAB12EA25AC40E900D55262 /* GreetingCardDetailsController.swift */,
-				EAD6825125F596B800EA36BB /* GreetingCardDetailsController2.swift */,
+				EAD6825125F596B800EA36BB /* GreetingCardDetailsController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -518,14 +515,13 @@
 				EA9FA1E225D128ED001AE96E /* AuthController.swift in Sources */,
 				EAD1426725A136EF00FA8474 /* QRCode.swift in Sources */,
 				EA5E4EC825BE1F9C0013B539 /* VideoView.swift in Sources */,
-				EAAB12EB25AC40E900D55262 /* GreetingCardDetailsController.swift in Sources */,
 				EA5E4EC325BD65120013B539 /* VideoPicker.swift in Sources */,
 				EAD619942522A1DC003E425F /* MagicPaperController.swift in Sources */,
 				EA01F4A225AADC0200188BC1 /* AudioManager.swift in Sources */,
 				EA01F48925AA818700188BC1 /* AppStoreReviewManager.swift in Sources */,
 				EA01F48F25AA81D100188BC1 /* UserDefaults+Key.swift in Sources */,
 				EAD6825725F5F5CE00EA36BB /* GreetingCardAsset.swift in Sources */,
-				EAD6825225F596B800EA36BB /* GreetingCardDetailsController2.swift in Sources */,
+				EAD6825225F596B800EA36BB /* GreetingCardDetailsController.swift in Sources */,
 				EAD1426F25A149D400FA8474 /* ScannerViewController.swift in Sources */,
 				EAD619902522A1DC003E425F /* AppDelegate.swift in Sources */,
 				EA5E4EBE25BCFB300013B539 /* ImagePicker.swift in Sources */,
