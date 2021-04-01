@@ -131,21 +131,18 @@ class GreetingCardDetailsController: UIViewController {
         alert.addTextField { textField in
             textField.autocapitalizationType = tag == tagHeading ? .words : .sentences
             textField.autocorrectionType = .default
-            print(textField.frame)
-
-            if tag != tagHeading {
-                textField.addConstraint(textField.heightAnchor.constraint(equalToConstant: 100))
-            }
+            textField.delegate = self
         }
         
-//        alert.view.autoresizesSubviews = true
-//        let textView = UITextView(frame: .zero)
-//        textView.translatesAutoresizingMaskIntoConstraints = false
-//        alert.view.addSubview(textView)
-//        NSLayoutConstraint.activate([textView.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 8),
-//                                     textView.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 64),
-//                                     alert.view.trailingAnchor.constraint(equalTo: textView.trailingAnchor, constant: 8),
-//                                     alert.view.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 64)])
+        //Add a second line for descriptionLabel
+        if tag != tagHeading {
+            alert.addTextField { textField2 in
+                textField2.autocapitalizationType = .sentences
+                textField2.autocorrectionType = .default
+                textField2.delegate = self
+            }
+        }
+
 
         let submitButton = UIAlertAction(title: "Submit", style: .default) { [unowned alert, weak self] _ in
             guard let self = self,
@@ -153,12 +150,16 @@ class GreetingCardDetailsController: UIViewController {
                   textField.count > 0 else {
                 return
             }
-            
+
             if tag == tagHeading {
                 self.headingLabel.text = textField
             }
             else {
                 self.descriptionLabel.text = textField
+                
+                if let textField2 = alert.textFields?[1].text, textField2.count > 0 {
+                    self.descriptionLabel.text! += "\n" + textField2
+                }
             }
         }
         
@@ -168,7 +169,6 @@ class GreetingCardDetailsController: UIViewController {
                                                object: alert.textFields?[0],
                                                queue: .main) { [unowned submitButton] notification in
             guard let textField = alert.textFields?[0].text else { return }
-
             submitButton.isEnabled = !textField.isEmpty
         }
 
@@ -178,10 +178,6 @@ class GreetingCardDetailsController: UIViewController {
         alert.addAction(cancelButton)
         
         present(alert, animated: true, completion: nil)
-    }
-    
-    @objc func didTapDescription(_ sender: UITapGestureRecognizer) {
-        
     }
     
     private func fadeButtons(delay: TimeInterval) {
@@ -398,5 +394,16 @@ extension GreetingCardDetailsController: ImagePickerDelegate, VideoPickerDelegat
             self.videoView.player?.seek(to: CMTime.zero)
             self.playVideoButton.isHidden = false
         }
+    }
+}
+
+
+// MARK: - UITextFieldDelegate
+
+extension GreetingCardDetailsController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let newString = (textField.text! as NSString).replacingCharacters(in: range, with: string) as NSString
+
+        return newString.length <= 50
     }
 }
