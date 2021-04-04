@@ -144,7 +144,7 @@ class GreetingCardDetailsController: UIViewController {
         }
 
 
-        let submitButton = UIAlertAction(title: "Submit", style: .default) { [unowned alert, weak self] _ in
+        let submitButton = UIAlertAction(title: "Apply", style: .default) { [unowned alert, weak self] _ in
             guard let self = self,
                   let textField = alert.textFields?[0].text,
                   textField.count > 0 else {

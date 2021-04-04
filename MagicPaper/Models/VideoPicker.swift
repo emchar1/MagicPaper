@@ -29,7 +29,7 @@ open class VideoPicker: NSObject {
         self.pickerController.delegate = self
         self.pickerController.allowsEditing = true
         self.pickerController.mediaTypes = ["public.movie"]
-        self.pickerController.videoQuality = .typeLow                    //3/4/21 THIS CHANGED THE VIDEO QUALITY
+        self.pickerController.videoQuality = .typeMedium
         self.pickerController.videoMaximumDuration = K.videoMaximumDuration
     }
 

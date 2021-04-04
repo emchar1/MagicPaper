@@ -14,6 +14,7 @@
 		EA01F49725AAD01F00188BC1 /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F49625AAD01F00188BC1 /* CheckmarkView.swift */; };
 		EA01F4A225AADC0200188BC1 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F4A125AADC0200188BC1 /* AudioManager.swift */; };
 		EA01F4AF25AB0A7800188BC1 /* main_PageTurn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA01F4AE25AB0A7800188BC1 /* main_PageTurn.mp3 */; };
+		EA119AD126199140004B34FB /* ImagePanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA119AD026199140004B34FB /* ImagePanController.swift */; };
 		EA49D77C25908A0D00C52847 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA49D77B25908A0D00C52847 /* CloudKit.framework */; };
 		EA5E4EBE25BCFB300013B539 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5E4EBD25BCFB300013B539 /* ImagePicker.swift */; };
 		EA5E4EC325BD65120013B539 /* VideoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5E4EC225BD65120013B539 /* VideoPicker.swift */; };
@@ -71,6 +72,7 @@
 		EA01F4A125AADC0200188BC1 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		EA01F4AE25AB0A7800188BC1 /* main_PageTurn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = main_PageTurn.mp3; sourceTree = "<group>"; };
 		EA0C1906A94E59050EF536C8 /* Pods-MagicPaper-MagicPaperUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicPaper-MagicPaperUITests.release.xcconfig"; path = "Target Support Files/Pods-MagicPaper-MagicPaperUITests/Pods-MagicPaper-MagicPaperUITests.release.xcconfig"; sourceTree = "<group>"; };
+		EA119AD026199140004B34FB /* ImagePanController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePanController.swift; sourceTree = "<group>"; };
 		EA49D77625908A0700C52847 /* MagicPaper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MagicPaper.entitlements; sourceTree = "<group>"; };
 		EA49D77B25908A0D00C52847 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		EA5E4EBD25BCFB300013B539 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				EA9FA1E125D128ED001AE96E /* AuthController.swift */,
 				EAAB12DD25AC327F00D55262 /* GreetingCardController.swift */,
 				EAD6825125F596B800EA36BB /* GreetingCardDetailsController.swift */,
+				EA119AD026199140004B34FB /* ImagePanController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -526,6 +529,7 @@
 				EAD619902522A1DC003E425F /* AppDelegate.swift in Sources */,
 				EA5E4EBE25BCFB300013B539 /* ImagePicker.swift in Sources */,
 				EAAB12E625AC361F00D55262 /* MagicGreetingCard.swift in Sources */,
+				EA119AD126199140004B34FB /* ImagePanController.swift in Sources */,
 				EA9CC8F325A6EE980040122E /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

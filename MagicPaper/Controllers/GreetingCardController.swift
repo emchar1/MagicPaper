@@ -200,6 +200,71 @@ class GreetingCardController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            removeFromStorage(for: greetingCards[indexPath.row])
+            greetingCards.remove(at: indexPath.row)
+            
+            //Don't need to remove row, because the listener will take care of it when the document is deleted from Firestore! In fact, it will crash if you try to do this:
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    private func removeFromStorage(for greetingCard: MagicGreetingCard) {
+        guard let greetingCardID = greetingCard.id else {
+            return print("Invalid Greeting Card ID when attempting to removeFromStorage!")
+        }
+        
+        //First delete the storageAssets entry
+        if let index = FIR.storageAssets.firstIndex(where: { $0.documentID == greetingCardID }) {
+            FIR.storageAssets.remove(at: index)
+        }
+        
+        //Then remove it from Firebase Firestore
+        let doc = Firestore.firestore().collection(FIR.collection).document(greetingCardID)
+        doc.delete { (error) in
+            if let error = error {
+                print("Error removing document: \(error)")
+            }
+            else {
+                print("Document successfully removed!")
+            }
+        }
+        
+        //Also delete the storage assets in Firebase
+        let storageRef = Storage.storage().reference().child(self.uid)
+
+        let imageRef = storageRef.child(FIR.storageImage).child("\(greetingCardID).png")
+        imageRef.delete { (error) in
+            if let error = error {
+                print("Error removing image: \(error)")
+            }
+            else {
+                print("Image successfully removed!")
+            }
+        }
+        
+        let videoRef = storageRef.child(FIR.storageVideo).child("\(greetingCardID).mp4")
+        videoRef.delete { (error) in
+            if let error = error {
+                print("Error removing video: \(error)")
+            }
+            else {
+                print("Video successfully removed!")
+            }
+        }
+        
+        let qrCodeRef = storageRef.child(FIR.storageQR).child("\(greetingCardID).png")
+        qrCodeRef.delete { (error) in
+            if let error = error {
+                print("Error removing QR Code: \(error)")
+            }
+            else {
+                print("QR Code successfully removed!")
+            }
+        }
+    }
 
 
     // MARK: - Navigation

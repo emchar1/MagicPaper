@@ -424,6 +424,7 @@
                     <connections>
                         <segue destination="T2I-Hm-52y" kind="relationship" relationship="viewControllers" id="nRj-5C-y3m"/>
                         <segue destination="OaK-d7-XwJ" kind="relationship" relationship="viewControllers" id="ufe-rO-A0O"/>
+                        <segue destination="riD-jg-SDs" kind="relationship" relationship="viewControllers" id="a08-QR-bdF"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u41-21-TBY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -578,6 +579,49 @@
             </objects>
             <point key="canvasLocation" x="-87" y="1148"/>
         </scene>
+        <!--Image Pan-->
+        <scene sceneID="dmj-Mn-0pi">
+            <objects>
+                <viewController id="riD-jg-SDs" customClass="ImagePanController" customModule="MagicPaper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iw9-qA-1Tf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JKF-51-wci">
+                                <rect key="frame" x="32" y="349.5" width="350" height="197"/>
+                                <color key="backgroundColor" name="colorGreen"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="JKF-51-wci" secondAttribute="height" multiplier="16:9" id="JjR-H3-bcv"/>
+                                    <constraint firstAttribute="width" constant="350" id="gX2-Ax-HGk"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EYJ-ua-ghQ">
+                                <rect key="frame" x="196.5" y="750" width="21" height="23"/>
+                                <color key="tintColor" name="colorBlue"/>
+                                <state key="normal" image="rotate.right.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="rotateView:" destination="riD-jg-SDs" eventType="touchUpInside" id="mNO-nZ-Wkw"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="iYZ-Cd-lVT"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="JKF-51-wci" firstAttribute="centerX" secondItem="iw9-qA-1Tf" secondAttribute="centerX" id="2M7-mq-6Pn"/>
+                            <constraint firstItem="JKF-51-wci" firstAttribute="centerY" secondItem="iw9-qA-1Tf" secondAttribute="centerY" id="EJW-ex-csP"/>
+                            <constraint firstItem="EYJ-ua-ghQ" firstAttribute="centerX" secondItem="iw9-qA-1Tf" secondAttribute="centerX" id="HZ6-sW-Fzi"/>
+                            <constraint firstItem="iYZ-Cd-lVT" firstAttribute="bottom" secondItem="EYJ-ua-ghQ" secondAttribute="bottom" constant="40" id="ZPH-c3-0uY"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Image Pan" image="camera.fill" catalog="system" id="edA-62-S0A"/>
+                    <connections>
+                        <outlet property="imageView" destination="JKF-51-wci" id="sUi-xt-7vP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sVf-mv-5D7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-88" y="2044"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="N75-PH-mmt">
             <objects>
@@ -608,11 +652,15 @@
         <image name="greetingcard" catalog="system" width="107" height="128"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="qrcode.viewfinder" catalog="system" width="128" height="115"/>
+        <image name="rotate.right.fill" catalog="system" width="128" height="124"/>
         <namedColor name="colorBlue">
             <color red="0.062745098039215685" green="0.67450980392156867" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="colorDarkGrey">
             <color red="0.25099998712539673" green="0.25099998712539673" blue="0.25099998712539673" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="colorGreen">
+            <color red="0.063000001013278961" green="0.67500001192092896" blue="0.51800000667572021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="colorPurple">
             <color red="0.44299998879432678" green="0.2669999897480011" blue="0.5220000147819519" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
