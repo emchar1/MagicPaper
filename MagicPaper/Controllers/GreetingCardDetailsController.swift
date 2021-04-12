@@ -26,10 +26,14 @@ class GreetingCardDetailsController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var headingLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
+
+    @IBOutlet weak var scrollView: UIScrollView!
+    private var imageView: UIImageView!
     @IBOutlet weak var videoView: VideoView!
     @IBOutlet weak var qrView: UIImageView!
-    @IBOutlet weak var cameraVideoButton: UIButton!
+
+    @IBOutlet weak var setZoomButton: UIButton!
+    @IBOutlet weak var swapImageButton: UIButton!
     @IBOutlet weak var selectImageButton: UIButton!
     @IBOutlet weak var playVideoButton: UIButton!
     
@@ -38,14 +42,56 @@ class GreetingCardDetailsController: UIViewController {
         formatter.dateFormat = "MMMM d, yyyy"
         return formatter
     }()
+
+    private lazy var imageViewConstraints: [NSLayoutConstraint] = {
+        let top = NSLayoutConstraint.init(item: imageView!, attribute: .top, relatedBy: .equal,
+                                          toItem: scrollView, attribute: .top,
+                                          multiplier: 1, constant: scrollView.bounds.height)
+        let leading = NSLayoutConstraint.init(item: imageView!, attribute: .leading, relatedBy: .equal,
+                                              toItem: scrollView, attribute: .leading,
+                                              multiplier: 1, constant: scrollView.bounds.width)
+        let trailing = NSLayoutConstraint.init(item: scrollView!, attribute: .trailing, relatedBy: .equal,
+                                               toItem: imageView, attribute: .trailing,
+                                               multiplier: 1, constant: scrollView.bounds.width)
+        let bottom = NSLayoutConstraint.init(item: scrollView!, attribute: .bottom, relatedBy: .equal,
+                                             toItem: imageView, attribute: .bottom,
+                                             multiplier: 1, constant: scrollView.bounds.height)
+//        let aspectratio = NSLayoutConstraint.init(item: imageView!, attribute: .width, relatedBy: .equal,
+//                                                  toItem: imageView, attribute: .height,
+//                                                  multiplier: 16/9, constant: 0)
+        return [top, leading, trailing, bottom]
+    }()
     
+//    private lazy var videoViewConstraints: [NSLayoutConstraint] = {
+//        let top = NSLayoutConstraint.init(item: videoView!, attribute: .top, relatedBy: .equal,
+//                                          toItem: scrollView, attribute: .top,
+//                                          multiplier: 1, constant: scrollView.bounds.height)
+//        let leading = NSLayoutConstraint.init(item: videoView!, attribute: .leading, relatedBy: .equal,
+//                                              toItem: scrollView, attribute: .leading,
+//                                              multiplier: 1, constant: scrollView.bounds.width)
+//        let trailing = NSLayoutConstraint.init(item: scrollView!, attribute: .trailing, relatedBy: .equal,
+//                                               toItem: videoView, attribute: .trailing,
+//                                               multiplier: 1, constant: scrollView.bounds.width)
+//        let bottom = NSLayoutConstraint.init(item: scrollView!, attribute: .bottom, relatedBy: .equal,
+//                                             toItem: videoView, attribute: .bottom,
+//                                             multiplier: 1, constant: scrollView.bounds.height)
+//        return [top, leading, trailing, bottom]
+//    }()
+
     private var imagePicker: ImagePicker!
     private var videoPicker: VideoPicker!
     private var imageChanged: Bool!
     private var videoChanged: Bool!
     private var isNewDoc: Bool!
     private var showImageSide: Bool!
+    private var didSetImage: Bool! {
+        didSet {
+            setZoomButton.isHidden = !didSetImage
+            scrollView.isUserInteractionEnabled = didSetImage
+        }
+    }
 
+    //Public properties that can be set from parent view
     var uid: String!
     var docRef: DocumentReference!
     var greetingCard: MagicGreetingCard?
@@ -62,7 +108,18 @@ class GreetingCardDetailsController: UIViewController {
         imageChanged = false
         videoChanged = false
         showImageSide = true
-
+        didSetImage = false
+        
+        
+        
+        
+        scrollView.delegate = self                 //Needed to take advantge of zooming.
+        imageView = UIImageView()
+//        videoView = VideoView()
+        
+        
+        
+        
         if let greetingCard = greetingCard {
             dateLabel.text = dateFormatter.string(from: greetingCard.greetingDate)
             headingLabel.text = greetingCard.greetingHeading
@@ -76,6 +133,28 @@ class GreetingCardDetailsController: UIViewController {
             dateLabel.text = dateFormatter.string(from: Date())
             isNewDoc = true
         }
+
+        
+        
+        
+        
+        scrollView.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([imageViewConstraints[0],
+                                     imageViewConstraints[1],
+                                     imageViewConstraints[2],
+                                     imageViewConstraints[3]])
+        
+//        scrollView.addSubview(videoView)
+//        videoView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([videoViewConstraints[0],
+//                                     videoViewConstraints[1],
+//                                     videoViewConstraints[2],
+//                                     videoViewConstraints[3]])
+        
+        
+        
+        
         
         let code = QRCode(uid: uid, docID: docRef.documentID)
         qrView.image = code.generate()
@@ -102,6 +181,20 @@ class GreetingCardDetailsController: UIViewController {
 
         //Debug purposes only
         title = docRef.documentID
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        
+        //I don't think these are right -EC
+        let widthScale = scrollView.bounds.size.width / imageView.bounds.width
+        let heightScale = scrollView.bounds.size.height / imageView.bounds.height
+        let minScale = max(widthScale, heightScale)
+        
+        scrollView.minimumZoomScale = minScale
+        scrollView.zoomScale = minScale
+        scrollView.maximumZoomScale = 100
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -181,14 +274,32 @@ class GreetingCardDetailsController: UIViewController {
     }
     
     private func fadeButtons(delay: TimeInterval) {
-        cameraVideoButton.gentleFade(withDuration: 0.5, delay: delay)
+        swapImageButton.gentleFade(withDuration: 0.5, delay: delay)
         selectImageButton.gentleFade(withDuration: 0.5, delay: delay)
     }
 
     
     // MARK: - UIBar Button Items
     
-    @IBAction func cameraVideoButtonPressed(_ sender: UIButton) {
+    @IBAction func setImageViewButtonPressed(_ sender: UIButton) {
+        didSetImage = false
+        
+        let scale = 1 / scrollView.zoomScale
+        let visibleRect = CGRect(x: scrollView.contentOffset.x * scale,
+                                 y: scrollView.contentOffset.y * scale,
+                                 width: scrollView.bounds.size.width * scale,
+                                 height: scrollView.bounds.size.height * scale)
+        
+        guard let cgImage = (imageView.image?.cgImage)!.cropping(to: visibleRect) else {
+            return
+        }
+        
+        let cropped = UIImage.init(cgImage: cgImage)
+        imageView.image = cropped
+        viewWillLayoutSubviews()
+    }
+    
+    @IBAction func swapImageButtonPressed(_ sender: UIButton) {
         let speed: TimeInterval = 0.5
         
         UIView.animateKeyframes(withDuration: 2 * speed, delay: 0, options: [], animations: {
@@ -216,8 +327,8 @@ class GreetingCardDetailsController: UIViewController {
         CATransaction.setCompletionBlock {
             K.addHapticFeedback(withStyle: .light)
 
-            self.imageView.isHidden = isImage ? true : false
-            self.videoView.isHidden = isImage ? false : true
+            self.imageView.isHidden = isImage
+            self.videoView.isHidden = !isImage
             self.selectImageButton.setImage(UIImage(systemName: isImage ? "video.fill" : "camera.fill"), for: .normal)
 
             if !isImage {
@@ -256,6 +367,7 @@ class GreetingCardDetailsController: UIViewController {
         }
         else {
             self.imageView.animate(keyPath: keyPath, fromValue: midPoint, toValue: 0, duration: speed, delay: speed)
+            
         }
         
         CATransaction.commit()
@@ -378,6 +490,9 @@ extension GreetingCardDetailsController: ImagePickerDelegate, VideoPickerDelegat
         self.image = image
         imageView.image = image
         imageChanged = true
+        didSetImage = true
+        
+        
     }
     
     func didSelect(url: URL?) {
@@ -394,6 +509,34 @@ extension GreetingCardDetailsController: ImagePickerDelegate, VideoPickerDelegat
             self.videoView.player?.seek(to: CMTime.zero)
             self.playVideoButton.isHidden = false
         }
+    }
+}
+
+
+// MARK: - UIScrollViewDelegate
+
+extension GreetingCardDetailsController: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        let yOffset: CGFloat = 0//max(0, (imageScrollView.bounds.size.height - imageScrollViewImageView.bounds.size.height) / 2)
+        imageViewConstraints[0].constant = yOffset
+        imageViewConstraints[3].constant = yOffset
+        
+        let xOffset: CGFloat = 0//max(0, (imageScrollView.bounds.size.height - imageScrollViewImageView.bounds.size.height) / 2)
+        imageViewConstraints[1].constant = xOffset
+        imageViewConstraints[2].constant = xOffset
+        
+        
+        print("imageScrollView.zoomScale: \(scrollView.zoomScale)")
+        
+        view.layoutIfNeeded()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("bounds.x: \(scrollView.bounds.origin.x), bounds.y: \(scrollView.bounds.origin.y)")
     }
 }
 
