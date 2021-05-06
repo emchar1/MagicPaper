@@ -204,20 +204,21 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="SF2-lV-Lnt" userLabel="Stack - Main">
                                         <rect key="frame" x="4" y="4" width="386" height="287.5"/>
                                         <subviews>
-                                            <view hidden="YES" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="DGl-M3-Loe" customClass="VideoView" customModule="MagicPaper" customModuleProvider="target">
+                                            <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Xh-gd-4R6" userLabel="Scroll View Video">
                                                 <rect key="frame" x="0.0" y="0.0" width="386" height="217"/>
-                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="DGl-M3-Loe" secondAttribute="height" multiplier="16:9" id="XUv-bN-uvX"/>
+                                                    <constraint firstAttribute="width" secondItem="2Xh-gd-4R6" secondAttribute="height" multiplier="16:9" id="gzF-ut-mwK"/>
                                                 </constraints>
-                                            </view>
+                                                <viewLayoutGuide key="contentLayoutGuide" id="UUP-q3-sHQ"/>
+                                                <viewLayoutGuide key="frameLayoutGuide" id="xct-Ym-czW"/>
+                                            </scrollView>
                                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WDr-ro-zaX">
                                                 <rect key="frame" x="0.0" y="0.0" width="386" height="217"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="WDr-ro-zaX" secondAttribute="height" multiplier="16:9" id="YYi-gB-4Gx"/>
                                                 </constraints>
-                                                <viewLayoutGuide key="contentLayoutGuide" id="246-wq-OYZ"/>
-                                                <viewLayoutGuide key="frameLayoutGuide" id="qJd-2g-eHR"/>
+                                                <viewLayoutGuide key="contentLayoutGuide" id="7e4-yZ-rv5"/>
+                                                <viewLayoutGuide key="frameLayoutGuide" id="PNq-B4-3uC"/>
                                             </scrollView>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qep-aM-14y" userLabel="Stack - Bottom">
                                                 <rect key="frame" x="0.0" y="221" width="386" height="66.5"/>
@@ -279,13 +280,13 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="Qep-aM-14y" secondAttribute="trailing" id="3xL-tv-2Ue"/>
                                             <constraint firstItem="Qep-aM-14y" firstAttribute="leading" secondItem="SF2-lV-Lnt" secondAttribute="leading" id="67Y-hw-H6Y"/>
+                                            <constraint firstItem="2Xh-gd-4R6" firstAttribute="leading" secondItem="SF2-lV-Lnt" secondAttribute="leading" id="9oK-fg-1gV"/>
+                                            <constraint firstItem="2Xh-gd-4R6" firstAttribute="top" secondItem="SF2-lV-Lnt" secondAttribute="top" id="BO8-At-pWK"/>
+                                            <constraint firstAttribute="trailing" secondItem="2Xh-gd-4R6" secondAttribute="trailing" id="DJi-il-78U"/>
                                             <constraint firstAttribute="bottom" secondItem="Qep-aM-14y" secondAttribute="bottom" id="Dxc-gN-H2m"/>
-                                            <constraint firstItem="DGl-M3-Loe" firstAttribute="leading" secondItem="SF2-lV-Lnt" secondAttribute="leading" id="EPE-KC-vfd"/>
-                                            <constraint firstAttribute="trailing" secondItem="DGl-M3-Loe" secondAttribute="trailing" id="HcR-4N-jwk"/>
                                             <constraint firstItem="WDr-ro-zaX" firstAttribute="leading" secondItem="SF2-lV-Lnt" secondAttribute="leading" id="Lem-DH-wIf"/>
                                             <constraint firstItem="WDr-ro-zaX" firstAttribute="top" secondItem="SF2-lV-Lnt" secondAttribute="top" id="NzV-6S-KxX"/>
                                             <constraint firstAttribute="trailing" secondItem="WDr-ro-zaX" secondAttribute="trailing" id="Ori-mc-bnW"/>
-                                            <constraint firstItem="DGl-M3-Loe" firstAttribute="top" secondItem="SF2-lV-Lnt" secondAttribute="top" id="q3v-fL-9jZ"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -415,11 +416,11 @@
                         <outlet property="headingLabel" destination="ajS-7S-snb" id="kY8-IJ-Zth"/>
                         <outlet property="playVideoButton" destination="NR7-mR-ugz" id="gik-M8-UDe"/>
                         <outlet property="qrView" destination="bx4-K9-ACI" id="o5q-X0-Ch5"/>
-                        <outlet property="scrollView" destination="WDr-ro-zaX" id="8bs-tv-cfV"/>
+                        <outlet property="scrollViewPhoto" destination="WDr-ro-zaX" id="8bs-tv-cfV"/>
+                        <outlet property="scrollViewVideo" destination="2Xh-gd-4R6" id="kmd-ii-6Xk"/>
                         <outlet property="selectImageButton" destination="jRO-1E-gNi" id="UJn-P0-Zbb"/>
                         <outlet property="setZoomButton" destination="uZB-CB-kX2" id="aWV-7A-FOH"/>
                         <outlet property="swapImageButton" destination="4va-Ef-mmh" id="C49-FC-Cb8"/>
-                        <outlet property="videoView" destination="DGl-M3-Loe" id="cSd-1g-Q0K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="knd-Jc-pDe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -27,9 +27,12 @@ class GreetingCardDetailsController: UIViewController {
     @IBOutlet weak var headingLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
 
-    @IBOutlet weak var scrollView: UIScrollView!
-    private var imageView: UIImageView!
-    @IBOutlet weak var videoView: VideoView!
+    //2. Need to have a separate videoScrollView, embed videoViewNEW in it and do it like imageView.
+    @IBOutlet weak var scrollViewPhoto: UIScrollView!
+    @IBOutlet weak var scrollViewVideo: UIScrollView!
+    private var photoView: UIImageView!
+    private var videoViewNEW: VideoView!
+//    @IBOutlet weak var videoView: VideoView!
     @IBOutlet weak var qrView: UIImageView!
 
     @IBOutlet weak var setZoomButton: UIButton!
@@ -42,52 +45,70 @@ class GreetingCardDetailsController: UIViewController {
         formatter.dateFormat = "MMMM d, yyyy"
         return formatter
     }()
+    
+    enum LayoutConstraint: Int {
+        case top = 0, leading, trailing, bottom
+    }
 
     private lazy var imageViewConstraints: [NSLayoutConstraint] = {
-        let top = NSLayoutConstraint.init(item: imageView!, attribute: .top, relatedBy: .equal,
-                                          toItem: scrollView, attribute: .top,
-                                          multiplier: 1, constant: scrollView.bounds.height)
-        let leading = NSLayoutConstraint.init(item: imageView!, attribute: .leading, relatedBy: .equal,
-                                              toItem: scrollView, attribute: .leading,
-                                              multiplier: 1, constant: scrollView.bounds.width)
-        let trailing = NSLayoutConstraint.init(item: scrollView!, attribute: .trailing, relatedBy: .equal,
-                                               toItem: imageView, attribute: .trailing,
-                                               multiplier: 1, constant: scrollView.bounds.width)
-        let bottom = NSLayoutConstraint.init(item: scrollView!, attribute: .bottom, relatedBy: .equal,
-                                             toItem: imageView, attribute: .bottom,
-                                             multiplier: 1, constant: scrollView.bounds.height)
+        let top = NSLayoutConstraint.init(item: photoView!, attribute: .top, relatedBy: .equal,
+                                          toItem: photoView.superview, attribute: .top,
+                                          multiplier: 1, constant: 0)
+        let leading = NSLayoutConstraint.init(item: photoView!, attribute: .leading, relatedBy: .equal,
+                                              toItem: photoView.superview, attribute: .leading,
+                                              multiplier: 1, constant: 0)
+        let trailing = NSLayoutConstraint.init(item: photoView!, attribute: .trailing, relatedBy: .equal,
+                                               toItem: photoView.superview, attribute: .trailing,
+                                               multiplier: 1, constant: 0)
+        let bottom = NSLayoutConstraint.init(item: photoView!, attribute: .bottom, relatedBy: .equal,
+                                             toItem: photoView.superview, attribute: .bottom,
+                                             multiplier: 1, constant: 0)
 //        let aspectratio = NSLayoutConstraint.init(item: imageView!, attribute: .width, relatedBy: .equal,
 //                                                  toItem: imageView, attribute: .height,
 //                                                  multiplier: 16/9, constant: 0)
         return [top, leading, trailing, bottom]
     }()
     
-//    private lazy var videoViewConstraints: [NSLayoutConstraint] = {
-//        let top = NSLayoutConstraint.init(item: videoView!, attribute: .top, relatedBy: .equal,
-//                                          toItem: scrollView, attribute: .top,
-//                                          multiplier: 1, constant: scrollView.bounds.height)
-//        let leading = NSLayoutConstraint.init(item: videoView!, attribute: .leading, relatedBy: .equal,
-//                                              toItem: scrollView, attribute: .leading,
-//                                              multiplier: 1, constant: scrollView.bounds.width)
-//        let trailing = NSLayoutConstraint.init(item: scrollView!, attribute: .trailing, relatedBy: .equal,
-//                                               toItem: videoView, attribute: .trailing,
-//                                               multiplier: 1, constant: scrollView.bounds.width)
-//        let bottom = NSLayoutConstraint.init(item: scrollView!, attribute: .bottom, relatedBy: .equal,
-//                                             toItem: videoView, attribute: .bottom,
-//                                             multiplier: 1, constant: scrollView.bounds.height)
-//        return [top, leading, trailing, bottom]
-//    }()
+    private lazy var videoViewConstraints: [NSLayoutConstraint] = {
+        let top = NSLayoutConstraint.init(item: videoViewNEW!, attribute: .top, relatedBy: .equal,
+                                          toItem: videoViewNEW.superview, attribute: .top,
+                                          multiplier: 1, constant: 0)
+        let leading = NSLayoutConstraint.init(item: videoViewNEW!, attribute: .leading, relatedBy: .equal,
+                                              toItem: videoViewNEW.superview, attribute: .leading,
+                                              multiplier: 1, constant: 0)
+        let trailing = NSLayoutConstraint.init(item: videoViewNEW!, attribute: .trailing, relatedBy: .equal,
+                                               toItem: videoViewNEW.superview, attribute: .trailing,
+                                               multiplier: 1, constant: 0)
+        let bottom = NSLayoutConstraint.init(item: videoViewNEW!, attribute: .bottom, relatedBy: .equal,
+                                             toItem: videoViewNEW.superview, attribute: .bottom,
+                                             multiplier: 1, constant: 0)
+        
+        return [top, leading, trailing, bottom]
+    }()
 
     private var imagePicker: ImagePicker!
     private var videoPicker: VideoPicker!
+    private var isNewDoc: Bool!
     private var imageChanged: Bool!
     private var videoChanged: Bool!
-    private var isNewDoc: Bool!
-    private var showImageSide: Bool!
+    private var showImageSide: Bool = true {
+        didSet {
+            scrollViewPhoto.isHidden = !showImageSide
+            scrollViewVideo.isHidden = showImageSide
+        }
+    }
     private var didSetImage: Bool! {
         didSet {
             setZoomButton.isHidden = !didSetImage
-            scrollView.isUserInteractionEnabled = didSetImage
+            scrollViewPhoto.isUserInteractionEnabled = didSetImage
+        }
+    }
+    
+    //I dunno know about this...
+    private var didSetVideo: Bool! {
+        didSet {
+            setZoomButton.isHidden = !didSetVideo
+            scrollViewVideo.isUserInteractionEnabled = didSetVideo
         }
     }
 
@@ -105,17 +126,26 @@ class GreetingCardDetailsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        scrollViewPhoto.delegate = self                 //Needed to take advantage of zooming.
+//        scrollViewVideo.delegate = self
+        photoView = UIImageView(frame: CGRect(x: 0, y: 0, width: 1024, height: 768))
+        photoView.backgroundColor = .green
+        videoViewNEW = VideoView()
+        print("videoViewNEW frame: \(videoViewNEW.frame)")
+        videoViewNEW.backgroundColor = .systemPink
+        
+        scrollViewPhoto.backgroundColor = .green
+        scrollViewVideo.backgroundColor = .yellow
+
+        //Do this AFTER setting imageView and videoViewNEW
         imageChanged = false
         videoChanged = false
         showImageSide = true
         didSetImage = false
+        didSetVideo = false
         
         
         
-        
-        scrollView.delegate = self                 //Needed to take advantge of zooming.
-        imageView = UIImageView()
-//        videoView = VideoView()
         
         
         
@@ -124,8 +154,8 @@ class GreetingCardDetailsController: UIViewController {
             dateLabel.text = dateFormatter.string(from: greetingCard.greetingDate)
             headingLabel.text = greetingCard.greetingHeading
             descriptionLabel.text = greetingCard.greetingDescription
-            imageView.image = image
-            videoView.url = videoURL
+            photoView.image = image
+            videoViewNEW.url = videoURL
             isNewDoc = false
         }
         else {
@@ -137,22 +167,16 @@ class GreetingCardDetailsController: UIViewController {
         
         
         
+        scrollViewPhoto.addSubview(photoView)
+        photoView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate(imageViewConstraints)
         
-        scrollView.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([imageViewConstraints[0],
-                                     imageViewConstraints[1],
-                                     imageViewConstraints[2],
-                                     imageViewConstraints[3]])
+        scrollViewVideo.addSubview(videoViewNEW)
+        videoViewNEW.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate(videoViewConstraints)
         
-//        scrollView.addSubview(videoView)
-//        videoView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([videoViewConstraints[0],
-//                                     videoViewConstraints[1],
-//                                     videoViewConstraints[2],
-//                                     videoViewConstraints[3]])
-        
-        
+        updateMinZoomScaleForSize(view.bounds.size)
+
         
         
         
@@ -171,10 +195,10 @@ class GreetingCardDetailsController: UIViewController {
 
         //Notification observer for videoView player
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
-                                               object: self.videoView.player?.currentItem,
+                                               object: self.videoViewNEW.player?.currentItem,
                                                queue: nil) { [weak self] notification in
             guard let self = self else { return }
-            self.videoView.player?.seek(to: CMTime.zero)
+            self.videoViewNEW.player?.seek(to: CMTime.zero)
             self.playVideoButton.isHidden = false
         }
         
@@ -188,13 +212,13 @@ class GreetingCardDetailsController: UIViewController {
         
         
         //I don't think these are right -EC
-        let widthScale = scrollView.bounds.size.width / imageView.bounds.width
-        let heightScale = scrollView.bounds.size.height / imageView.bounds.height
-        let minScale = max(widthScale, heightScale)
-        
-        scrollView.minimumZoomScale = minScale
-        scrollView.zoomScale = minScale
-        scrollView.maximumZoomScale = 100
+//        let widthScale = view.bounds.size.width / imageView.bounds.width
+//        let heightScale = view.bounds.size.height / imageView.bounds.height
+//        let minScale = min(widthScale, heightScale)
+//
+//        scrollView.minimumZoomScale = minScale
+//        scrollView.zoomScale = minScale
+//        scrollView.maximumZoomScale = 100
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -206,7 +230,26 @@ class GreetingCardDetailsController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self,
                                                   name: .AVPlayerItemDidPlayToEndTime,
-                                                  object: self.videoView.player?.currentItem)
+                                                  object: self.videoViewNEW.player?.currentItem)
+    }
+    
+    private func updateMinZoomScaleForSize(_ size: CGSize) {
+        let widthScale = size.width / (showImageSide ? photoView.bounds.width : videoViewNEW.bounds.width)
+        let heightScale = size.height / (showImageSide ? photoView.bounds.height : videoViewNEW.bounds.height)
+        let minScale = min(widthScale, heightScale)
+        
+        print("photoViewBounds: \(photoView.constraints), size: \(size.width), widthScale: \(widthScale), heightScale: \(heightScale), minScale: \(minScale)")
+        
+//        if showImageSide {
+            scrollViewPhoto.minimumZoomScale = minScale
+            scrollViewPhoto.zoomScale = minScale
+            scrollViewPhoto.maximumZoomScale = 100
+//        }
+//        else {
+            scrollViewVideo.minimumZoomScale = minScale
+            scrollViewVideo.zoomScale = minScale
+            scrollViewVideo.maximumZoomScale = 100
+//        }
     }
     
     @objc func didGestureAtScreen(_ sender: UIGestureRecognizer) {
@@ -282,20 +325,29 @@ class GreetingCardDetailsController: UIViewController {
     // MARK: - UIBar Button Items
     
     @IBAction func setImageViewButtonPressed(_ sender: UIButton) {
-        didSetImage = false
+        let scale = 1 / scrollViewPhoto.zoomScale
+        let visibleRect = CGRect(x: scrollViewPhoto.contentOffset.x * scale,
+                                 y: scrollViewPhoto.contentOffset.y * scale,
+                                 width: scrollViewPhoto.bounds.size.width * scale,
+                                 height: scrollViewPhoto.bounds.size.height * scale)
         
-        let scale = 1 / scrollView.zoomScale
-        let visibleRect = CGRect(x: scrollView.contentOffset.x * scale,
-                                 y: scrollView.contentOffset.y * scale,
-                                 width: scrollView.bounds.size.width * scale,
-                                 height: scrollView.bounds.size.height * scale)
         
-        guard let cgImage = (imageView.image?.cgImage)!.cropping(to: visibleRect) else {
-            return
+        if showImageSide {
+            didSetImage = false
+
+            guard let cgImage = (photoView.image?.cgImage)!.cropping(to: visibleRect) else {
+                return
+            }
+            
+            let cropped = UIImage.init(cgImage: cgImage)
+            photoView.image = cropped
+        }
+        else {
+            didSetVideo = false
+
+            //1. HOW THE FUCK DO YOU CROP A VIDEO???
         }
         
-        let cropped = UIImage.init(cgImage: cgImage)
-        imageView.image = cropped
         viewWillLayoutSubviews()
     }
     
@@ -312,11 +364,10 @@ class GreetingCardDetailsController: UIViewController {
         }, completion: nil)
         
         fadeButtons(delay: 3.0)
-        showHelper(isImage: showImageSide)
-        showImageSide = !showImageSide
+        showHelper(showImageSide: showImageSide)
     }
     
-    private func showHelper(isImage: Bool) {
+    private func showHelper(showImageSide: Bool) {
         let speed: TimeInterval = 0.5
         let keyPath = "transform.rotation.y"
         let midPoint: Float = .pi / 2
@@ -327,23 +378,33 @@ class GreetingCardDetailsController: UIViewController {
         CATransaction.setCompletionBlock {
             K.addHapticFeedback(withStyle: .light)
 
-            self.imageView.isHidden = isImage
-            self.videoView.isHidden = !isImage
-            self.selectImageButton.setImage(UIImage(systemName: isImage ? "video.fill" : "camera.fill"), for: .normal)
+//            self.imageView.isHidden = showImageSide
+//            self.videoView.isHidden = !showImageSide
+//            self.videoViewNEW.isHidden = !showImageSide
+            
+            self.showImageSide = !self.showImageSide
+//            self.photoView.isHidden = showImageSide
+//            self.videoViewNEW.isHidden = !showImageSide
+            self.selectImageButton.setImage(UIImage(systemName: showImageSide ? "video.fill" : "camera.fill"), for: .normal)
 
-            if !isImage {
-                self.videoView.player?.pause()
+            if !showImageSide {
+//                self.videoView.player?.pause()
+                self.videoViewNEW.player?.pause()
             }
         }
         
-        if isImage {
-            self.imageView.isUserInteractionEnabled = false
-            self.imageView.animate(keyPath: keyPath, fromValue: 0, toValue: midPoint, duration: speed, delay: 0)
+        if showImageSide {
+            self.photoView.isUserInteractionEnabled = false
+//            self.imageView.animate(keyPath: keyPath, fromValue: 0, toValue: midPoint, duration: speed, delay: 0)
+            self.scrollViewPhoto.animate(keyPath: keyPath, fromValue: 0, toValue: midPoint, duration: speed, delay: 0)
         }
         else {
             self.playVideoButton.isHidden = true
-            self.videoView.isUserInteractionEnabled = false
-            self.videoView.animate(keyPath: keyPath, fromValue: 0, toValue: midPoint, duration: speed, delay: 0)
+//            self.videoView.isUserInteractionEnabled = false
+//            self.videoView.animate(keyPath: keyPath, fromValue: 0, toValue: midPoint, duration: speed, delay: 0)
+            self.videoViewNEW.isUserInteractionEnabled = false
+//            self.videoViewNEW.animate(keyPath: keyPath, fromValue: 0, toValue: midPoint, duration: speed, delay: 0)
+            self.scrollViewVideo.animate(keyPath: keyPath, fromValue: 0, toValue: midPoint, duration: speed, delay: 0)
         }
         
         CATransaction.commit()
@@ -352,22 +413,25 @@ class GreetingCardDetailsController: UIViewController {
         //...and show the next view.
         CATransaction.begin()
         CATransaction.setCompletionBlock {
-            if isImage {
-                self.imageView.isUserInteractionEnabled = true
-                self.videoView.player?.play()
+            if showImageSide {
+                self.photoView.isUserInteractionEnabled = true
+//                self.videoView.player?.play()
+                self.videoViewNEW.player?.play()
                 self.playVideoButton.isHidden = true
             }
             else {
-                self.videoView.isUserInteractionEnabled = true
+//                self.videoView.isUserInteractionEnabled = true
+                self.videoViewNEW.isUserInteractionEnabled = true
             }
         }
         
-        if isImage {
-            self.videoView.animate(keyPath: keyPath, fromValue: midPoint, toValue: 0, duration: speed, delay: speed)
+        if showImageSide {
+//            self.videoView.animate(keyPath: keyPath, fromValue: midPoint, toValue: 0, duration: speed, delay: speed)
+            self.scrollViewVideo.animate(keyPath: keyPath, fromValue: midPoint, toValue: 0, duration: speed, delay: speed)
         }
         else {
-            self.imageView.animate(keyPath: keyPath, fromValue: midPoint, toValue: 0, duration: speed, delay: speed)
-            
+//            self.imageView.animate(keyPath: keyPath, fromValue: midPoint, toValue: 0, duration: speed, delay: speed)
+            self.scrollViewPhoto.animate(keyPath: keyPath, fromValue: midPoint, toValue: 0, duration: speed, delay: speed)
         }
         
         CATransaction.commit()
@@ -385,7 +449,8 @@ class GreetingCardDetailsController: UIViewController {
     }
     
     @IBAction func playVideoPressed(_ sender: UIButton) {
-        videoView.player?.play()
+//        videoView.player?.play()
+        videoViewNEW.player?.play()
         playVideoButton.isHidden = true
     }
 
@@ -406,14 +471,15 @@ class GreetingCardDetailsController: UIViewController {
             
             
             //Save image, video and QR code to Firebase Cloud Storage
-            if imageChanged, let dataFile = imageView.image {
+            if imageChanged, let dataFile = photoView.image {
                 putInStorage(withData: dataFile.pngData(),
                              inFolder: FIR.storageImage,
                              forFilename: docRef.documentID + ".png",
                              contentType: "image/png")
             }
             
-            if videoChanged, let dataFile = videoView.url {
+//            if videoChanged, let dataFile = videoView.url {
+            if videoChanged, let dataFile = videoViewNEW.url {
                 //Use try if you want to catch the error and investigate. Use try? if you just care about success and failure without the "why". Use try! if you're certain it'll succeed.
                 putInStorage(withData: try? Data(contentsOf: dataFile),
                              inFolder: FIR.storageVideo,
@@ -429,8 +495,9 @@ class GreetingCardDetailsController: UIViewController {
             }
             
             delegate?.greetingCardDetailsController(self,
-                                                    didUpdateFor: imageView.image,
-                                                    video: videoView.url,
+                                                    didUpdateFor: photoView.image,
+//                                                    video: videoView.url,
+                                                    video: videoViewNEW.url,
                                                     qrCode: qrView.image)
             
             print("Document ID: \(docRef.documentID) has been created or updated in Firestore.")
@@ -488,7 +555,7 @@ class GreetingCardDetailsController: UIViewController {
 extension GreetingCardDetailsController: ImagePickerDelegate, VideoPickerDelegate {
     func didSelect(image: UIImage?) {
         self.image = image
-        imageView.image = image
+        photoView.image = image
         imageChanged = true
         didSetImage = true
         
@@ -497,16 +564,20 @@ extension GreetingCardDetailsController: ImagePickerDelegate, VideoPickerDelegat
     
     func didSelect(url: URL?) {
         videoURL = url
-        videoView.url = url
-        videoView.player?.play()
+//        videoView.url = url
+//        videoView.player?.play()
+        videoViewNEW.url = url
+        videoViewNEW.player?.play()
         playVideoButton.isHidden = true
         videoChanged = true
         
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
-                                               object: self.videoView.player?.currentItem,
+//                                               object: self.videoView.player?.currentItem,
+                                               object: self.videoViewNEW.player?.currentItem,
                                                queue: nil) { [weak self] notification in
             guard let self = self else { return }
-            self.videoView.player?.seek(to: CMTime.zero)
+//            self.videoView.player?.seek(to: CMTime.zero)
+            self.videoViewNEW.player?.seek(to: CMTime.zero)
             self.playVideoButton.isHidden = false
         }
     }
@@ -517,20 +588,20 @@ extension GreetingCardDetailsController: ImagePickerDelegate, VideoPickerDelegat
 
 extension GreetingCardDetailsController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return imageView
+        return showImageSide ? photoView : videoViewNEW
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         let yOffset: CGFloat = 0//max(0, (imageScrollView.bounds.size.height - imageScrollViewImageView.bounds.size.height) / 2)
-        imageViewConstraints[0].constant = yOffset
-        imageViewConstraints[3].constant = yOffset
+        imageViewConstraints[LayoutConstraint.top.rawValue].constant = yOffset
+        imageViewConstraints[LayoutConstraint.bottom.rawValue].constant = yOffset
         
         let xOffset: CGFloat = 0//max(0, (imageScrollView.bounds.size.height - imageScrollViewImageView.bounds.size.height) / 2)
-        imageViewConstraints[1].constant = xOffset
-        imageViewConstraints[2].constant = xOffset
+        imageViewConstraints[LayoutConstraint.leading.rawValue].constant = xOffset
+        imageViewConstraints[LayoutConstraint.trailing.rawValue].constant = xOffset
         
         
-        print("imageScrollView.zoomScale: \(scrollView.zoomScale)")
+        print("scrollView.zoomScale: \(scrollView.zoomScale)")
         
         view.layoutIfNeeded()
     }
